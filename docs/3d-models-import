@@ -1,0 +1,11 @@
+#Blender
+##Export as Wavefront .obj
+    Blender doesn't use the same axis order as Small Square. ( X Right, Y Front, Z Up for blender and X Left, Y Up, Z front for Small Square)
+    Therefore you shoud import wavefront from blender with the following export transform parameters: 
+            
+            Scale : 1.00
+            Path  Mode : Auto 
+            Forward : -Z Forward
+            Up : Y Up 
+
+    They both use a right hand axis system so your models shouldn't be fliped at all;
