@@ -139,57 +139,53 @@ void Shader::setMaterial(const string &name, Material  *value) const{
     
 }
 
-void Shader::setDirLightArray(const string &name, list<DirectionLight *>value) const{
+void Shader::setDirLightArray(const string &name, vector<DirectionLight *>value) const{
 
-    int i =0;
-    for(list<DirectionLight * >::iterator it = value.begin() ; it != value.end(); it++ ){
-        setVec3(name + "[" + to_string(i) + "].direction", (*it)->GetGlobalFront() );
-        setVec3(name + "[" + to_string(i) + "].ambient", (*it)->ambient );
-        setVec3(name + "[" + to_string(i) + "].diffuse", (*it)->diffuse );
-        setVec3(name + "[" + to_string(i) + "].specular", (*it)->specular );
-        i++;
+    for(int i =0; i< value.size() ; i++){
+        setVec3(name + "[" + to_string(i) + "].direction", value[i]->GetGlobalFront() );
+        setVec3(name + "[" + to_string(i) + "].ambient", value[i]->ambient );
+        setVec3(name + "[" + to_string(i) + "].diffuse", value[i]->diffuse );
+        setVec3(name + "[" + to_string(i) + "].specular", value[i]->specular );
     }
     setInt("n_dirLight", value.size());
 
 }
 
 
-void Shader::setPointLightArray(const string &name,list<PointLight *>value) const{
+void Shader::setPointLightArray(const string &name,vector<PointLight *>value) const{
     
-    int i =0;
-    for(list<PointLight * >::iterator it = value.begin() ; it != value.end(); it++ ){
-        setVec3(name + "[" + to_string(i) + "].position", (*it)->position );
-        setVec3(name + "[" + to_string(i) + "].ambient", (*it)->ambient );
-        setVec3(name + "[" + to_string(i) + "].diffuse", (*it)->diffuse );
-        setVec3(name + "[" + to_string(i) + "].specular", (*it)->specular );
-        setFloat(name + "[" + to_string(i) + "].constan", (*it)->constant );
-        setFloat(name + "[" + to_string(i) + "].linear", (*it)->linear );
-        setFloat(name + "[" + to_string(i) + "].quadratic", (*it)->quadratic );
-        i++;
+
+    for(int i =0; i< value.size() ; i++){
+        setVec3(name + "[" + to_string(i) + "].position", value[i]->position );
+        setVec3(name + "[" + to_string(i) + "].ambient", value[i]->ambient );
+        setVec3(name + "[" + to_string(i) + "].diffuse", value[i]->diffuse );
+        setVec3(name + "[" + to_string(i) + "].specular", value[i]->specular );
+        setFloat(name + "[" + to_string(i) + "].constant", value[i]->constant );
+        setFloat(name + "[" + to_string(i) + "].linear", value[i]->linear );
+        setFloat(name + "[" + to_string(i) + "].quadratic", value[i]->quadratic );
+
     }
 
     setInt("n_pointLight",value.size());
 
 }
 
-void Shader::setSpotLightArray(const string &name, list<SpotLight *>value) const{
+void Shader::setSpotLightArray(const string &name, vector<SpotLight *>value) const{
 
-    int i =0;
-    for(list<SpotLight * >::iterator it = value.begin() ; it != value.end(); it++ ){
+    for(int i =0; i< value.size() ; i++){
 
         string id = name + "[" + to_string(i) + "].position";
 
-        setVec3(name + "[" + to_string(i) + "].position", (*it)->position );
-        setVec3(name + "[" + to_string(i) + "].direction", (*it)->GetGlobalFront() );
-        setVec3(name + "[" + to_string(i) + "].ambient", (*it)->ambient );
-        setVec3(name + "[" + to_string(i) + "].diffuse", (*it)->diffuse );
-        setVec3(name + "[" + to_string(i) + "].specular", (*it)->specular );
-        setFloat(name + "[" + to_string(i) + "].constant", (*it)->constant );
-        setFloat(name + "[" + to_string(i) + "].linear", (*it)->linear );
-        setFloat(name + "[" + to_string(i) + "].quadratic", (*it)->quadratic );
-        setFloat(name + "[" + to_string(i) + "].cutOff", (*it)->cutOff );
-        setFloat(name + "[" + to_string(i) + "].outerCutOff", (*it)->outerCutOff );
-        i++;
+        setVec3(name + "[" + to_string(i) + "].position", value[i]->position );
+        setVec3(name + "[" + to_string(i) + "].direction", value[i]->GetGlobalFront() );
+        setVec3(name + "[" + to_string(i) + "].ambient", value[i]->ambient );
+        setVec3(name + "[" + to_string(i) + "].diffuse", value[i]->diffuse );
+        setVec3(name + "[" + to_string(i) + "].specular", value[i]->specular );
+        setFloat(name + "[" + to_string(i) + "].constant", value[i]->constant );
+        setFloat(name + "[" + to_string(i) + "].linear", value[i]->linear );
+        setFloat(name + "[" + to_string(i) + "].quadratic", value[i]->quadratic );
+        setFloat(name + "[" + to_string(i) + "].cutOff", value[i]->cutOff );
+        setFloat(name + "[" + to_string(i) + "].outerCutOff", value[i]->outerCutOff );
     }
     setInt("n_spotLight",value.size());
 

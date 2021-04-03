@@ -56,9 +56,9 @@ namespace smallsquare{
         void setMat4(const string &name, const mat4 &value) const;
         void setMaterial(const string &name, Material *value) const;
 
-        void setDirLightArray(const string &name, list<DirectionLight *>value) const;
-        void setPointLightArray(const string &name, list<PointLight *>value) const;
-        void setSpotLightArray(const string &name, list<SpotLight *> value) const;
+        void setDirLightArray(const string &name, vector<DirectionLight *>value) const;
+        void setPointLightArray(const string &name, vector<PointLight *>value) const;
+        void setSpotLightArray(const string &name, vector<SpotLight *> value) const;
 
     };
 

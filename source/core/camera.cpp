@@ -1,9 +1,8 @@
 #include <camera.h>
-using namespace smallsquare;
 
 
 
-Camera::Camera(vec3 position, vec3 euler){
+smallsquare::Camera::Camera(vec3 position, vec3 euler){
     rotation = mat4(1.0f);
     rotation = rotate(rotation, radians(euler.x), vec3(1.0f,0.0f,0.0f));
     rotation = rotate(rotation, radians(euler.y), vec3(0.0f,1.0f,0.0f));
@@ -12,37 +11,37 @@ Camera::Camera(vec3 position, vec3 euler){
     this->position = position;
 }
 
-vec3 Camera::GetFront() const {
+vec3 smallsquare::Camera::GetFront() const {
     mat4 inv = inverse(rotation);
     return vec3(inv[2][0], inv[2][1], inv[2][2]);
 }
 
-vec3 Camera::GetRight() const {
+vec3 smallsquare::Camera::GetRight() const {
     mat4 inv = inverse(rotation);
     return vec3(inv[0][0], inv[0][1], inv[0][2]);
 }
 
-vec3 Camera::GetUp() const {
+vec3 smallsquare::Camera::GetUp() const {
     mat4 inv = inverse(rotation);
     return vec3(inv[1][0], inv[1][1], inv[1][2]);
 }
 
-mat4 Camera::GetView() const {
+mat4 smallsquare::Camera::GetView() const {
     return lookAt( position, position + GetFront(),GetUp() );
 }
 
-mat4 Camera::GetInvertedView() const {
+mat4 smallsquare::Camera::GetInvertedView() const {
     return inverse(GetView());
 }
 
-
-Basic_Flight_Controller::Basic_Flight_Controller(Camera * cam, float MoveSpeed, float RotateSpeed){
+/*
+smallsquare::Basic_Flight_Controller::Basic_Flight_Controller(Camera * cam, float MoveSpeed, float RotateSpeed){
     this->cam = cam;
     this->MoveSpeed = MoveSpeed;
     this->RotateSpeed = RotateSpeed;
 }
 
-void Basic_Flight_Controller::Move(Direction dir, float deltaTime){
+void smallsquare::Basic_Flight_Controller::Move(Direction dir, float deltaTime){
     switch(dir){
         case Direction::FORWARD: cam->position +=  MoveSpeed * deltaTime * cam->GetFront() ; break;
         case Direction::BACK: cam->position -=  MoveSpeed * deltaTime * cam->GetFront() ;  break;
@@ -53,7 +52,7 @@ void Basic_Flight_Controller::Move(Direction dir, float deltaTime){
     }
 }
 
-void Basic_Flight_Controller::Rotate(Rotation rot, float deltaTime){
+void smallsquare::Basic_Flight_Controller::Rotate(Rotation rot, float deltaTime){
     switch(rot){
         case Rotation::PITCHUP: cam->rotation = rotate(cam->rotation, RotateSpeed * deltaTime, cam->GetRight()); break;
         case Rotation::PITCHDOWN: cam->rotation = rotate(cam->rotation, - RotateSpeed * deltaTime, cam->GetRight()); break;
@@ -64,7 +63,7 @@ void Basic_Flight_Controller::Rotate(Rotation rot, float deltaTime){
     }
 }
 
-void Basic_Flight_Controller::Rotate(Direction dir, float offset)
+void smallsquare::Basic_Flight_Controller::Rotate(Direction dir, float offset)
 {
     switch(dir){
         case Direction::FORWARD: cam->rotation = rotate(cam->rotation, offset, cam->GetFront()); break;
@@ -72,3 +71,4 @@ void Basic_Flight_Controller::Rotate(Direction dir, float offset)
         case Direction::UP: cam->rotation = rotate(cam->rotation, offset, cam->GetUp()); break; 
     }
 }
+*/

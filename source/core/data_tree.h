@@ -1,7 +1,8 @@
 #ifndef DATA_TREE_H
 #define DATA_TREE_H
 
-#include <list> 
+//#include <list>
+#include <vector>
 
 using namespace std;
 
@@ -9,7 +10,7 @@ using namespace std;
 template <class T>
 struct node{
     node * parent; 
-    list<node * > children;
+    vector<node * > children;
     T data;
 
     node(T data, node * parent ){
@@ -27,21 +28,21 @@ private:
     node<T> * TraverseOrReturn(node<T> *n, T data){
         if(n->data == data) {return n;}
 
-        for(typename list<node<T> *>::iterator it = n->children.begin(); it != n->children.end(); it++){
-            node<T> * traversedChild = TraverseOrReturn((*it), data);
-            if(traversedChild == NULL){continue;}
+        for(int i =0; i< n->children.size() ; i++) {
+            node<T> * traversedChild = TraverseOrReturn(n->children[i], data);
+            if(traversedChild == nullptr){continue;}
             if(traversedChild->data == data ) {return traversedChild; } 
         }
 
-        return NULL;
+        return nullptr;
     }
 
-    list<T> TraverseOrPushback(node<T> * n){
-        list<T> result;
+    vector<T> TraverseOrPushback(node<T> * n){
+        vector<T> result;
         result.push_back(n->data);
-        for(typename list<node<T> *>::iterator it = n->children.begin(); it != n->children.end(); it++ ){
-            list<T> traversedChild = TraverseOrPushback(*it);
-            result.splice(result.end(),traversedChild );
+        for(int i =0; i< n->children.size() ; i++){
+            vector<T> traversedChild = TraverseOrPushback(n->children[i]);
+            result.insert(result.end(),traversedChild.begin() , traversedChild.end());
         }
         return result;
     } 
@@ -55,7 +56,7 @@ private:
     }
 public:
     explicit tree(T data)  {
-        root = new node<T>(data, NULL);
+        root = new node<T>(data, nullptr);
     }
 
     T GetRoot(){
@@ -64,40 +65,37 @@ public:
     
     T ChildOf(T data, int i = 0){
         node<T> *  n = GetFirst(data); 
-        if(n == NULL) {return NULL;}
-        if(n->children.size() == 0){return NULL;}
-        if(n->children.size() <= i ){return NULL;}
-
-        typename list<node<T> *>::iterator it = n->children.begin();
-        advance(it, i);
-        return (*it)->data; 
+        if(!n) {return nullptr;}
+        if(n->children.size() == 0){return nullptr;}
+        if(n->children.size() <= i ){return nullptr;}
+        return n->children[i]->data;
     }
 
-    list<T> ChildrenOf(T data){
-        list<T> result;
+    vector<T> ChildrenOf(T data){
+        vector<T> result;
         node<T> *  n = GetFirst(data); 
 
-        for(typename list<node<T> *>::iterator it = n->children.begin() ; it != n->children.end(); it++ ){
-            result.push_back((*it)->data );
+        for(int i =0; i< n->children.size(); i++){
+            result.push_back(n->children[i]->data );
         }
         return result;
     }
 
     T ParentOf(T data){
         node<T> *  n = GetFirst(data); 
-        if(n == NULL) {return NULL;}
+        if(!n) {return nullptr;}
         return n->parent->data;
     }
 
-    list<T> PathTo(T data){
+    vector<T> PathTo(T data){
         node<T> *  n = GetFirst(data); 
-        list<T> result;
-        if(n == NULL) {return result;}
+        vector<T> result;
+        result.push_back(data);
+        if(!n) {return result;}
 
-        result.push_front(data);
         do{
             n = n->parent; 
-            result.push_front(n->data);
+            result.push_back(n->data);
         }while(n != root);
 
         return result;
@@ -105,7 +103,7 @@ public:
 
     int insert(T data, T parent){
         node<T> * p_node  = GetFirst(parent);
-        if( p_node == NULL) { return -1; }
+        if( p_node == nullptr) { return -1; }
         insert(data, p_node);
         return 0;
     }
@@ -114,7 +112,7 @@ public:
         insert(data, root);
         return 0;
     }
-    list<T> flatten(){
+    vector<T> flatten(){
         return TraverseOrPushback(root);
     }
 

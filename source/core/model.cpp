@@ -102,7 +102,7 @@ Mesh * Model::ProcessMesh(aiMesh * mesh, const aiScene *scene){
     return new Mesh(verts,indices, mat);
 }
 
-void Model::Tick(){
+void Model::Tick(float deltaTime){
 }
 
 
@@ -110,7 +110,7 @@ void Model::Tick(){
 
 void Model::Draw(Viewport * viewport){
 
-    list<Light * > lightsources = game->FindObjectsOfType<Light*>();
+    auto lightsources = game->FindObjectsOfType<Light*>();
 
     shader->use();
 
@@ -120,12 +120,12 @@ void Model::Draw(Viewport * viewport){
     shader->setVec3("viewPos", viewport->_cam->position );
     
 
-    //Adding Lightsources Info To used Shader;
-    list<DirectionLight *> dls; 
-    list<PointLight *> pls; 
-    list<SpotLight *> sls; 
-    for(list<Light*>::iterator it = lightsources.begin(); it != lightsources.end(); it++ ){
-        Light * l = (*it);
+    //Adding Light Sources Info To used Shader;
+    vector<DirectionLight *> dls;
+    vector<PointLight *> pls;
+    vector<SpotLight *> sls;
+    for(auto & i : lightsources ){
+        Light * l = i ;
         if(dynamic_cast<DirectionLight *>(l)){
             dls.push_back((DirectionLight *)l);
         } 

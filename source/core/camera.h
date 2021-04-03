@@ -6,15 +6,12 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+
 using namespace std;
 using namespace glm;
 
 namespace smallsquare{
     class Camera {
-    private:
-        vec3 _front; 
-        vec3 _right;
-        vec3 _up;
 
     public:
         mat4 rotation;
@@ -32,26 +29,7 @@ namespace smallsquare{
 
     };
 
-    enum Direction{
-        LEFT,
-        RIGHT,
-        FORWARD,
-        BACK,
-        UP,
-        DOWN,
-    };
-    enum Rotation{
-        ROLLCWISE,
-        ROLLANTICWISE,
-
-        PITCHUP,
-        PITCHDOWN,
-
-        YAWLEFT,
-        YAWRIGHT,
-    };
-
-
+/*
     class Basic_Flight_Controller{
     public:
         Basic_Flight_Controller(Camera * cam ,float MoveSpeed, float RotateSpeed);
@@ -65,6 +43,7 @@ namespace smallsquare{
         float RotateSpeed;
 
     };
+*/
 };
 
 #endif

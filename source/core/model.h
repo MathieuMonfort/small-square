@@ -33,7 +33,7 @@ namespace smallsquare{
             LoadModel(path);
         }
 
-        void Tick() override;
+        void Tick(float deltaTime) override;
         virtual void Draw(Viewport * viewport) override;
     private: 
         string directory;
