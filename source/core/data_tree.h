@@ -119,6 +119,11 @@ public:
         return TraverseOrPushback(root);
     }
 
+    vector<T> flatten(T data){
+        if(!GetFirst(data)) { return vector<T>(); }
+        return TraverseOrPushback(GetFirst(data));
+    }
+
 
 };
 

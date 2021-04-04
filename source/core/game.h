@@ -34,9 +34,9 @@ namespace smallsquare{
         vec3 position = vec3(0.0f) ;
         mat4 rotation= mat4(0.0f);
         vec3 oscale = vec3(0.0f) ;
+        string name;
 
-
-        GameObject(vec3 position, vec3 euler, vec3 oscale);
+        GameObject(vec3 position, vec3 euler, vec3 oscale , const string& name = "GameObject");
 
 
         virtual vec3 GetLocalFront();
@@ -56,6 +56,10 @@ namespace smallsquare{
 
 
         virtual void Tick(float deltaTime){
+        }
+
+        virtual void CheckIntegrity(){
+
         }
     };
 

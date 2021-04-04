@@ -137,7 +137,7 @@ mat4 smallsquare::Viewport::GetViewMatrix() const{
 #pragma endregion
 
 #pragma region GameObject
-smallsquare::GameObject::GameObject(vec3 position, vec3 euler, vec3 oscale){
+smallsquare::GameObject::GameObject(vec3 position, vec3 euler, vec3 oscale, const string& name){
     rotation = mat4(1.0f);
     rotation = rotate(rotation, euler.x, vec3(1.0f,0.0f,0.0f)); 
     rotation = rotate(rotation, euler.y, vec3(0.0f,1.0f,0.0f)); 
