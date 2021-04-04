@@ -121,6 +121,21 @@ namespace smallsquare{
             return result;
         }
 
+        template <class T> vector<T> FindChildrenOfType(GameObject * subRoot) {
+            vector<GameObject *> object_list = _object_tree.flatten(subRoot);
+            vector<T> result;
+
+            for (auto &i :object_list ) {
+                GameObject *go = i;
+
+                if (dynamic_cast<T > (go)) {
+                    T tObject = (T) go;
+                    result.push_back(tObject);
+                }
+            }
+            return result;
+        }
+
 
     };
 

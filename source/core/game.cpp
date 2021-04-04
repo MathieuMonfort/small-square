@@ -64,6 +64,12 @@ smallsquare::GameObject * smallsquare::Game::Instanciate(GameObject * object, Ga
 
 void smallsquare::Game::GameLoop()
 {
+    auto object_list = _object_tree.flatten();
+    for(auto & i : object_list){
+        decltype(i) obj = i;
+        obj->CheckIntegrity();
+    }
+
     while(!glfwWindowShouldClose(_win)){
         glClearColor(0.7f,0.7f,0.7f,1.0f);
         glClear(GL_COLOR_BUFFER_BIT);

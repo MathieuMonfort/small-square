@@ -11,13 +11,16 @@
 #include <collision_object.h>
 
 namespace smallsquare {
+    class CollisionObject;
     class ColliderObject : public GameObject {
     public:
         CollisionObject * cMaster = nullptr;
 
-        ColliderObject(vec3 position, vec3 euler,vec3 oscale);
+        ColliderObject(vec3 position, vec3 euler,vec3 oscale, const string &name = "Collision Object"):GameObject(position, euler,oscale,name) {
 
+        };
 
+        void CheckIntegrity() override;
 
     };
 }

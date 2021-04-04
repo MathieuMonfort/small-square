@@ -7,7 +7,9 @@
 #include "collider_object.h"
 
 
-smallsquare::ColliderObject::ColliderObject(vec3 position, vec3 euler,vec3 oscale) :GameObject(position, euler,oscale) {
+
+
+void smallsquare::ColliderObject::CheckIntegrity() {
     for (auto &i : game->GetPathTo(this)) {
         if (dynamic_cast<CollisionObject *>(i)) {
             cMaster = (CollisionObject *) i;
@@ -16,5 +18,4 @@ smallsquare::ColliderObject::ColliderObject(vec3 position, vec3 euler,vec3 oscal
             cerr << "ERROR IN OBJECT: " << name << " Collider Object is not assigned to Collision Object";
         }
     }
-
 }
