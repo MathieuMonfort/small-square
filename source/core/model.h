@@ -1,3 +1,7 @@
+//
+// Created by Mathieu Monfort
+// Date : 4/2/21.
+//
 #include <game.h>
 #include <shader.h>
 
@@ -34,13 +38,13 @@ namespace smallsquare{
         }
 
         void Tick(float deltaTime) override;
-        virtual void Draw(Viewport * viewport) override;
+        void Draw(Viewport * viewport) override;
     private: 
         string directory;
         vector<MatIndex> _loadedMaterials;
        
        
-        void LoadModel(string path);
+        void LoadModel(string &path);
         void ProcessNode(aiNode *node, const aiScene *scene);
         Mesh  * ProcessMesh(aiMesh *mesh, const aiScene *scene);
 
@@ -61,13 +65,13 @@ namespace smallsquare{
         vector<unsigned int> indices; 
 
         Mesh(vector<Vertex> vertices, vector<unsigned int> indices, Material * mat); 
-        void Draw(Shader * shader);
+        void Draw(Shader * shader) const ;
 
     private: 
-        unsigned int _VAO, _VBO, _EBO;
+        unsigned int VAO, VBO, EBO;
 
         void SetupMesh();
 
 
     };
-};
+}

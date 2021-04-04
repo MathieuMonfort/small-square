@@ -1,5 +1,6 @@
 //
-// Created by mmonfort on 4/2/21.
+// Created by Mathieu Monfort
+// Date : 4/2/21.
 //
 
 #include "input.h"
@@ -9,6 +10,7 @@ float smallsquare::Input::mlastx = 0;
 float smallsquare::Input::mlasty = 0;
 float smallsquare::Input::mxoffset = 0;
 float smallsquare::Input::myoffset = 0;
+float smallsquare::Input::sensitivity = 0.001f;
 bool smallsquare::Input::firstmouse = true;
 
 
@@ -24,11 +26,6 @@ bool smallsquare::Input::KeyPressed(const string &name) {
     for(auto & i : keymap){
         if(i->id == name){
             pressed = glfwGetKey(_win, i->key) == GLFW_PRESS;
-            if(pressed){
-                cout<< i->key << "Pressed \n";
-            }
-
-
         }
     }
     return pressed;
@@ -49,8 +46,6 @@ void smallsquare::Input::MouseMoveCallback(GLFWwindow * win, double xpos, double
 
     mlastx = (float)xpos;
     mlasty = (float)ypos;
-
-    float sensitivity = 0.001f;
     mxoffset *= sensitivity;
     myoffset *= sensitivity;
 }

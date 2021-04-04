@@ -1,3 +1,7 @@
+//
+// Created by Mathieu Monfort
+// Date : 4/2/21.
+//
 #ifndef SHADER_H
 #define SHADER_H
 
@@ -6,9 +10,6 @@
 #include <sstream>
 #include <iostream>
 #include <list>
-
-#include "glad/glad.h"
-#include "GLFW/glfw3.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -42,7 +43,7 @@ namespace smallsquare{
 
 
         Shader(const GLchar* vertexPath, const GLchar* fragmentPath);
-        void use();
+        void use() const;
 
         void setBool(const string &name, bool value) const;
         void setInt(const string &name, int value) const;
@@ -59,11 +60,10 @@ namespace smallsquare{
         void setDirLightArray(const string &name, vector<DirectionLight *>value) const;
         void setPointLightArray(const string &name, vector<PointLight *>value) const;
         void setSpotLightArray(const string &name, vector<SpotLight *> value) const;
-
     };
 
 
-};
+}
 
 
 #endif

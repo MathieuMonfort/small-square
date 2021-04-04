@@ -1,3 +1,8 @@
+//
+// Created by Mathieu Monfort
+// Date : 4/2/21.
+//
+
 #ifndef CAMERA_H
 #define CAMERA_H
 
@@ -14,37 +19,25 @@ namespace smallsquare{
     class Camera {
 
     public:
-        mat4 rotation;
-        vec3 position;
+        mat4 rotation = mat4(1.0f);
+        vec3 position = vec3(1.0f);
 
         Camera(vec3 position, vec3 rotation);
-        
+
+        [[nodiscard]]
         mat4 GetView() const;
+        [[nodiscard]]
         mat4 GetInvertedView() const;
 
-
+        [[nodiscard]]
         vec3 GetFront() const;
+        [[nodiscard]]
         vec3 GetRight() const;
+        [[nodiscard]]
         vec3 GetUp() const;
 
     };
-
-/*
-    class Basic_Flight_Controller{
-    public:
-        Basic_Flight_Controller(Camera * cam ,float MoveSpeed, float RotateSpeed);
-        void Move(Direction dir, float deltaTime);
-        void Rotate(Rotation rot, float deltaTime);
-        void Rotate(Direction dir, float offset);
-
-    private:
-        Camera * cam;
-        float MoveSpeed; 
-        float RotateSpeed;
-
-    };
-*/
-};
+}
 
 #endif
 

@@ -1,7 +1,10 @@
+//
+// Created by Mathieu Monfort
+// Date : 4/2/21.
+//
+
 #ifndef DATA_TREE_H
 #define DATA_TREE_H
-
-//#include <list>
 #include <vector>
 
 using namespace std;

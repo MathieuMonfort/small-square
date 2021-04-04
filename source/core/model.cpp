@@ -1,9 +1,12 @@
+//
+// Created by Mathieu Monfort
+// Date : 4/2/21.
+//
+
 #include <model.h>
-using namespace smallsquare;
 
 
-
-void Model::LoadModel(string path){
+void smallsquare::Model::LoadModel(string &path){
     Assimp::Importer importer; 
     const aiScene * scene = importer.ReadFile(path, aiProcess_Triangulate |aiProcess_FlipUVs);
 
@@ -17,7 +20,7 @@ void Model::LoadModel(string path){
     ProcessNode(scene->mRootNode,scene);
 }
 
-void Model::ProcessNode(aiNode *node, const aiScene *scene){
+void smallsquare::Model::ProcessNode(aiNode *node, const aiScene *scene){
     for(unsigned int i = 0; i < node->mNumMeshes; i++){
         aiMesh *mesh = scene->mMeshes[node->mMeshes[i]];
         meshes.push_back(ProcessMesh(mesh, scene));
@@ -28,13 +31,13 @@ void Model::ProcessNode(aiNode *node, const aiScene *scene){
     }
 }
 
-Mesh * Model::ProcessMesh(aiMesh * mesh, const aiScene *scene){
-    vector<Vertex> verts; 
+smallsquare::Mesh * smallsquare::Model::ProcessMesh(aiMesh * mesh, const aiScene *scene){
+    vector<Vertex> vertices;
     vector<unsigned int> indices;
     Material * mat;
 
     for(int i =0; i< mesh->mNumVertices; i++){
-        Vertex vertex; 
+        Vertex vertex{};
 
         vertex.Position.x = mesh->mVertices[i].x;
         vertex.Position.y = mesh->mVertices[i].y;
@@ -52,7 +55,7 @@ Mesh * Model::ProcessMesh(aiMesh * mesh, const aiScene *scene){
             vertex.TexCoords = vec2(0.0f);
         }
 
-        verts.push_back(vertex);
+        vertices.push_back(vertex);
     }
 
 
@@ -64,19 +67,19 @@ Mesh * Model::ProcessMesh(aiMesh * mesh, const aiScene *scene){
     }
 
     bool isMatLoaded = false;
-    for(int i = 0 ; i< _loadedMaterials.size(); i++ ){
-        if(_loadedMaterials[i].index  == mesh->mMaterialIndex) {
+    for(auto & _loadedMaterial : _loadedMaterials){
+        if(_loadedMaterial.index  == mesh->mMaterialIndex) {
             isMatLoaded = true; 
-            mat = _loadedMaterials[i].mat;
+            mat = _loadedMaterial.mat;
 
         }
     }
 
     if(mesh->mMaterialIndex >=0 && !isMatLoaded ){
         aiMaterial *material = scene->mMaterials[mesh->mMaterialIndex];
-        Texture * diffuse = NULL;
-        Texture * specular = NULL;
-        Texture * emissive = NULL;
+        Texture * diffuse = nullptr;
+        Texture * specular = nullptr;
+        Texture * emissive = nullptr;
         if(material->GetTextureCount(aiTextureType_DIFFUSE) > 0){
             aiString diffPath;
             material->GetTexture(aiTextureType_DIFFUSE, 0 , &diffPath);
@@ -96,19 +99,19 @@ Mesh * Model::ProcessMesh(aiMesh * mesh, const aiScene *scene){
         }
         mat = new Material(diffuse, specular, emissive, 10.0f);
 
-        _loadedMaterials.push_back(MatIndex(mat, mesh->mMaterialIndex));
+        _loadedMaterials.emplace_back(mat, mesh->mMaterialIndex);
     }
     
-    return new Mesh(verts,indices, mat);
+    return new Mesh(vertices, indices, mat);
 }
 
-void Model::Tick(float deltaTime){
+void smallsquare::Model::Tick(float deltaTime){
 }
 
 
 
 
-void Model::Draw(Viewport * viewport){
+void smallsquare::Model::Draw(Viewport * viewport){
 
     auto lightsources = game->FindObjectsOfType<Light*>();
 
@@ -140,36 +143,40 @@ void Model::Draw(Viewport * viewport){
     shader->setPointLightArray("pointlights", pls);
     shader->setSpotLightArray("spotlights",sls);
 
-    for(int i =0; i<meshes.size(); i++){
-        meshes[i]->Draw(shader);
+    for(auto & mesh : meshes){
+        mesh->Draw(shader);
     }
 
 }
 
-Mesh::Mesh(vector<Vertex> vertices, vector<unsigned int> indices, Material * material){
-    this->vertices = vertices;
-    this->indices = indices;
+smallsquare::Mesh::Mesh(vector<Vertex> vertices, vector<unsigned int> indices, Material * material){
+    VAO =0;
+    VBO =0;
+    EBO =0;
+
+    this->vertices = std::move(vertices);
+    this->indices = std::move(indices);
     this->material = material;
 
     SetupMesh();
 }
 
 
-void Mesh::SetupMesh(){
-    glGenVertexArrays(1,&_VAO);
-    glGenBuffers(1,&_VBO);
-    glGenBuffers(1,&_EBO);
+void smallsquare::Mesh::SetupMesh(){
+    glGenVertexArrays(1,&VAO);
+    glGenBuffers(1,&VBO);
+    glGenBuffers(1,&EBO);
 
-    glBindVertexArray(_VAO);
-    glBindBuffer(GL_ARRAY_BUFFER, _VBO);
+    glBindVertexArray(VAO);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
 
     glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), &vertices[0], GL_STATIC_DRAW);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _EBO);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), &indices[0], GL_STATIC_DRAW);
 
 
     glEnableVertexAttribArray(0);	
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)nullptr);
     glEnableVertexAttribArray(1);	
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Normal));
     glEnableVertexAttribArray(2);	
@@ -182,11 +189,11 @@ void Mesh::SetupMesh(){
     glBindVertexArray(0);
 }
 
-void Mesh::Draw(Shader * shader){
+void smallsquare::Mesh::Draw(Shader * shader) const {
     shader->use();
     shader->setMaterial("material", material);
 
-    glBindVertexArray(_VAO);
-    glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
+    glBindVertexArray(VAO);
+    glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, nullptr);
     glBindVertexArray(0);
 }

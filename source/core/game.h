@@ -1,9 +1,13 @@
+//
+// Created by Mathieu Monfort
+// Date : 4/2/21.
+//
+
 #ifndef GAME_H
 #define GAME_H
 
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
-
 
 #include <list>
 #include <iostream>
@@ -145,7 +149,7 @@ namespace smallsquare{
     };
 
 
-};
+}
 
 
 #endif

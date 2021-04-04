@@ -1,5 +1,6 @@
 //
-// Created by mmonfort on 4/2/21.
+// Created by Mathieu Monfort
+// Date : 4/2/21.
 //
 
 #ifndef SMALLSQUARE_INPUT_H
@@ -12,6 +13,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#include <utility>
 #include <vector>
 #include <string>
 #include <iostream>
@@ -29,7 +31,7 @@ namespace  smallsquare {
     public:
         Action(const int key,string  id) {
             this->key = key;
-            this->id = id;
+            this->id = std::move(id);
         }
     };
 
@@ -40,14 +42,15 @@ namespace  smallsquare {
         static float mlasty;
         static float mxoffset;
         static float myoffset;
+        static float sensitivity;
         static bool firstmouse;
 
     public:
-        Input(GLFWwindow * win );
+        explicit Input(GLFWwindow * win );
         static void MouseMoveCallback(GLFWwindow * win, double xpos, double ypos);
         bool KeyPressed(const string &name);
-        vec2 MouseOffset();
-        void Process();
+        static vec2 MouseOffset();
+        static void Process();
         void AddInput( int key, string id);
 
 

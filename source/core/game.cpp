@@ -1,3 +1,8 @@
+//
+// Created by Mathieu Monfort
+// Date : 4/2/21.
+//
+
 #include <game.h>
 
 #pragma region Game
@@ -15,7 +20,14 @@ smallsquare::Game::Game(int Width, int Height){
     }
 
     glfwMakeContextCurrent(_win);
+
+#ifndef CURSORDEBUG
+    glfwSetInputMode(_win, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+#endif
+#ifdef CURSORDEBUG
     glfwSetInputMode(_win, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+#endif
+
     glfwSetCursorPosCallback(_win, Input::MouseMoveCallback);
 
 
@@ -62,7 +74,7 @@ void smallsquare::Game::GameLoop()
 
         Tick();
 
-        input->Process();
+        smallsquare::Input::Process();
         glfwSwapBuffers(_win);
         glfwPollEvents();
     }

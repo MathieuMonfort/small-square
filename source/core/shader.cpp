@@ -1,8 +1,11 @@
+//
+// Created by Mathieu Monfort
+// Date : 4/2/21.
+//
 #include <shader.h>
-using namespace smallsquare;
 
 
-Shader::Shader(const char * vertexPath, const char* fragmentPath){
+smallsquare::Shader::Shader(const char * vertexPath, const char* fragmentPath){
     string vertexCode;
     string fragmentCode;
     ifstream vShaderFile;
@@ -26,7 +29,7 @@ Shader::Shader(const char * vertexPath, const char* fragmentPath){
         vertexCode = vShaderStream.str();
         fragmentCode = fShaderStream.str();
     }catch(ifstream::failure& e){
-        cout<< "ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ" << endl;
+        cout<< "ERROR::SHADER::FILE_NOT_SUCCESSFULLY_READ" << endl;
     }
     const char* vShaderCode = vertexCode.c_str();
     const char* fShaderCode = fragmentCode.c_str();
@@ -39,25 +42,25 @@ Shader::Shader(const char * vertexPath, const char* fragmentPath){
 
 
     vertex = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(vertex, 1, &vShaderCode, NULL);
+    glShaderSource(vertex, 1, &vShaderCode, nullptr);
     glCompileShader(vertex);
 
     glGetShaderiv(vertex, GL_COMPILE_STATUS, &success);
     if(!success){
-        glGetShaderInfoLog(vertex, 512, NULL, infoLog);
+        glGetShaderInfoLog(vertex, 512, nullptr, infoLog);
         std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::
         endl;
     }
     
     fragment = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fragment, 1, &fShaderCode, NULL);
+    glShaderSource(fragment, 1, &fShaderCode, nullptr);
     glCompileShader(fragment);
 
     glGetShaderiv(fragment, GL_COMPILE_STATUS, &success);
     if(!success){
-        glGetShaderInfoLog(fragment, 512, NULL, infoLog);
+        glGetShaderInfoLog(fragment, 512, nullptr, infoLog);
         std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << endl;
-    };
+    }
     
     // shader Program
     program = glCreateProgram();
@@ -68,51 +71,51 @@ Shader::Shader(const char * vertexPath, const char* fragmentPath){
 
     glGetProgramiv(program, GL_LINK_STATUS, &success);
     if(!success){
-        glGetProgramInfoLog(program, 512, NULL, infoLog);
+        glGetProgramInfoLog(program, 512, nullptr, infoLog);
         std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
     }
-    // delete the shaders as they’re linked into our program now and no longer necessery
+    // delete the shaders as they’re linked into our program now and no longer necessary
     glDeleteShader(vertex);
     glDeleteShader(fragment);
 }
 
-void Shader::use(){
+void smallsquare::Shader::use()const{
     glUseProgram(program);
 }
 
-void Shader::setBool(const string &name, bool value) const{
+void smallsquare::Shader::setBool(const string &name, bool value) const{
     glUniform1i(glGetUniformLocation(program, name.c_str()), (int)value);
 }
 
-void Shader::setInt(const string &name, int value) const{
+void smallsquare::Shader::setInt(const string &name, int value) const{
     glUniform1i(glGetUniformLocation(program, name.c_str()), value);
 }
 
-void Shader::setFloat(const string &name, float value) const{
+void smallsquare::Shader::setFloat(const string &name, float value) const{
     glUniform1f(glGetUniformLocation(program, name.c_str()), value);
 }
 
-void Shader::setVec2(const string &name, const vec2 &value) const{ 
+void smallsquare::Shader::setVec2(const string &name, const vec2 &value) const{
     glUniform2fv(glGetUniformLocation(program, name.c_str()), 1, &value[0]); 
 }
 
-void Shader::setVec3(const string &name, const vec3 &value) const{ 
+void smallsquare::Shader::setVec3(const string &name, const vec3 &value) const{
     glUniform3fv(glGetUniformLocation(program, name.c_str()), 1, &value[0]); 
 }
 
-void Shader::setVec4(const string &name, const vec4 &value) const{ 
+void smallsquare::Shader::setVec4(const string &name, const vec4 &value) const{
     glUniform4fv(glGetUniformLocation(program, name.c_str()), 1, &value[0]); 
 }
 
-void Shader::setMat2(const string &name, const mat2 &value) const{
+void smallsquare::Shader::setMat2(const string &name, const mat2 &value) const{
     glUniformMatrix2fv(  glGetUniformLocation(program,name.c_str() ) , 1 ,GL_FALSE, &value[0][0] );
 }
 
-void Shader::setMat3(const string &name, const mat3 &value) const{
+void smallsquare::Shader::setMat3(const string &name, const mat3 &value) const{
     glUniformMatrix3fv(  glGetUniformLocation(program,name.c_str() ) , 1 ,GL_FALSE, &value[0][0] );
 }
 
-void Shader::setMat4(const string &name, const mat4 &value) const{
+void smallsquare::Shader::setMat4(const string &name, const mat4 &value) const{
     glUniformMatrix4fv(  glGetUniformLocation(program,name.c_str() ) , 1 ,GL_FALSE, &value[0][0] );
 }
 
@@ -120,7 +123,7 @@ void Shader::setMat4(const string &name, const mat4 &value) const{
 #pragma region Mat&Light
 
 
-void Shader::setMaterial(const string &name, Material  *value) const{
+void smallsquare::Shader::setMaterial(const string &name, Material  *value) const{
     setInt(name + ".diffuse",0);
     setInt(name + ".specular",1);
     setInt(name + ".emission",2);
@@ -139,7 +142,7 @@ void Shader::setMaterial(const string &name, Material  *value) const{
     
 }
 
-void Shader::setDirLightArray(const string &name, vector<DirectionLight *>value) const{
+void smallsquare::Shader::setDirLightArray(const string &name, vector<DirectionLight *>value) const{
 
     for(int i =0; i< value.size() ; i++){
         setVec3(name + "[" + to_string(i) + "].direction", value[i]->GetGlobalFront() );
@@ -152,7 +155,7 @@ void Shader::setDirLightArray(const string &name, vector<DirectionLight *>value)
 }
 
 
-void Shader::setPointLightArray(const string &name,vector<PointLight *>value) const{
+void smallsquare::Shader::setPointLightArray(const string &name,vector<PointLight *>value) const{
     
 
     for(int i =0; i< value.size() ; i++){
@@ -170,7 +173,7 @@ void Shader::setPointLightArray(const string &name,vector<PointLight *>value) co
 
 }
 
-void Shader::setSpotLightArray(const string &name, vector<SpotLight *>value) const{
+void smallsquare::Shader::setSpotLightArray(const string &name, vector<SpotLight *>value) const{
 
     for(int i =0; i< value.size() ; i++){
 

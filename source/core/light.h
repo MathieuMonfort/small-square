@@ -1,3 +1,8 @@
+//
+// Created by Mathieu Monfort
+// Date : 4/2/21.
+//
+
 #ifndef LIGHT_H
 #define LIGHT_H
 
@@ -6,9 +11,9 @@
 namespace smallsquare{
     class Light : public GameObject{
     public:
-        vec3 ambient; 
-        vec3 diffuse;
-        vec3 specular;
+        vec3 ambient = vec3(0.0f);
+        vec3 diffuse = vec3(0.0f);
+        vec3 specular = vec3(0.0f);
 
 
         Light(vec3 position , vec3 euler, vec3 ambient, vec3 diffuse, vec3 specular ) : GameObject(position, euler, vec3(0.0f)){
@@ -70,7 +75,7 @@ namespace smallsquare{
     };
 
 
-};
+}
 
 
 #endif

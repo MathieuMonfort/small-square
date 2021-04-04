@@ -1,5 +1,6 @@
 //
-// Created by mmonfort on 4/2/21.
+// Created by Mathieu Monfort
+// Date : 4/2/21.
 //
 
 #ifndef SMALLSQUARE_CAMERA_CONTROLLER_H

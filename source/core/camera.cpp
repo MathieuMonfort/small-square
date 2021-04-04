@@ -1,3 +1,7 @@
+//
+// Created by Mathieu Monfort
+// Date : 4/2/21.
+//
 #include <camera.h>
 
 
@@ -33,42 +37,3 @@ mat4 smallsquare::Camera::GetView() const {
 mat4 smallsquare::Camera::GetInvertedView() const {
     return inverse(GetView());
 }
-
-/*
-smallsquare::Basic_Flight_Controller::Basic_Flight_Controller(Camera * cam, float MoveSpeed, float RotateSpeed){
-    this->cam = cam;
-    this->MoveSpeed = MoveSpeed;
-    this->RotateSpeed = RotateSpeed;
-}
-
-void smallsquare::Basic_Flight_Controller::Move(Direction dir, float deltaTime){
-    switch(dir){
-        case Direction::FORWARD: cam->position +=  MoveSpeed * deltaTime * cam->GetFront() ; break;
-        case Direction::BACK: cam->position -=  MoveSpeed * deltaTime * cam->GetFront() ;  break;
-        case Direction::LEFT: cam->position +=  MoveSpeed * deltaTime * cam->GetRight() ;  break;
-        case Direction::RIGHT: cam->position -=  MoveSpeed * deltaTime * cam->GetRight() ; break;
-        case Direction::UP: cam->position +=  MoveSpeed * deltaTime * cam->GetUp() ; break;
-        case Direction::DOWN: cam->position -=  MoveSpeed * deltaTime * cam->GetUp() ; break;
-    }
-}
-
-void smallsquare::Basic_Flight_Controller::Rotate(Rotation rot, float deltaTime){
-    switch(rot){
-        case Rotation::PITCHUP: cam->rotation = rotate(cam->rotation, RotateSpeed * deltaTime, cam->GetRight()); break;
-        case Rotation::PITCHDOWN: cam->rotation = rotate(cam->rotation, - RotateSpeed * deltaTime, cam->GetRight()); break;
-        case Rotation::YAWLEFT: cam->rotation = rotate(cam->rotation, - RotateSpeed * deltaTime, cam->GetUp()); break;
-        case Rotation::YAWRIGHT: cam->rotation = rotate(cam->rotation,  RotateSpeed * deltaTime, cam->GetUp()); break;
-        case Rotation::ROLLANTICWISE: cam->rotation = rotate(cam->rotation, RotateSpeed * deltaTime, cam->GetFront()); break;
-        case Rotation::ROLLCWISE: cam->rotation = rotate(cam->rotation, - RotateSpeed * deltaTime, cam->GetFront()); break;
-    }
-}
-
-void smallsquare::Basic_Flight_Controller::Rotate(Direction dir, float offset)
-{
-    switch(dir){
-        case Direction::FORWARD: cam->rotation = rotate(cam->rotation, offset, cam->GetFront()); break;
-        case Direction::RIGHT: cam->rotation = rotate(cam->rotation, offset, cam->GetRight()); break;
-        case Direction::UP: cam->rotation = rotate(cam->rotation, offset, cam->GetUp()); break; 
-    }
-}
-*/

@@ -1,5 +1,8 @@
+//
+// Created by Mathieu Monfort
+// Date : 4/2/21.
+//
 #include <texture.h>
-using namespace smallsquare;
 
 #ifndef STB_IMAGE_IMPLEMENTATION
 #define STB_IMAGE_IMPLEMENTATION
@@ -8,7 +11,7 @@ using namespace smallsquare;
 
 
 
-Texture::Texture(string path){
+smallsquare::Texture::Texture(const string& path){
 
     glGenTextures(1,&ID);
     glBindTexture(GL_TEXTURE_2D,ID);
@@ -41,8 +44,7 @@ Texture::Texture(string path){
     stbi_image_free(data);
 }
 
-void Texture::BindToProcessor(GLenum proc)
-{
+void smallsquare::Texture::BindToProcessor(GLenum proc) const{
     glActiveTexture(proc);
     glBindTexture(GL_TEXTURE_2D,ID); 
 }

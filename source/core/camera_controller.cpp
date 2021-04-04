@@ -1,5 +1,6 @@
 //
-// Created by mmonfort on 4/2/21.
+// Created by Mathieu Monfort
+// Date : 4/2/21.
 //
 
 #include "camera_controller.h"
@@ -33,8 +34,8 @@ void smallsquare::FlightCamCon::Tick(float deltaTime){
         position -= MoveSpeed * deltaTime * GetLocalUp();
     }
 
-    rotation = rotate(rotation,game->input->MouseOffset().x,  GetLocalUp());
-    rotation = rotate(rotation,game->input->MouseOffset().y,  GetLocalRight());
+    rotation = rotate(rotation,smallsquare::Input::MouseOffset().x,  GetLocalUp());
+    rotation = rotate(rotation,smallsquare::Input::MouseOffset().y,  GetLocalRight());
 
 
 }
