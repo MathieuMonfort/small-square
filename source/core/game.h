@@ -59,7 +59,7 @@ namespace smallsquare{
         }
 
         virtual void CheckIntegrity(){
-
+            cout<< "OBJECT : " << name << " : OK";
         }
     };
 
