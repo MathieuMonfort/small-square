@@ -8,7 +8,11 @@ To build small-square libraries you need to download a bunch of external librari
 
 fedora
     
-    sudo dnf install g++ cmake glm-devel
+    sudo dnf install git g++ cmake glm-devel libX11-devel
+
+debian
+    
+    sudo apt-get install git g++ cmake xorg-dev libglm-dev 
 
 ####GLFW3
 glfw3 is a common OpenGL library, you need to build it from source. 
@@ -30,19 +34,23 @@ setup this way:
 
     Language : c/c++
     Specification : OpenGL
+    Profile : core
     API : gl : Version 3.3
     Check "Generate a Loader"
 
 Generate & download given .zip
-Copy the content of the include directory into your /usr/include directory (you probably need super user privileges).
+Copy the content of the include directory into your 
+
+    /usr/include 
+
+directory (you probably need super user privileges).
 
 ####Assimp
 Assimp is the Open Asset Import Library (Manages 3d models imports).
 clone the source from https://github.com/assimp/assimp
 Build with (when in assimp directory):
 
-    mkdir build
-    cd build
+    kdir build   cd build
     cmake ../ -DBUILD_SHARED_LIBS=ON -DASSIMP_BUILD_ZLIB=ON
     make 
     sudo make install
