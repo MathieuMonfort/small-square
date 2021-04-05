@@ -20,7 +20,7 @@ add_library(smallsquare_core
 
 find_package(OpenGL REQUIRED)
 find_package(glfw3 3.3 REQUIRED)
-find_package(Assimp REQUIRED)
+find_package(assimp REQUIRED)
 find_package(ZLIB REQUIRED)
 
 
