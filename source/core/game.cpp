@@ -182,7 +182,10 @@ vec3 smallsquare::GameObject::GetGlobalUp(){
     return vec3(inv[1][0], inv[1][1], inv[1][2]);
 }
 mat4 smallsquare::GameObject::GetGlobalMatrix(){
+    mat4 lmat = GetLocalMatrix();
     if(!game->GetParent(this)) {return GetLocalMatrix();}
+
+    mat4 pmat = game->GetParent(this)->GetGlobalMatrix();
     return  game->GetParent(this)->GetGlobalMatrix() *  GetLocalMatrix();
 }
 mat4 smallsquare::GameObject::GetGlobalRotation(){

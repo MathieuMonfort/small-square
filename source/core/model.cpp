@@ -116,7 +116,7 @@ void smallsquare::Model::Draw(Viewport * viewport){
     auto lightsources = game->FindObjectsOfType<Light*>();
 
     shader->use();
-
+    DEBUG::Log( GetGlobalMatrix(),"ModelMatrix");
     shader->setMat4("model",GetGlobalMatrix());
     shader->setMat4("view", viewport->GetViewMatrix());
     shader->setMat4("projection", viewport->GetProjectionMatrix());
