@@ -23,7 +23,7 @@ namespace smallsquare {
         void CheckIntegrity() override;
 
 
-        virtual void OnCollision(ColliderObject collider){}
+        virtual void OnCollision(ColliderObject *collider){}
     };
 }
 
