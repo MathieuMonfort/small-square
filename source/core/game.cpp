@@ -21,10 +21,10 @@ smallsquare::Game::Game(int Width, int Height){
 
     glfwMakeContextCurrent(_win);
 
-#ifndef CURSORDEBUG
+#ifndef CURSOR_DEBUG
     glfwSetInputMode(_win, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 #endif
-#ifdef CURSORDEBUG
+#ifdef CURSOR_DEBUG
     glfwSetInputMode(_win, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 #endif
 

@@ -1,8 +1,8 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.17)
 project(smallsquare)
 
 set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DCURSORDEBUG")
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DCURSOR_DEBUG")
 
 add_subdirectory(include)
 
