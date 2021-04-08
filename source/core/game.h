@@ -35,6 +35,8 @@ namespace smallsquare{
         mat4 rotation= mat4(0.0f);
         vec3 oscale = vec3(0.0f) ;
         string name;
+        bool active = true;
+
 
         GameObject(vec3 position, vec3 euler, vec3 oscale , const string& name = "GameObject");
 
@@ -62,6 +64,7 @@ namespace smallsquare{
             cout<< "OBJECT : " << name << " : OK";
         }
 
+        bool IsActive();
     };
 
     class Origin : public GameObject{
@@ -77,7 +80,7 @@ namespace smallsquare{
 
     class DrawableObject : public GameObject {
     public:
-        bool Visible = true;
+        bool visible = true;
         DrawableObject(vec3 position, vec3 euler, vec3 oscale, const string& name = "DrawableObject" ) : GameObject(position, euler, oscale, name) {}
         virtual void Draw(Viewport * viewport) {}
     };

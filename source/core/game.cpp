@@ -84,7 +84,9 @@ void smallsquare::Game::Tick(){
     auto object_list = _object_tree.flatten();
     for(auto & i : object_list){
         decltype(i) obj = i;
-        obj->Tick(deltaTime);
+        if(obj->IsActive()) {
+            obj->Tick(deltaTime);
+        }
     }
 
     auto drawables = FindObjectsOfType<DrawableObject *>();
@@ -123,7 +125,9 @@ void smallsquare::Viewport::Draw(vector<DrawableObject *> drawables){
 
     for(auto & i : drawables){
         decltype(i) obj = i;
-        obj->Draw(this);
+        if(obj->visible && obj->IsActive()) {
+            obj->Draw(this);
+        }
     } 
 }
 
@@ -190,6 +194,12 @@ vec3 smallsquare::GameObject::GetGlobalPosition(){
 vec3 smallsquare::GameObject::GetGlobalScale(){
     if(!game->GetParent(this)) {return oscale;}
     return game->GetParent(this)->GetGlobalScale() * oscale;
+}
+
+bool smallsquare::GameObject::IsActive() {
+    if(!game->GetParent(this)) {return active;}
+    if(game->GetParent(this)->IsActive()) {return active;}
+    return false;
 }
 
 

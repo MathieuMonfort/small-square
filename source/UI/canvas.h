@@ -12,6 +12,9 @@
 namespace  smallsquare {
     class Canvas : public GameObject{
 
+    public:
+
+        Canvas(vec3 position, vec3 euler, vec2 oscale, const string& name = "Canvas" ): GameObject( position , euler, vec3(oscale,0.0f ), name ){}
     };
 }
 
