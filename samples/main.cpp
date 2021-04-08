@@ -8,12 +8,11 @@
 #include <iostream>
 #include <filesystem> 
 
-#include <unistd.h>
-#include <stdio.h>
-#include <limits.h>
 
 #include <model.h>
 #include <debug.h>
+
+#include <canvas.h>
 
 #include <camera_controller.h>
 #define M_SPEED 2.5f

@@ -1,4 +1,4 @@
 add_executable(sample main.cpp)
 
 
-target_link_libraries(sample PRIVATE smallsquare_core)
+target_link_libraries(sample PRIVATE smallsquare_core smallsquare_ui)

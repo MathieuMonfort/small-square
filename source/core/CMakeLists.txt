@@ -16,7 +16,7 @@ add_library(smallsquare_core
                 texture.cpp
                 camera.cpp
         camera_controller.cpp camera_controller.h
-        input.cpp input.h)
+        input.cpp input.h ../UI/canvas.cpp ../UI/canvas.h)
 
 find_package(OpenGL REQUIRED)
 find_package(glfw3 3.3 REQUIRED)
