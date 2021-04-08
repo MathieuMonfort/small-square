@@ -61,6 +61,7 @@ namespace smallsquare{
         virtual void CheckIntegrity(){
             cout<< "OBJECT : " << name << " : OK";
         }
+
     };
 
     class Origin : public GameObject{
@@ -76,7 +77,8 @@ namespace smallsquare{
 
     class DrawableObject : public GameObject {
     public:
-        DrawableObject(vec3 position, vec3 euler, vec3 oscale) : GameObject(position, euler, oscale) {}
+        bool Visible = true;
+        DrawableObject(vec3 position, vec3 euler, vec3 oscale, const string& name = "DrawableObject" ) : GameObject(position, euler, oscale, name) {}
         virtual void Draw(Viewport * viewport) {}
     };
 
