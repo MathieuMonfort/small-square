@@ -34,6 +34,9 @@ namespace smallsquare {
         static vector<float> vertices;
 
     public:
+        float alpha = 1.0f;
+
+
         Canvas * canvas = nullptr;
         HorizontalAnchor HAnchor;
         VerticalAnchor VAnchor;
@@ -60,6 +63,10 @@ namespace smallsquare {
         }
 
         void CheckIntegrity() override;
+        void Tick(float deltaTime) override{
+
+        }
+
         void Draw(Viewport * viewport) override;
 
 

@@ -1,5 +1,8 @@
 #include <model.h>
 #include <camera_controller.h>
+
+#include <ui_element.h>
+#include <canvas.h>
 #include "config.h"
 
 
@@ -23,21 +26,57 @@ public :
 };
 
 
+class MyGame : public Game{
+public:
+    MyGame() : Game(){
+
+
+
+    }
+
+    void Tick() override{
+        Game::Tick();
+
+
+
+
+
+    }
+
+};
+
+
+
+
+
 
 
 
 int main(int argc, char * argv[]){
 
-    auto game = new Game();
+    auto game = new MyGame();
     auto cam = new Camera(vec3 (0.0f), vec3(0.0f));
     game->AddViewPort(cam);
 
     
+
     string resFold = RESOURCE_FOLDER;
+
     auto PhongShader = new Shader((resFold +  "/shaders/basic_phong.vert").c_str(), (resFold + "/shaders/basic_phong.frag").c_str());
     auto SolidShader = new Shader((resFold +  "/shaders/solid.vert").c_str(),(resFold +  "/shaders/solid.frag").c_str());
+    auto UIShader = new Shader((resFold +  "/shaders/basic_ui.vert").c_str(),(resFold +  "/shaders/basic_ui.frag").c_str());
+
+    auto ui_texture = new Texture((resFold +  "/textures/UI_Element.png"));
+
+
+
+    auto ui_element = new UIElement(vec2(0.0f,0.0f), 0.0f,vec2(0.2f) ,UIShader , ui_texture);
+    auto canvas = new FixedCanvas();
+
+
     auto pl = new PointLight(vec3(-3.0f),vec3(0.0f), vec3(0.1f), vec3(0.6f),vec3(1.0f),1.0f,0.09f,0.032f);
-    
+
+
     auto backpack = new Model(vec3(0.0f , 0.0f  , 2.0f),vec3(0.0f),vec3(0.3f),resFold + "/models/Backpack/backpack.obj",PhongShader);
 
     auto all_axes = new Model(vec3(0.0f, 0.0f, 0.0f), vec3(0.0f), vec3(0.2f), resFold + "/models/Axes/all-axes.obj", SolidShader);
@@ -47,6 +86,8 @@ int main(int argc, char * argv[]){
     game->Instanciate(all_axes);
     game->Instanciate(fcc);
 
+    game->Instanciate(canvas);
+    //game->Instanciate(ui_element,canvas);
 
     game->Instanciate(backpack);
 

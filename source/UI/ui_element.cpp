@@ -50,6 +50,14 @@ void smallsquare::UIElement::SetupMesh() {
 
 void smallsquare::UIElement::Draw(Viewport *viewport) {
     shader->use();
+    shader->setFloat("alpha", alpha);
+
+    shader->setInt("texture_ui", 0);
+    shader->setMat4("model", GetGlobalMatrix());
+    shader->setMat4("view", canvas->GetViewMatrix(viewport));
+    shader->setMat4("projection", canvas->GetProjectionMatrix(viewport));
+
+    background->BindToProcessor(GL_TEXTURE0);
 
     glBindVertexArray(VAO);
     glDrawArrays(GL_TRIANGLES, 0, 6);

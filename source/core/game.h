@@ -60,9 +60,7 @@ namespace smallsquare{
         virtual void Tick(float deltaTime){
         }
 
-        virtual void CheckIntegrity(){
-            cout<< "OBJECT : " << name << " : OK";
-        }
+        virtual void CheckIntegrity(){}
 
         bool IsActive();
     };
@@ -93,7 +91,6 @@ namespace smallsquare{
         float lastFrame = 0.0f;
         tree<GameObject*> _object_tree = tree<GameObject *>(new Origin());
         GLFWwindow * _win;
-        void Tick();
 
 
     public:
@@ -104,6 +101,7 @@ namespace smallsquare{
         explicit Game(int Width = 1920, int Height = 1080);
         Viewport * AddViewPort(Camera * cam, float x = 0, float y = 0, float w =1, float h =1);
         GameObject * Instanciate(GameObject * object, GameObject * parent = nullptr);
+        virtual void Tick();
         void GameLoop();
 
 

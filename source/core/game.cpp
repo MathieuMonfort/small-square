@@ -85,6 +85,13 @@ void smallsquare::Game::Tick(){
     for(auto & i : object_list){
         decltype(i) obj = i;
         if(obj->IsActive()) {
+            obj->CheckIntegrity();
+        }
+    }
+
+    for(auto & i : object_list){
+        decltype(i) obj = i;
+        if(obj->IsActive()) {
             obj->Tick(deltaTime);
         }
     }

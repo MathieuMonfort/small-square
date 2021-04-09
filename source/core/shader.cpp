@@ -132,7 +132,7 @@ void smallsquare::Shader::setMaterial(const string &name, Material  *value) cons
     if(value->diffuse){ value->diffuse->BindToProcessor(GL_TEXTURE0);}
     if(value->specular){ value->specular->BindToProcessor(GL_TEXTURE1);}
     
-    if(value->emission){ 
+    if(value->emission){
         value->emission->BindToProcessor(GL_TEXTURE2); 
         setBool(name + ".emissive", true);
     }
