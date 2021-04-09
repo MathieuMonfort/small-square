@@ -32,7 +32,7 @@ namespace smallsquare{
         vector<Mesh *> meshes;
         Shader * shader;
     
-        Model(vec3 position, vec3 euler, vec3 uscale,string path, Shader * shader) : DrawableObject(position,euler,uscale) {
+        Model(vec3 position, vec3 euler, vec3 uscale,string path, Shader * shader, const string & name = "Model") : DrawableObject(position,euler,uscale,name) {
             this->shader = shader;
             LoadModel(path);
         }

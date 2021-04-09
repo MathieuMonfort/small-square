@@ -30,6 +30,7 @@ namespace smallsquare{
 
     class GameObject{
     public:
+
         Game * game = nullptr;
         vec3 position = vec3(0.0f) ;
         mat4 rotation= mat4(0.0f);
@@ -109,6 +110,7 @@ namespace smallsquare{
         GameObject * GetChild(GameObject * object, int i);
         vector<GameObject *> GetChildren(GameObject * object);
         vector<GameObject *> GetPathTo(GameObject* object);
+
         template <class T> vector<T> FindObjectsOfType() {
             vector<GameObject *> object_list = _object_tree.flatten();
             vector<T> result;
@@ -122,6 +124,19 @@ namespace smallsquare{
                 }
             }
             return result;
+        }
+
+        template <class T> vector<T> FindObjects(const string & name){
+            vector<T> object_list = FindObjectsOfType<T>();
+            vector<T> res;
+
+            for(auto & i : object_list ){
+                if(((GameObject *) i)->name == name ){
+                    res.push_back(i);
+                }
+            }
+
+            return res;
         }
 
 

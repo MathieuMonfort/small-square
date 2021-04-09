@@ -10,26 +10,47 @@ using namespace std;
 using namespace glm;
 using namespace smallsquare;
 
-
-class A{
-public :
-    int x,y; 
-    A(int x, int y ){
-        this->x = x;
-        this->y = y;
-
-    }
-
-    void print(){
-        cout<< "(" <<  x << " ;" << y << " );" <<endl; 
-    }
-};
-
-
 class MyGame : public Game{
+private:
+
+
 public:
     MyGame() : Game(){
+        string resFold = RESOURCE_FOLDER;
 
+        //Cams & Viewports
+        auto cam = new Camera(vec3 (0.0f), vec3(0.0f));
+        AddViewPort(cam);
+
+
+        //Shaders
+        auto PhongShader = new Shader((resFold +  "/shaders/basic_phong.vert").c_str(), (resFold + "/shaders/basic_phong.frag").c_str());
+        auto SolidShader = new Shader((resFold +  "/shaders/solid.vert").c_str(),(resFold +  "/shaders/solid.frag").c_str());
+        auto UIShader = new Shader((resFold +  "/shaders/basic_ui.vert").c_str(),(resFold +  "/shaders/basic_ui.frag").c_str());
+
+
+        //UI Stuff
+        auto ui_texture = new Texture((resFold +  "/textures/UI_Element.png"));
+        auto canvas = Instanciate(new FixedCanvas());
+        auto ui_element =Instanciate(new UIElement(vec2(0.0f,0.0f), 0.0f,vec2(0.2f) ,UIShader , ui_texture),canvas);
+
+        //Lights
+        auto pl = Instanciate(new PointLight(vec3(-3.0f),vec3(0.0f), vec3(0.1f), vec3(0.6f),vec3(1.0f),1.0f,0.09f,0.032f));
+
+        //Models
+        auto backpack = Instanciate(new Model(vec3(0.0f , 0.0f  , 2.0f),vec3(0.0f),vec3(0.3f),resFold + "/models/Backpack/backpack.obj",PhongShader,"Back Pack" ));
+        auto all_axes = Instanciate(new Model(vec3(0.0f, 0.0f, 0.0f), vec3(0.0f), vec3(0.2f), resFold + "/models/Axes/all-axes.obj", SolidShader));
+
+
+
+        auto fcc = Instanciate(new FlightCamCon(vec3(0.0f, 0.0f,-5.0f ), vec3(0.0f),cam));
+
+        input->AddInput( GLFW_KEY_A, "Move_Left");
+        input->AddInput( GLFW_KEY_D, "Move_Right");
+        input->AddInput( GLFW_KEY_W, "Move_Forward");
+        input->AddInput( GLFW_KEY_S, "Move_Back");
+        input->AddInput( GLFW_KEY_SPACE, "Move_Up");
+        input->AddInput( GLFW_KEY_C, "Move_Down");
 
 
     }
@@ -37,8 +58,8 @@ public:
     void Tick() override{
         Game::Tick();
 
-
-
+        auto backpack = FindObjects<Model *>("Back Pack")[0];
+        backpack->position += vec3(1.0f,0.0f,0.0f);
 
 
     }
@@ -55,68 +76,8 @@ public:
 int main(int argc, char * argv[]){
 
     auto game = new MyGame();
-    auto cam = new Camera(vec3 (0.0f), vec3(0.0f));
-    game->AddViewPort(cam);
-
-    
-
-    string resFold = RESOURCE_FOLDER;
-
-    auto PhongShader = new Shader((resFold +  "/shaders/basic_phong.vert").c_str(), (resFold + "/shaders/basic_phong.frag").c_str());
-    auto SolidShader = new Shader((resFold +  "/shaders/solid.vert").c_str(),(resFold +  "/shaders/solid.frag").c_str());
-    auto UIShader = new Shader((resFold +  "/shaders/basic_ui.vert").c_str(),(resFold +  "/shaders/basic_ui.frag").c_str());
-
-    auto ui_texture = new Texture((resFold +  "/textures/UI_Element.png"));
-
-
-
-    auto ui_element = new UIElement(vec2(0.0f,0.0f), 0.0f,vec2(0.2f) ,UIShader , ui_texture);
-    auto canvas = new FixedCanvas();
-
-
-    auto pl = new PointLight(vec3(-3.0f),vec3(0.0f), vec3(0.1f), vec3(0.6f),vec3(1.0f),1.0f,0.09f,0.032f);
-
-
-    auto backpack = new Model(vec3(0.0f , 0.0f  , 2.0f),vec3(0.0f),vec3(0.3f),resFold + "/models/Backpack/backpack.obj",PhongShader);
-
-    auto all_axes = new Model(vec3(0.0f, 0.0f, 0.0f), vec3(0.0f), vec3(0.2f), resFold + "/models/Axes/all-axes.obj", SolidShader);
-    auto fcc = new FlightCamCon(vec3(0.0f, 0.0f,-5.0f ), vec3(0.0f),cam);
-
-    game->Instanciate(pl);
-    game->Instanciate(all_axes);
-    game->Instanciate(fcc);
-
-    game->Instanciate(canvas);
-    //game->Instanciate(ui_element,canvas);
-
-    game->Instanciate(backpack);
-
-    game->input->AddInput( GLFW_KEY_A, "Move_Left");
-    game->input->AddInput( GLFW_KEY_D, "Move_Right");
-    game->input->AddInput( GLFW_KEY_W, "Move_Forward");
-    game->input->AddInput( GLFW_KEY_S, "Move_Back");
-    game->input->AddInput( GLFW_KEY_SPACE, "Move_Up");
-    game->input->AddInput( GLFW_KEY_C, "Move_Down");
-
-
     game->GameLoop();
 
-
-    /*
-    if( glfwGetKey(_win, GLFW_KEY_ESCAPE) == GLFW_PRESS){glfwSetWindowShouldClose(_win, true);}
-    if( glfwGetKey(_win, GLFW_KEY_KP_4) == GLFW_PRESS) {bfc->Rotate(YAWLEFT, 0.01f);}
-    if( glfwGetKey(_win, GLFW_KEY_KP_6) == GLFW_PRESS) {bfc->Rotate(YAWRIGHT, 0.01f);}
-    if( glfwGetKey(_win, GLFW_KEY_KP_8) == GLFW_PRESS) {bfc->Rotate(PITCHDOWN, 0.01f);}
-    if( glfwGetKey(_win, GLFW_KEY_KP_2) == GLFW_PRESS) {bfc->Rotate(PITCHUP, 0.01f);}
-    if( glfwGetKey(_win, GLFW_KEY_Q) == GLFW_PRESS) {bfc->Rotate(ROLLANTICWISE, 0.01f);}
-    if( glfwGetKey(_win, GLFW_KEY_E) == GLFW_PRESS) {bfc->Rotate(ROLLCWISE, 0.01f);}
-    if( glfwGetKey(_win, GLFW_KEY_W) == GLFW_PRESS) {bfc->Move(FORWARD,0.1f);}
-    if( glfwGetKey(_win, GLFW_KEY_S) == GLFW_PRESS) {bfc->Move(BACK,0.1f);}
-    if( glfwGetKey(_win, GLFW_KEY_A) == GLFW_PRESS) {bfc->Move(LEFT,0.1f);}
-    if( glfwGetKey(_win, GLFW_KEY_D) == GLFW_PRESS) {bfc->Move(RIGHT, 0.1f);}
-    if( glfwGetKey(_win, GLFW_KEY_C) == GLFW_PRESS) {bfc->Move(DOWN, 0.1f);}
-    if( glfwGetKey(_win, GLFW_KEY_SPACE) == GLFW_PRESS) {bfc->Move(UP, 0.1f);}
-    */
 
 }
 

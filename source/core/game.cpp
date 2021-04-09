@@ -155,6 +155,7 @@ smallsquare::GameObject::GameObject(vec3 position, vec3 euler, vec3 oscale, cons
     rotation = rotate(rotation, euler.z, vec3(0.0f,0.0f,1.0f));
     this->position = position;
     this->oscale = oscale;
+    this->name = name;
 }
 
 vec3 smallsquare::GameObject::GetLocalFront(){
