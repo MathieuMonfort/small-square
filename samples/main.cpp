@@ -1,22 +1,7 @@
-#include "glad/glad.h"
-#include "GLFW/glfw3.h"
-
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
-
-#include <iostream>
-#include <filesystem> 
-
-
 #include <model.h>
-#include <debug.h>
-
-#include <canvas.h>
-
 #include <camera_controller.h>
-#define M_SPEED 2.5f
-#define R_SPEED 2.0f
+#include "config.h"
+
 
 using namespace std;
 using namespace glm;
@@ -43,25 +28,21 @@ public :
 
 int main(int argc, char * argv[]){
 
-    Game * game = new Game();
-    Camera * cam = new Camera(vec3 (0.0f), vec3(0.0f));
+    auto game = new Game();
+    auto cam = new Camera(vec3 (0.0f), vec3(0.0f));
     game->AddViewPort(cam);
 
     
-    string resFold = "/home/mmonfort/dev-space/small-square";
-    resFold += "/samples";
-    Shader * PhongShader = new Shader((resFold +  "/shaders/basic_phong.vert").c_str(), (resFold + "/shaders/basic_phong.frag").c_str());
-    Shader * SolidShader = new Shader((resFold +  "/shaders/solid.vert").c_str(),(resFold +  "/shaders/solid.frag").c_str());
-    PointLight * pl = new PointLight(vec3(-3.0f),vec3(0.0f), vec3(0.1f), vec3(0.6f),vec3(1.0f),1.0f,0.09f,0.032f);
+    string resFold = RESOURCE_FOLDER;
+    auto PhongShader = new Shader((resFold +  "/shaders/basic_phong.vert").c_str(), (resFold + "/shaders/basic_phong.frag").c_str());
+    auto SolidShader = new Shader((resFold +  "/shaders/solid.vert").c_str(),(resFold +  "/shaders/solid.frag").c_str());
+    auto pl = new PointLight(vec3(-3.0f),vec3(0.0f), vec3(0.1f), vec3(0.6f),vec3(1.0f),1.0f,0.09f,0.032f);
     
-    Model * backpack = new Model(vec3(0.0f , 0.0f  , 2.0f),vec3(0.0f),vec3(0.3f),resFold + "/models/Backpack/backpack.obj",PhongShader);
+    auto backpack = new Model(vec3(0.0f , 0.0f  , 2.0f),vec3(0.0f),vec3(0.3f),resFold + "/models/Backpack/backpack.obj",PhongShader);
 
+    auto all_axes = new Model(vec3(0.0f, 0.0f, 0.0f), vec3(0.0f), vec3(0.2f), resFold + "/models/Axes/all-axes.obj", SolidShader);
+    auto fcc = new FlightCamCon(vec3(0.0f, 0.0f,-5.0f ), vec3(0.0f),cam);
 
-
-    Model * all_axes = new Model(vec3(0.0f, 0.0f, 0.0f), vec3(0.0f), vec3(0.2f), resFold + "/models/Axes/all-axes.obj", SolidShader);
-
-
-    FlightCamCon * fcc = new FlightCamCon(vec3(0.0f, 0.0f,-5.0f ), vec3(0.0f),cam);
     game->Instanciate(pl);
     game->Instanciate(all_axes);
     game->Instanciate(fcc);

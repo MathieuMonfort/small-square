@@ -12,7 +12,6 @@
 #include <shader.h>
 
 class Canvas;
-
 enum VerticalAnchor{
     VA_TOP,
     VA_CENTER,

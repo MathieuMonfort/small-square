@@ -87,6 +87,7 @@ public:
     T ParentOf(T data){
         node<T> *  n = GetFirst(data); 
         if(!n) {return nullptr;}
+        if(!n->parent) {return nullptr;}
         return n->parent->data;
     }
 
