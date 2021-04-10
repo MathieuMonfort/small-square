@@ -172,7 +172,9 @@ vec3 smallsquare::GameObject::GetLocalUp(){
 }
 mat4 smallsquare::GameObject::GetLocalMatrix(){
     mat4 trans = translate(mat4(1.0f),position);
-    return trans * scale(rotation , oscale );
+    mat4 scalemat = scale(mat4(1.0f), oscale );
+
+    return scalemat * trans * rotation ;
 }
 
 vec3 smallsquare::GameObject::GetGlobalFront(){

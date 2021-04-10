@@ -119,7 +119,7 @@ void smallsquare::Model::Draw(Viewport * viewport){
 
     shader->use();
 
-    shader->setMat4("model",GetGlobalMatrix());
+    shader->setMat4("model",GetLocalMatrix());
     shader->setMat4("view", viewport->GetViewMatrix());
     shader->setMat4("projection", viewport->GetProjectionMatrix());
     shader->setVec3("viewPos", viewport->_cam->position );

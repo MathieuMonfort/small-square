@@ -3,7 +3,10 @@
 
 #include <ui_element.h>
 #include <canvas.h>
+#include <debug.h>
+
 #include "config.h"
+
 
 
 using namespace std;
@@ -35,10 +38,10 @@ public:
         auto ui_element =Instanciate(new UIElement(vec2(0.0f,0.0f), 0.0f,vec2(0.2f) ,UIShader , ui_texture),canvas);
 
         //Lights
-        auto pl = Instanciate(new PointLight(vec3(-3.0f),vec3(0.0f), vec3(0.1f), vec3(0.6f),vec3(1.0f),1.0f,0.09f,0.032f));
+        auto pl = Instanciate(new PointLight(vec3(-3.0f),vec3(0.0f), vec3(0.8f), vec3(2.f),vec3(3.0f),1.0f,0.09f,0.032f));
 
         //Models
-        auto backpack = Instanciate(new Model(vec3(0.0f , 0.0f  , 2.0f),vec3(0.0f),vec3(0.3f),resFold + "/models/Backpack/backpack.obj",PhongShader,"Back Pack" ));
+        auto backpack = Instanciate(new Model(vec3(0.0f , 0.0f  , 2.0f),vec3(0.0f),vec3(0.3f),resFold + "/models/Backpack/backpack.obj",SolidShader,"Back Pack" ));
         auto all_axes = Instanciate(new Model(vec3(0.0f, 0.0f, 0.0f), vec3(0.0f), vec3(0.2f), resFold + "/models/Axes/all-axes.obj", SolidShader));
 
 
@@ -56,20 +59,24 @@ public:
     }
 
     void Tick() override{
+        DEBUG::Clear();
         Game::Tick();
 
         auto backpack = FindObjects<Model *>("Back Pack")[0];
-        backpack->position += vec3(1.0f,0.0f,0.0f);
+        //backpack->position += vec3(0.1f,0.0f,0.0f);
 
+
+        backpack->rotation *= rotate(mat4(1.0f), radians(1.0f), vec3(0.0f,1.0f,0.0f) );
+
+        DEBUG::Log("Back Pack Position", backpack->position);
+        DEBUG::Log("Back Pack Scale", backpack->oscale);
+
+        DEBUG::Log("Back Pack Rotation", backpack->rotation);
+        DEBUG::Log("Back Pack Local Matrix", backpack->GetLocalMatrix());
 
     }
 
 };
-
-
-
-
-
 
 
 

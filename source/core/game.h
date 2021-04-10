@@ -29,12 +29,15 @@ namespace smallsquare{
 
 
     class GameObject{
-    public:
-
-        Game * game = nullptr;
+    private:
         vec3 position = vec3(0.0f) ;
         mat4 rotation= mat4(0.0f);
         vec3 oscale = vec3(0.0f) ;
+
+    public:
+
+        Game * game = nullptr;
+
         string name;
         bool active = true;
 
@@ -56,7 +59,7 @@ namespace smallsquare{
         virtual vec3 GetGlobalPosition();
         virtual vec3 GetGlobalScale();
 
-
+        void Rotate(float amount , vec3 direction );
 
         virtual void Tick(float deltaTime){
         }
