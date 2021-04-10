@@ -30,9 +30,9 @@ namespace smallsquare{
 
     class GameObject{
     private:
-        vec3 position = vec3(0.0f) ;
-        mat4 rotation= mat4(0.0f);
-        vec3 oscale = vec3(0.0f) ;
+        vec3 _position = vec3(0.0f) ;
+        mat4 _rotation= mat4(0.0f);
+        vec3 _scale = vec3(0.0f) ;
 
     public:
 
@@ -48,7 +48,11 @@ namespace smallsquare{
         virtual vec3 GetLocalFront();
         virtual vec3 GetLocalRight();
         virtual vec3 GetLocalUp();
+        virtual vec3 GetLocalPosition();
+        virtual vec3 GetLocalScale();
+        virtual mat4 GetLocalRotation();
         virtual mat4 GetLocalMatrix();
+
 
 
         virtual vec3 GetGlobalFront();
@@ -59,12 +63,14 @@ namespace smallsquare{
         virtual vec3 GetGlobalPosition();
         virtual vec3 GetGlobalScale();
 
-        void Rotate(float amount , vec3 direction );
-
-        virtual void Tick(float deltaTime){
-        }
-
+        virtual void Tick(float deltaTime){}
         virtual void CheckIntegrity(){}
+
+
+
+        void Rotate(float amount , vec3 direction );
+        void Translate(vec3 direction);
+        void Scale(vec3 newScale);
 
         bool IsActive();
     };

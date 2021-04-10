@@ -159,7 +159,7 @@ void smallsquare::Shader::setPointLightArray(const string &name,vector<PointLigh
     
 
     for(int i =0; i< value.size() ; i++){
-        setVec3(name + "[" + to_string(i) + "].position", value[i]->position );
+        setVec3(name + "[" + to_string(i) + "]._position", value[i]->GetGlobalPosition());
         setVec3(name + "[" + to_string(i) + "].ambient", value[i]->ambient );
         setVec3(name + "[" + to_string(i) + "].diffuse", value[i]->diffuse );
         setVec3(name + "[" + to_string(i) + "].specular", value[i]->specular );
@@ -177,9 +177,9 @@ void smallsquare::Shader::setSpotLightArray(const string &name, vector<SpotLight
 
     for(int i =0; i< value.size() ; i++){
 
-        string id = name + "[" + to_string(i) + "].position";
+        string id = name + "[" + to_string(i) + "]._position";
 
-        setVec3(name + "[" + to_string(i) + "].position", value[i]->position );
+        setVec3(name + "[" + to_string(i) + "]._position", value[i]->GetGlobalPosition());
         setVec3(name + "[" + to_string(i) + "].direction", value[i]->GetGlobalFront() );
         setVec3(name + "[" + to_string(i) + "].ambient", value[i]->ambient );
         setVec3(name + "[" + to_string(i) + "].diffuse", value[i]->diffuse );

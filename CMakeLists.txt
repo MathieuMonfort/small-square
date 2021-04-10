@@ -10,6 +10,9 @@ add_subdirectory(source/core)
 add_subdirectory(source/UI)
 
 
+#add_subdirectory(unit-tests)
+
+
 add_subdirectory(samples)
 
 

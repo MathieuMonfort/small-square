@@ -63,17 +63,8 @@ public:
         Game::Tick();
 
         auto backpack = FindObjects<Model *>("Back Pack")[0];
-        //backpack->position += vec3(0.1f,0.0f,0.0f);
 
-
-        backpack->rotation *= rotate(mat4(1.0f), radians(1.0f), vec3(0.0f,1.0f,0.0f) );
-
-        DEBUG::Log("Back Pack Position", backpack->position);
-        DEBUG::Log("Back Pack Scale", backpack->oscale);
-
-        DEBUG::Log("Back Pack Rotation", backpack->rotation);
-        DEBUG::Log("Back Pack Local Matrix", backpack->GetLocalMatrix());
-
+        backpack->Rotate(radians(1.0f), vec3(0.0f, 1.0f, 0.0f) );
     }
 
 };
