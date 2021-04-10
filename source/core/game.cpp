@@ -64,6 +64,12 @@ smallsquare::GameObject * smallsquare::Game::Instanciate(GameObject * object, Ga
 
 void smallsquare::Game::GameLoop()
 {
+    auto object_list = _object_tree.flatten();
+    for(auto & i : object_list){
+        decltype(i) obj = i;
+        obj->CheckIntegrity();
+    }
+
     while(!glfwWindowShouldClose(_win)){
         glClearColor(0.7f,0.7f,0.7f,1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
@@ -190,7 +196,10 @@ vec3 smallsquare::GameObject::GetGlobalUp(){
     return vec3(inv[1][0], inv[1][1], inv[1][2]);
 }
 mat4 smallsquare::GameObject::GetGlobalMatrix(){
+    mat4 lmat = GetLocalMatrix();
     if(!game->GetParent(this)) {return GetLocalMatrix();}
+
+    mat4 pmat = game->GetParent(this)->GetGlobalMatrix();
     return  game->GetParent(this)->GetGlobalMatrix() *  GetLocalMatrix();
 }
 mat4 smallsquare::GameObject::GetGlobalRotation(){

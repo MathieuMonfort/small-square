@@ -4,6 +4,7 @@
 //
 #include <game.h>
 #include <shader.h>
+#include <debug.h>
 
 #include <vector>
 #include <string>
