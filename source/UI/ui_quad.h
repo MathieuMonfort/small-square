@@ -4,8 +4,8 @@
 // In Project : smallsquare
 //
 
-#ifndef SMALLSQUARE_UI_ELEMENT_H
-#define SMALLSQUARE_UI_ELEMENT_H
+#ifndef SMALLSQUARE_UI_QUAD_H
+#define SMALLSQUARE_UI_QUAD_H
 
 #include <game.h>
 #include <canvas.h>
@@ -26,7 +26,7 @@ enum HorizontalAnchor{
 
 
 namespace smallsquare {
-    class UIElement : public DrawableObject{
+    class UIQuad : public UIElement{
     private :
         void SetupMesh();
         unsigned int VAO = 0;
@@ -35,23 +35,22 @@ namespace smallsquare {
 
     public:
         float alpha = 1.0f;
-
-
         Canvas * canvas = nullptr;
         HorizontalAnchor HAnchor;
         VerticalAnchor VAnchor;
         Shader * shader;
         Texture * background;
 
-        UIElement(vec2 position,
-                  float rotation,
-                  vec2 oscale,
-                  Shader * shader,
-                  Texture * background,
-                  const string &name = "UIElement",
-                  HorizontalAnchor HAnchor = HA_LEFT,
-                  VerticalAnchor VAnchor = VA_TOP )
-                        : DrawableObject(vec3(position,0.0f), vec3(0.0f,0.0f,rotation), vec3(oscale, 1.0f),name ){
+        UIQuad(vec2 position,
+               float rotation,
+               vec2 oscale,
+               Shader * shader,
+               Texture * background,
+               HorizontalAnchor HAnchor = HA_LEFT,
+               VerticalAnchor VAnchor = VA_TOP,
+               const string &name = "UIQuad"
+                  )
+                        : UIElement(vec3(position,0.0f), vec3(0.0f,0.0f,rotation), vec3(oscale, 0.0f),name ){
 
 
             this->HAnchor = HAnchor;
@@ -65,7 +64,10 @@ namespace smallsquare {
         void CheckIntegrity() override;
         void Tick(float deltaTime) override{
 
+
         }
+
+        mat4 GetLocalMatrix() override;
 
         void Draw(Viewport * viewport) override;
 
@@ -74,4 +76,4 @@ namespace smallsquare {
 
 }
 
-#endif //SMALLSQUARE_UI_ELEMENT_H
+#endif //SMALLSQUARE_UI_QUAD_H

@@ -67,7 +67,6 @@ namespace smallsquare{
         virtual void CheckIntegrity(){}
 
 
-
         void Rotate(float amount , vec3 direction );
         void Translate(vec3 direction);
         void Scale(vec3 newScale);
@@ -89,7 +88,7 @@ namespace smallsquare{
     class DrawableObject : public GameObject {
     public:
         bool visible = true;
-        DrawableObject(vec3 position, vec3 euler, vec3 oscale, const string& name = "DrawableObject" ) : GameObject(position, euler, oscale, name) {}
+        DrawableObject(vec3 position, vec3 euler, vec3 s, const string& name = "DrawableObject" ) : GameObject(position, euler, s, name) {}
         virtual void Draw(Viewport * viewport) {}
     };
 
@@ -97,10 +96,13 @@ namespace smallsquare{
 
     class Game{
     private:
-        float deltaTime = 0.0f;
+
         float lastFrame = 0.0f;
         tree<GameObject*> _object_tree = tree<GameObject *>(new Origin());
         GLFWwindow * _win;
+
+    protected:
+        float deltaTime = 0.0f;
 
 
     public:
@@ -174,7 +176,11 @@ namespace smallsquare{
         [[nodiscard]]
         mat4 GetProjectionMatrix() const;
         [[nodiscard]]
+        mat4 GetOrthoProjectionMatrix() const;
+        [[nodiscard]]
         mat4 GetViewMatrix() const;
+        [[nodiscard]]
+        float GetRatio() const;
 
         void Draw(vector<DrawableObject *> drawables);
     };

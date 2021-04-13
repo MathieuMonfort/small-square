@@ -116,6 +116,7 @@ public:
         insert(data, root);
         return 0;
     }
+
     vector<T> flatten(){
         return TraverseOrPushback(root);
     }

@@ -148,6 +148,17 @@ mat4 smallsquare::Viewport::GetProjectionMatrix() const{
     return perspective(radians(45.0f), (float)(_w*(float)_wWidth) /(_h*(float)_wHeight) ,0.1f,100.0f);
 }
 
+mat4 smallsquare::Viewport::GetOrthoProjectionMatrix() const{
+    const float ratio = GetRatio();
+    return ortho(-ratio ,ratio,-1.0f,1.0f);
+}
+
+float smallsquare::Viewport::GetRatio() const {
+    return ((float) (_w*(float) _wWidth)/ (_h*(float) _wHeight ));
+}
+
+
+
 mat4 smallsquare::Viewport::GetViewMatrix() const{
     return _cam->GetView();
 }
@@ -180,7 +191,7 @@ mat4 smallsquare::GameObject::GetLocalMatrix(){
     mat4 trans = translate(mat4(1.0f), _position);
     mat4 scalemat = scale(mat4(1.0f), _scale );
 
-    return scalemat * trans * _rotation ;
+    return trans * scalemat * _rotation ;
 }
 
 vec3 smallsquare::GameObject::GetLocalPosition() {

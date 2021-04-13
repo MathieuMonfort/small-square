@@ -9,18 +9,31 @@
 
 #include <game.h>
 
+
+
+
+
 namespace  smallsquare {
-    class Canvas : public GameObject{
-
+    class UIElement : public DrawableObject{
     public:
+        float ratio = 1.0f;
+        UIElement(vec3 position, vec3 euler, vec2 oscale, const string& name = "Canvas" ): DrawableObject( position , euler, vec3(oscale,0.0f ), name ){}
 
-        Canvas(vec3 position, vec3 euler, vec2 oscale, const string& name = "Canvas" ): GameObject( position , euler, vec3(oscale,0.0f ), name ){}
+    };
+
+
+    class Canvas : public UIElement{
+    public:
+        Canvas(vec3 position, vec3 euler, vec2 oscale, const string& name = "Canvas" ): UIElement( position , euler, vec3(oscale,0.0f ), name ){}
 
         virtual mat4 GetProjectionMatrix(Viewport * viewport){
             return viewport->GetProjectionMatrix();
         }
         virtual mat4 GetViewMatrix(Viewport * viewport){
             return viewport->GetViewMatrix();
+        }
+        void Draw(Viewport * viewport) override{
+            ratio = viewport->GetRatio();
         }
     };
 
@@ -31,13 +44,14 @@ namespace  smallsquare {
         mat4 GetGlobalMatrix() override{
             return mat4(1.0f);
         }
-        mat4 GetProjectionMatrix(Viewport * viewport) override {
+        mat4 GetProjectionMatrix(Viewport * viewport) override{
+            return viewport->GetOrthoProjectionMatrix();
             return mat4(1.0f);
         }
-        mat4 GetViewMatrix(Viewport * viewport) override {
+        mat4 GetViewMatrix(Viewport * viewport) override{
+            //return translate(mat4(1.0), vec3(0.0f, 0.0f, -2.0f )  );
             return mat4(1.0f);
         }
-
     };
 }
 
