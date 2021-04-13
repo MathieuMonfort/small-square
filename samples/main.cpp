@@ -58,7 +58,9 @@ public:
         auto ui_texture = new Texture((resFold +  "/textures/UI_Element.png"));
         auto canvas = Instanciate(new FixedCanvas());
 
-        Instanciate(new UIQuad(vec2(0.0f, -0.0f), 0.0f, vec2(0.2f) , UIShader , ui_texture , HA_LEFT, VA_TOP), canvas);
+        auto ui_quad =(UIQuad *)Instanciate(new UIQuad(vec2(0.0f, -0.0f), 0.0f, vec2(0.2f) , UIShader , ui_texture , HA_LEFT, VA_TOP), canvas);
+        ui_quad->alpha = 0.5;
+
         Instanciate(new UIQuad(vec2(0.0f, 0.0f), 0.0f, vec2(0.2f) , UIShader , ui_texture , HA_CENTER, VA_CENTER), canvas);
         Instanciate(new UIQuad(vec2(-0.0f, 0.0f), 0.0f, vec2(0.2f) , UIShader , ui_texture , HA_RIGHT, VA_BOTTOM), canvas);
 
