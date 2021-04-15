@@ -53,7 +53,10 @@ void smallsquare::Input::MouseMoveCallback(GLFWwindow * win, double xpos, double
 
 vec2 smallsquare::Input::MouseOffset(){
     return vec2(mxoffset ,myoffset );
+}
 
+vec2 smallsquare::Input::MousePosition() {
+    return vec2(mlastx,mlasty);
 }
 
 void smallsquare::Input::Process() {

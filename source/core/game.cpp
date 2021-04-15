@@ -43,13 +43,36 @@ smallsquare::Game::Game(int Width, int Height){
 
 smallsquare::Viewport * smallsquare::Game::AddViewPort(Camera * cam , float x, float y, float w , float h){
     auto res = new Viewport(_win,cam,x,y,w,h);
-
     viewports.push_back(res);
-
     return res;
 }
 
-smallsquare::GameObject * smallsquare::Game::Instanciate(GameObject * object, GameObject * parent)
+smallsquare::Viewport * smallsquare::Game::GetFirstViewportAtProportion(float x, float y) {
+    if(x > 1.0f || x < 0.0f || y > 1.0f || y < 0.0f ) {
+        return nullptr;
+    }
+    for (auto i = viewports.rbegin(); i != viewports.rend(); ++i) {
+        if((*i)->ContainsProportionalPos(x, y)  ){return *i;}
+    }
+    return nullptr;
+}
+
+smallsquare::Viewport * smallsquare::Game::GetFirstViewportAtPixel(int x, int y) {
+    int w, h;
+    glfwGetWindowSize(_win, &w, &h );
+    if(x > w || x < 0 || y > h || y < 0) {
+        return nullptr;
+    }
+    for (auto i = viewports.rbegin(); i != viewports.rend(); ++i) {
+        Viewport * current = (*i);
+        float ratio = current->GetRatio();
+        if(current->ContainsPixelPos(x, y)  ){return *i;}
+
+    }
+    return nullptr;
+}
+
+smallsquare::GameObject * smallsquare::Game::Instantiate(GameObject * object, GameObject * parent)
 {
     if(!object) {return nullptr;}
 
@@ -132,9 +155,16 @@ vector<smallsquare::GameObject *> smallsquare::Game::GetPathTo(GameObject *objec
 void smallsquare::Viewport::Draw(vector<DrawableObject *> drawables){
 
     glfwGetWindowSize(_win, &_wWidth, &_wHeight );
-    glViewport(_x * (float)_wWidth,_y * (float)_wHeight,_w * (float)_wWidth ,_h *(float)_wHeight );
-    
-    glClear( GL_DEPTH_BUFFER_BIT);
+
+    int x = (int) (_x * (float)_wWidth );
+    int y = (int) (_y * (float)_wHeight);
+    int w = (int) (_w * (float)_wWidth );
+    int h = (int) (_h * (float)_wHeight);
+
+    glViewport(x,y,w,h);
+
+
+    glClear(GL_DEPTH_BUFFER_BIT);
 
     for(auto & i : drawables){
         decltype(i) obj = i;
@@ -148,12 +178,13 @@ mat4 smallsquare::Viewport::GetProjectionMatrix() const{
     return perspective(radians(45.0f), (float)(_w*(float)_wWidth) /(_h*(float)_wHeight) ,0.1f,100.0f);
 }
 
-mat4 smallsquare::Viewport::GetOrthoProjectionMatrix() const{
+mat4 smallsquare::Viewport::GetOrthoProjectionMatrix(){
     const float ratio = GetRatio();
     return ortho(-ratio ,ratio,-1.0f,1.0f);
 }
 
-float smallsquare::Viewport::GetRatio() const {
+float smallsquare::Viewport::GetRatio(){
+    glfwGetWindowSize(_win, &_wWidth, &_wHeight );
     return ((float) (_w*(float) _wWidth)/ (_h*(float) _wHeight ));
 }
 
@@ -162,36 +193,54 @@ float smallsquare::Viewport::GetRatio() const {
 mat4 smallsquare::Viewport::GetViewMatrix() const{
     return _cam->GetView();
 }
+
+bool smallsquare::Viewport::ContainsProportionalPos(float x, float y){
+    return x < _x + _w && x > _x && y < _y +_h && y > _y ;
+}
+
+bool smallsquare::Viewport::ContainsPixelPos(int x, int y){
+    glfwGetWindowSize(_win, &_wWidth, &_wHeight );
+    int xOffset = (int) ((float) _wWidth * _x);
+    int yOffset = (int) ((float) _wHeight * _y);
+
+    int wSize = (int) ((float) _wWidth * _w);
+    int hSize = (int) ((float) _wHeight * _h);
+    DEBUG::Log("Offset ", vec2(xOffset,yOffset));
+    DEBUG::Log("Size ", vec2(wSize,hSize));
+
+    return x < xOffset + wSize && x > xOffset && y < yOffset + hSize && y > yOffset ;
+}
+
 #pragma endregion
 
 #pragma region GameObject
-smallsquare::GameObject::GameObject(vec3 position, vec3 euler, vec3 oscale, const string& name){
+smallsquare::GameObject::GameObject(vec3 position, vec3 euler, vec3 s, const string& name){
     _rotation = mat4(1.0f);
     _rotation = rotate(_rotation, euler.x, vec3(1.0f, 0.0f, 0.0f));
     _rotation = rotate(_rotation, euler.y, vec3(0.0f, 1.0f, 0.0f));
     _rotation = rotate(_rotation, euler.z, vec3(0.0f, 0.0f, 1.0f));
     this->_position = position;
-    this->_scale = oscale;
+    this->_scale = s;
     this->name = name;
 }
 
 vec3 smallsquare::GameObject::GetLocalFront(){
-    mat4 inv = inverse(_rotation);
+    mat4 inv = inverse(GetLocalRotation());
     return vec3(inv[2][0], inv[2][1], inv[2][2]);
 }
 vec3 smallsquare::GameObject::GetLocalRight(){
-    mat4 inv = inverse(_rotation);
+    mat4 inv = inverse(GetLocalRotation());
     return vec3(inv[0][0], inv[0][1], inv[0][2]);
 }
 vec3 smallsquare::GameObject::GetLocalUp(){
-    mat4 inv = inverse(_rotation);
+    mat4 inv = inverse(GetLocalRotation());
     return vec3(inv[1][0], inv[1][1], inv[1][2]);
 }
 mat4 smallsquare::GameObject::GetLocalMatrix(){
-    mat4 trans = translate(mat4(1.0f), _position);
-    mat4 scalemat = scale(mat4(1.0f), _scale );
+    mat4 transMat = translate(mat4(1.0f), GetLocalPosition());
+    mat4 scaleMat = scale(mat4(1.0f), GetLocalScale() );
 
-    return trans * scalemat * _rotation ;
+    return transMat * scaleMat * GetLocalRotation() ;
 }
 
 vec3 smallsquare::GameObject::GetLocalPosition() {
@@ -228,16 +277,16 @@ mat4 smallsquare::GameObject::GetGlobalMatrix(){
     return  game->GetParent(this)->GetGlobalMatrix() *  GetLocalMatrix();
 }
 mat4 smallsquare::GameObject::GetGlobalRotation(){
-    if(!game->GetParent(this)) {return _rotation;}
-    return game->GetParent(this)->GetGlobalRotation() * _rotation;
+    if(!game->GetParent(this)) {return GetLocalRotation();}
+    return game->GetParent(this)->GetGlobalRotation() * GetLocalRotation();
 }
 vec3 smallsquare::GameObject::GetGlobalPosition(){
-    if(!game->GetParent(this)) {return _position;}
-    return game->GetParent(this)->GetGlobalPosition() + _position;
+    if(!game->GetParent(this)) {return GetLocalPosition();}
+    return game->GetParent(this)->GetGlobalPosition() + GetLocalPosition();
 }
 vec3 smallsquare::GameObject::GetGlobalScale(){
-    if(!game->GetParent(this)) {return _scale;}
-    return game->GetParent(this)->GetGlobalScale() * _scale;
+    if(!game->GetParent(this)) {return GetLocalScale();}
+    return game->GetParent(this)->GetGlobalScale() * GetLocalScale();
 }
 
 void smallsquare::GameObject::Rotate(float amount, vec3 direction) {
@@ -246,6 +295,10 @@ void smallsquare::GameObject::Rotate(float amount, vec3 direction) {
 
 void smallsquare::GameObject::Translate(vec3 direction) {
     _position += direction;
+}
+
+void smallsquare::GameObject::Place(vec3 position) {
+    _position = position;
 }
 
 void smallsquare::GameObject::Scale(vec3 newScale) {

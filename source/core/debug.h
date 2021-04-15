@@ -30,6 +30,10 @@ public:
         cout << setprecision(1) << mat[0][2] << "\t" << mat[1][2]<< "\t" << mat[2][2]<< "\t" << mat[3][2] << endl;
         cout << setprecision(1) << mat[0][3] << "\t" << mat[1][3]<< "\t" << mat[2][3]<< "\t" << mat[3][3] << endl;
     }
+    static void Log( const string &name, vec2 vec){
+        cout << name << " Vector :" <<endl;
+        cout << setprecision(10000) << vec.x  <<"\n" << vec.y<< endl;
+    }
 
     static void Log( const string &name, vec3 vec){
         cout << name << " Vector :" <<endl;

@@ -57,13 +57,6 @@ void smallsquare::UIQuad::Draw(Viewport *viewport) {
     shader->setMat4("model", GetGlobalMatrix());
     shader->setMat4("view", canvas->GetViewMatrix(viewport));
     shader->setMat4("projection", canvas->GetProjectionMatrix(viewport));
-
-    DEBUG::Log("Global ", GetGlobalMatrix() );
-    DEBUG::Log("View ", canvas->GetViewMatrix(viewport) );
-    DEBUG::Log("Projection ",canvas->GetProjectionMatrix(viewport) );
-    DEBUG::Log("Combined ",canvas->GetProjectionMatrix(viewport) * canvas->GetViewMatrix(viewport) *  GetGlobalMatrix()  );
-
-
     background->BindToProcessor(GL_TEXTURE0);
 
     glBindVertexArray(VAO);

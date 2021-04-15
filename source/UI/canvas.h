@@ -8,7 +8,7 @@
 #define SMALLSQUARE_CANVAS_H
 
 #include <game.h>
-
+#include <raycast.h>
 
 
 
@@ -22,9 +22,10 @@ namespace  smallsquare {
     };
 
 
-    class Canvas : public UIElement{
+class Canvas : public UIElement, public RayCastCandidate{
     public:
-        Canvas(vec3 position, vec3 euler, vec2 oscale, const string& name = "Canvas" ): UIElement( position , euler, vec3(oscale,0.0f ), name ){}
+        Canvas(vec3 position, vec3 euler, vec2 oscale, const string& name = "Canvas" ): UIElement( position , euler, vec3(oscale,0.0f ), name),
+                                                                                        RayCastCandidate()  {}
 
         virtual mat4 GetProjectionMatrix(Viewport * viewport){
             return viewport->GetProjectionMatrix();

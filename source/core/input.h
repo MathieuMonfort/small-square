@@ -50,6 +50,7 @@ namespace  smallsquare {
         static void MouseMoveCallback(GLFWwindow * win, double xpos, double ypos);
         bool KeyPressed(const string &name);
         static vec2 MouseOffset();
+        static vec2 MousePosition();
         static void Process();
         void AddInput( int key, string id);
 

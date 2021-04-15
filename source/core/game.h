@@ -42,7 +42,7 @@ namespace smallsquare{
         bool active = true;
 
 
-        GameObject(vec3 position, vec3 euler, vec3 oscale , const string& name = "GameObject");
+        GameObject(vec3 position, vec3 euler, vec3 s , const string& name = "GameObject");
 
 
         virtual vec3 GetLocalFront();
@@ -69,8 +69,8 @@ namespace smallsquare{
 
         void Rotate(float amount , vec3 direction );
         void Translate(vec3 direction);
+        void Place(vec3 position);
         void Scale(vec3 newScale);
-
         bool IsActive();
     };
 
@@ -112,7 +112,9 @@ namespace smallsquare{
 
         explicit Game(int Width = 1920, int Height = 1080);
         Viewport * AddViewPort(Camera * cam, float x = 0, float y = 0, float w =1, float h =1);
-        GameObject * Instanciate(GameObject * object, GameObject * parent = nullptr);
+        Viewport * GetFirstViewportAtProportion(float x, float y);
+        Viewport * GetFirstViewportAtPixel(int x, int y);
+        GameObject * Instantiate(GameObject * object, GameObject * parent = nullptr);
         virtual void Tick();
         void GameLoop();
 
@@ -176,11 +178,15 @@ namespace smallsquare{
         [[nodiscard]]
         mat4 GetProjectionMatrix() const;
         [[nodiscard]]
-        mat4 GetOrthoProjectionMatrix() const;
+        mat4 GetOrthoProjectionMatrix();
         [[nodiscard]]
         mat4 GetViewMatrix() const;
         [[nodiscard]]
-        float GetRatio() const;
+        float GetRatio();
+        [[nodiscard]]
+        bool ContainsProportionalPos(float x, float y);
+        [[nodiscard]]
+        bool ContainsPixelPos(int x, int y);
 
         void Draw(vector<DrawableObject *> drawables);
     };
