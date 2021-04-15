@@ -36,23 +36,32 @@ namespace  smallsquare {
     };
 
     class Input {
-        vector<Action *> keymap;
-        GLFWwindow * _win;
+        static vector<Action *> keymap;
+        static GLFWwindow * _win;
         static float mlastx;
         static float mlasty;
         static float mxoffset;
         static float myoffset;
         static float sensitivity;
+
+        static int winw;
+        static int winh;
+
+
         static bool firstmouse;
+        static bool initialised;
 
     public:
-        explicit Input(GLFWwindow * win );
+
+
+        static void Init(GLFWwindow * win );
         static void MouseMoveCallback(GLFWwindow * win, double xpos, double ypos);
-        bool KeyPressed(const string &name);
+        static void WindowSizeCallback(GLFWwindow * win , int h, int w);
+        static bool KeyPressed(const string &name);
         static vec2 MouseOffset();
         static vec2 MousePosition();
         static void Process();
-        void AddInput( int key, string id);
+        static void AddInput( int key, string id);
 
 
     };

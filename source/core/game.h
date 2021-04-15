@@ -107,8 +107,6 @@ namespace smallsquare{
 
     public:
         list<Viewport* > viewports;
-        Input *input;
-
 
         explicit Game(int Width = 1920, int Height = 1080);
         Viewport * AddViewPort(Camera * cam, float x = 0, float y = 0, float w =1, float h =1);

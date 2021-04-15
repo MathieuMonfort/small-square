@@ -10,18 +10,28 @@ float smallsquare::Input::mlastx = 0;
 float smallsquare::Input::mlasty = 0;
 float smallsquare::Input::mxoffset = 0;
 float smallsquare::Input::myoffset = 0;
+int smallsquare::Input::winw = 0;
+int smallsquare::Input::winh = 0;
+
 float smallsquare::Input::sensitivity = 0.001f;
 bool smallsquare::Input::firstmouse = true;
+bool smallsquare::Input::initialised = false;
+
+GLFWwindow * smallsquare::Input::_win = nullptr;
+vector<smallsquare::Action *> smallsquare::Input::keymap;
 
 
 
-smallsquare::Input::Input(GLFWwindow *win){
-    _win = win;
+
+void smallsquare::Input::Init(GLFWwindow *win){
+    Input::_win = win;
+    glfwGetWindowSize(_win, &winw,&winh);
+    Input::initialised = true;
 }
 
 
 bool smallsquare::Input::KeyPressed(const string &name) {
-
+    if(!initialised) {return false;}
     auto pressed = false;
     for(auto & i : keymap){
         if(i->id == name){
@@ -56,7 +66,7 @@ vec2 smallsquare::Input::MouseOffset(){
 }
 
 vec2 smallsquare::Input::MousePosition() {
-    return vec2(mlastx,mlasty);
+    return vec2(mlastx,(float)winh - mlasty);
 }
 
 void smallsquare::Input::Process() {
@@ -66,4 +76,9 @@ void smallsquare::Input::Process() {
 
 void smallsquare::Input::AddInput(int key, string id) {
     keymap.push_back(new Action(key, id));
+}
+
+void smallsquare::Input::WindowSizeCallback(GLFWwindow *win, int h, int w) {
+    winw = w;
+    winh = h;
 }

@@ -29,7 +29,7 @@ smallsquare::Game::Game(int Width, int Height){
 #endif
 
     glfwSetCursorPosCallback(_win, Input::MouseMoveCallback);
-
+    glfwSetWindowSizeCallback(_win, Input::WindowSizeCallback);
 
     if(!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress)){
         cerr << "Failed To Initialize GLAD;" << endl;
@@ -38,7 +38,7 @@ smallsquare::Game::Game(int Width, int Height){
 
     _object_tree.GetRoot()->game = this;
     glEnable(GL_DEPTH_TEST);
-    input = new Input(_win);
+    Input::Init(_win);
 }
 
 smallsquare::Viewport * smallsquare::Game::AddViewPort(Camera * cam , float x, float y, float w , float h){
