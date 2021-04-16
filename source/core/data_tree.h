@@ -3,20 +3,20 @@
 // Date : 4/2/21.
 //
 
-#ifndef DATA_TREE_H
-#define DATA_TREE_H
+#ifndef SMALLSQUARE_DATA_TREE_H
+#define SMALLSQUARE_DATA_TREE_H
 #include <vector>
 
 using namespace std;
 
 
 template <class T>
-struct node{
-    node * parent; 
-    vector<node * > children;
+struct Node{
+    Node * parent;
+    vector<Node * > children;
     T data;
 
-    node(T data, node * parent ){
+    Node(T data, Node * parent ){
         this->data = data;
         this->parent = parent;
     }
@@ -24,23 +24,25 @@ struct node{
 
 
 template <class T>
-class tree{
+class Tree{
 private:
-    node<T> * root;
+    Node<T> * _root;
 
-    node<T> * TraverseOrReturn(node<T> *n, T data){
+    Node<T> * GetFirst(T data){
+        return TraverseOrReturn(_root, data);
+    }
+    Node<T> * TraverseOrReturn(Node<T> *n, T data){
         if(n->data == data) {return n;}
 
         for(int i =0; i< n->children.size() ; i++) {
-            node<T> * traversedChild = TraverseOrReturn(n->children[i], data);
+            Node<T> * traversedChild = TraverseOrReturn(n->children[i], data);
             if(traversedChild == nullptr){continue;}
             if(traversedChild->data == data ) {return traversedChild; } 
         }
 
         return nullptr;
     }
-
-    vector<T> TraverseOrPushback(node<T> * n){
+    vector<T> TraverseOrPushback(Node<T> * n){
         vector<T> result;
         result.push_back(n->data);
         for(int i =0; i< n->children.size() ; i++){
@@ -50,49 +52,50 @@ private:
         return result;
     } 
 
-    void insert(T data, node<T> * parent){
-        parent->children.push_back(new node<T>(data,parent));
+    void Insert(T data, Node<T> * parent){
+        parent->children.push_back(new Node<T>(data, parent));
     }
 
-    node<T> * GetFirst(T data){
-        return TraverseOrReturn(root, data);
-    }
 public:
-    explicit tree(T data)  {
-        root = new node<T>(data, nullptr);
+    explicit Tree(T data)  {
+        _root = new Node<T>(data, nullptr);
     }
 
     T GetRoot(){
-        return root->data;
+        return _root->data;
     }
-    
+    vector<T> Flatten(){
+        return TraverseOrPushback(_root);
+    }
+    vector<T> Flatten(T data){
+        if(!GetFirst(data)) { return vector<T>(); }
+        return TraverseOrPushback(GetFirst(data));
+    }
+
     T ChildOf(T data, int i = 0){
-        node<T> *  n = GetFirst(data); 
+        Node<T> *  n = GetFirst(data);
         if(!n) {return nullptr;}
         if(n->children.size() == 0){return nullptr;}
         if(n->children.size() <= i ){return nullptr;}
         return n->children[i]->data;
     }
-
     vector<T> ChildrenOf(T data){
         vector<T> result;
-        node<T> *  n = GetFirst(data); 
+        Node<T> *  n = GetFirst(data);
 
         for(int i =0; i< n->children.size(); i++){
             result.push_back(n->children[i]->data );
         }
         return result;
     }
-
     T ParentOf(T data){
-        node<T> *  n = GetFirst(data); 
+        Node<T> *  n = GetFirst(data);
         if(!n) {return nullptr;}
         if(!n->parent) {return nullptr;}
         return n->parent->data;
     }
-
     vector<T> PathTo(T data){
-        node<T> *  n = GetFirst(data); 
+        Node<T> *  n = GetFirst(data);
         vector<T> result;
         result.push_back(data);
         if(!n) {return result;}
@@ -100,33 +103,21 @@ public:
         do{
             n = n->parent; 
             result.push_back(n->data);
-        }while(n != root);
+        }while(n != _root);
 
         return result;
     }
 
-    int insert(T data, T parent){
-        node<T> * p_node  = GetFirst(parent);
-        if( p_node == nullptr) { return -1; }
-        insert(data, p_node);
+    int Insert(T data, T parent){
+        Node<T> * pNode  = GetFirst(parent);
+        if(pNode == nullptr) { return -1; }
+        Insert(data, pNode);
         return 0;
     }
-
-    int insert(T data){
-        insert(data, root);
+    int Insert(T data){
+        Insert(data, _root);
         return 0;
     }
-
-    vector<T> flatten(){
-        return TraverseOrPushback(root);
-    }
-
-    vector<T> flatten(T data){
-        if(!GetFirst(data)) { return vector<T>(); }
-        return TraverseOrPushback(GetFirst(data));
-    }
-
-
 };
 
 #endif

@@ -14,7 +14,7 @@ namespace smallsquare {
     public:
         vec3 velocity  =vec3(0.0f);
 
-        PhysicsObject(vec3 position, vec3 euler, vec3 oscale, const string& name = "PhysicsObject") : CollisionObject(position, euler, oscale, name){
+        PhysicsObject(vec3 position, vec3 euler, vec3 s, const string& name = "PhysicsObject") : CollisionObject(position, euler, s, name){
 
         }
 

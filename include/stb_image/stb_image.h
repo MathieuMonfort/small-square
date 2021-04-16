@@ -1,5 +1,5 @@
 /* stb_image - v2.26 - public domain image loader - http://nothings.org/stb
-                                  no warranty implied; use at your own risk
+                                  no warranty implied; Use at your own risk
 
    Do this:
       #define STB_IMAGE_IMPLEMENTATION
@@ -180,7 +180,7 @@ RECENT REVISION HISTORY:
 //
 // UNICODE:
 //
-//   If compiling for Windows and you wish to use Unicode filenames, compile
+//   If compiling for Windows and you wish to Use Unicode filenames, compile
 //   with
 //       #define STBI_WINDOWS_UTF8
 //   and pass utf8-encoded filenames. Call stbi_convert_wchar_to_utf8 to convert
@@ -192,22 +192,22 @@ RECENT REVISION HISTORY:
 //
 // stb libraries are designed with the following priorities:
 //
-//    1. easy to use
+//    1. easy to Use
 //    2. easy to maintain
 //    3. good performance
 //
 // Sometimes I let "good performance" creep up in priority over "easy to maintain",
-// and for best performance I may provide less-easy-to-use APIs that give higher
-// performance, in addition to the easy-to-use ones. Nevertheless, it's important
+// and for best performance I may provide less-easy-to-Use APIs that give higher
+// performance, in addition to the easy-to-Use ones. Nevertheless, it's important
 // to keep in mind that from the standpoint of you, a client of this library,
 // all you care about is #1 and #3, and stb libraries DO NOT emphasize #3 above all.
 //
 // Some secondary priorities arise directly from the first two, some of which
 // provide more explicit reasons why performance can't be emphasized.
 //
-//    - Portable ("ease of use")
+//    - Portable ("ease of Use")
 //    - Small source code footprint ("easy to maintain")
-//    - No dependencies ("ease of use")
+//    - No dependencies ("ease of Use")
 //
 // ===========================================================================
 //
@@ -225,7 +225,7 @@ RECENT REVISION HISTORY:
 //
 // SIMD support
 //
-// The JPEG decoder will try to automatically use SIMD kernels on x86 when
+// The JPEG decoder will try to automatically Use SIMD kernels on x86 when
 // supported by the compiler. For ARM Neon support, you must explicitly
 // request it.
 //
@@ -238,7 +238,7 @@ RECENT REVISION HISTORY:
 // (at least this is true for iOS and Android). Therefore, the NEON support is
 // toggled by a build flag: define STBI_NEON to get NEON loops.
 //
-// If for some reason you do not want to use any of SIMD code, or if
+// If for some reason you do not want to Use any of SIMD code, or if
 // you have issues compiling it, you can disable it entirely by
 // defining STBI_NO_SIMD.
 //
@@ -255,7 +255,7 @@ RECENT REVISION HISTORY:
 //     stbi_hdr_to_ldr_gamma(2.2f);
 //     stbi_hdr_to_ldr_scale(1.0f);
 //
-// (note, do not use _inverse_ constants; stbi_image will invert them
+// (note, do not Use _inverse_ constants; stbi_image will invert them
 // appropriately).
 //
 // Additionally, there is a new, parallel interface for loading files as
@@ -272,7 +272,7 @@ RECENT REVISION HISTORY:
 //
 // Finally, given a filename (or an open file or memory block--see header
 // file for details) containing image data, you can query for the "most
-// appropriate" interface to use (that is, whether the image is HDR or
+// appropriate" interface to Use (that is, whether the image is HDR or
 // not), using:
 //
 //     stbi_is_hdr(char *filename);
@@ -324,7 +324,7 @@ RECENT REVISION HISTORY:
 //        STBI_ONLY_PIC
 //        STBI_ONLY_PNM   (.ppm and .pgm)
 //
-//   - If you use STBI_NO_PNG (or _ONLY_ without PNG), and you still
+//   - If you Use STBI_NO_PNG (or _ONLY_ without PNG), and you still
 //     want the zlib decoder to be available, #define STBI_SUPPORT_ZLIB
 //
 //  - If you define STBI_MAX_DIMENSIONS, stb_image will reject images greater
@@ -669,7 +669,7 @@ typedef unsigned char validate_uint32[sizeof(stbi__uint32)==4 ? 1 : -1];
 // detection caused numerous issues. The way architecture extensions are
 // exposed in GCC/Clang is, sadly, not really suited for one-file libs.
 // New behavior: if compiled with -msse2, we use SSE2 without any
-// detection; if not, we don't use it at all.
+// detection; if not, we don't Use it at all.
 #define STBI_NO_SIMD
 #endif
 
@@ -732,7 +732,7 @@ static int stbi__sse2_available(void)
 static int stbi__sse2_available(void)
 {
    // If we're even attempting to compile this on GCC/Clang, that means
-   // -msse2 is on, which means the compiler is allowed to use SSE2
+   // -msse2 is on, which means the compiler is allowed to Use SSE2
    // instructions at will, and so are we.
    return 1;
 }
@@ -851,7 +851,7 @@ static void stbi__rewind(stbi__context *s)
 {
    // conceptually rewind SHOULD rewind to the beginning of the stream,
    // but we just rewind to the beginning of the initial buffer, because
-   // we only use it after doing 'test', which only ever looks at at most 92 bytes
+   // we only Use it after doing 'test', which only ever looks at at most 92 bytes
    s->img_buffer = s->img_buffer_original;
    s->img_buffer_end = s->img_buffer_original_end;
 }
@@ -953,7 +953,7 @@ static void *stbi__malloc(size_t size)
 // stb_image uses ints pervasively, including for offset calculations.
 // therefore the largest decoded image size we can support with the
 // current code, even on 64-bit targets, is INT_MAX. this is not a
-// significant limitation for the intended use case.
+// significant limitation for the intended Use case.
 //
 // we do, however, need to make sure our size calculations don't
 // overflow. hence a few helper functions for size calculations that
@@ -1712,7 +1712,7 @@ static unsigned char *stbi__convert_format(unsigned char *data, int img_n, int r
       #define STBI__COMBO(a,b)  ((a)*8+(b))
       #define STBI__CASE(a,b)   case STBI__COMBO(a,b): for(i=x-1; i >= 0; --i, src += a, dest += b)
       // convert source image with img_n components to one with req_comp components;
-      // avoid switch per pixel, so use switch per scanline and massive macros
+      // avoid switch per pixel, so Use switch per scanline and massive macros
       switch (STBI__COMBO(img_n, req_comp)) {
          STBI__CASE(1,2) { dest[0]=src[0]; dest[1]=255;                                     } break;
          STBI__CASE(1,3) { dest[0]=dest[1]=dest[2]=src[0];                                  } break;
@@ -1769,7 +1769,7 @@ static stbi__uint16 *stbi__convert_format16(stbi__uint16 *data, int img_n, int r
       #define STBI__COMBO(a,b)  ((a)*8+(b))
       #define STBI__CASE(a,b)   case STBI__COMBO(a,b): for(i=x-1; i >= 0; --i, src += a, dest += b)
       // convert source image with img_n components to one with req_comp components;
-      // avoid switch per pixel, so use switch per scanline and massive macros
+      // avoid switch per pixel, so Use switch per scanline and massive macros
       switch (STBI__COMBO(img_n, req_comp)) {
          STBI__CASE(1,2) { dest[0]=src[0]; dest[1]=0xffff;                                     } break;
          STBI__CASE(1,3) { dest[0]=dest[1]=dest[2]=src[0];                                     } break;
@@ -2037,7 +2037,7 @@ stbi_inline static int stbi__jpeg_huff_decode(stbi__jpeg *j, stbi__huffman *h)
 
    if (j->code_bits < 16) stbi__grow_buffer_unsafe(j);
 
-   // look at the top FAST_BITS and determine what symbol ID it is,
+   // look at the top FAST_BITS and determine what symbol id it is,
    // if the code is <= FAST_BITS
    c = (j->code_buffer >> (32 - FAST_BITS)) & ((1 << FAST_BITS)-1);
    k = h->fast[c];
@@ -2289,7 +2289,7 @@ static int stbi__jpeg_decode_block_prog_ac(stbi__jpeg *j, short data[64], stbi__
          k = j->spec_start;
          do {
             int r,s;
-            int rs = stbi__jpeg_huff_decode(j, hac); // @OPTIMIZE see if we can use the fast path here, advance-by-r is so slow, eh
+            int rs = stbi__jpeg_huff_decode(j, hac); // @OPTIMIZE see if we can Use the fast path here, advance-by-r is so slow, eh
             if (rs < 0) return stbi__err("bad huffman code","Corrupt JPEG");
             s = rs & 15;
             r = rs >> 4;
@@ -2341,7 +2341,7 @@ static int stbi__jpeg_decode_block_prog_ac(stbi__jpeg *j, short data[64], stbi__
 // take a -128..127 value and stbi__clamp it and convert to 0..255
 stbi_inline static stbi_uc stbi__clamp(int x)
 {
-   // trick to use a single test to catch both cases
+   // trick to Use a single test to catch both cases
    if ((unsigned int) x > 255) {
       if (x < 0) return 0;
       if (x > 255) return 255;
@@ -2791,7 +2791,7 @@ static void stbi__idct_simd(stbi_uc *out, int out_stride, short data[64])
 #define dct_trn8_16(x, y) { uint16x4x2_t t = vtrn_u16(vreinterpret_u16_u8(x), vreinterpret_u16_u8(y)); x = vreinterpret_u8_u16(t.val[0]); y = vreinterpret_u8_u16(t.val[1]); }
 #define dct_trn8_32(x, y) { uint32x2x2_t t = vtrn_u32(vreinterpret_u32_u8(x), vreinterpret_u32_u8(y)); x = vreinterpret_u8_u32(t.val[0]); y = vreinterpret_u8_u32(t.val[1]); }
 
-      // sadly can't use interleaved stores here since we only write
+      // sadly can't Use interleaved stores here since we only write
       // 8 bytes to each scan line!
 
       // 8x8 8-bit transpose pass 1
@@ -3271,7 +3271,7 @@ static int stbi__process_frame_header(stbi__jpeg *z, int scan)
    return 1;
 }
 
-// use comparisons since in some cases we handle more than one case (e.g. SOF)
+// Use comparisons since in some cases we handle more than one case (e.g. SOF)
 #define stbi__DNL(x)         ((x) == 0xdc)
 #define stbi__SOI(x)         ((x) == 0xd8)
 #define stbi__EOI(x)         ((x) == 0xd9)
@@ -3455,7 +3455,7 @@ static stbi_uc *stbi__resample_row_hv_2_simd(stbi_uc *out, stbi_uc *in_near, stb
 
       // horizontal filter works the same based on shifted vers of current
       // row. "prev" is current row shifted right by 1 pixel; we need to
-      // insert the previous pixel value (from t1).
+      // Insert the previous pixel value (from t1).
       // "next" is current row shifted left by 1 pixel, with first pixel
       // of next block of 8 pixels added in.
       __m128i prv0 = _mm_slli_si128(curr, 2);
@@ -3495,7 +3495,7 @@ static stbi_uc *stbi__resample_row_hv_2_simd(stbi_uc *out, stbi_uc *in_near, stb
 
       // horizontal filter works the same based on shifted vers of current
       // row. "prev" is current row shifted right by 1 pixel; we need to
-      // insert the previous pixel value (from t1).
+      // Insert the previous pixel value (from t1).
       // "next" is current row shifted left by 1 pixel, with first pixel
       // of next block of 8 pixels added in.
       int16x8_t prv0 = vextq_s16(curr, curr, 7);
@@ -3588,7 +3588,7 @@ static void stbi__YCbCr_to_RGB_simd(stbi_uc *out, stbi_uc const *y, stbi_uc cons
 
 #ifdef STBI_SSE2
    // step == 3 is pretty ugly on the final interleave, and i'm not convinced
-   // it's useful in practice (you wouldn't use it for textures, for example).
+   // it's useful in practice (you wouldn't Use it for textures, for example).
    // so just accelerate step == 4 case.
    if (step == 4) {
       // this is a fairly straightforward implementation and not super-optimized.
@@ -4112,7 +4112,7 @@ static int stbi__zhuffman_decode_slowpath(stbi__zbuf *a, stbi__zhuffman *z)
 {
    int b,s,k;
    // not resolved by fast table, so compute it the slow way
-   // use jpeg approach, which requires MSbits at top
+   // Use jpeg approach, which requires MSbits at top
    k = stbi__bit_reverse(a->code_buffer, 16);
    for (s=STBI__ZFAST_BITS+1; ; ++s)
       if (k < z->maxcode[s])
@@ -4336,7 +4336,7 @@ static const stbi_uc stbi__zdefault_distance[32] =
 /*
 Init algorithm:
 {
-   int i;   // use <= to match clearly with spec
+   int i;   // Use <= to match clearly with spec
    for (i=0; i <= 143; ++i)     stbi__zdefault_length[i]   = 8;
    for (   ; i <= 255; ++i)     stbi__zdefault_length[i]   = 9;
    for (   ; i <= 279; ++i)     stbi__zdefault_length[i]   = 7;
@@ -4362,7 +4362,7 @@ static int stbi__parse_zlib(stbi__zbuf *a, int parse_header)
          return 0;
       } else {
          if (type == 1) {
-            // use fixed code lengths
+            // Use fixed code lengths
             if (!stbi__zbuild_huffman(&a->z_length  , stbi__zdefault_length  , 288)) return 0;
             if (!stbi__zbuild_huffman(&a->z_distance, stbi__zdefault_distance,  32)) return 0;
          } else {
@@ -4578,7 +4578,7 @@ static int stbi__create_png_image_raw(stbi__png *a, stbi_uc *raw, stbi__uint32 r
       }
       prior = cur - stride; // bugfix: need to compute this after 'cur +=' computation above
 
-      // if first row, use special filter that doesn't sample previous row
+      // if first row, Use special filter that doesn't sample previous row
       if (j == 0) filter = first_row_filter[filter];
 
       // handle first byte explicitly
@@ -4714,7 +4714,7 @@ static int stbi__create_png_image_raw(stbi__png *a, stbi_uc *raw, stbi__uint32 r
          }
          if (img_n != out_n) {
             int q;
-            // insert alpha = 255
+            // Insert alpha = 255
             cur = a->out + stride*j;
             if (img_n == 1) {
                for (q=x-1; q >= 0; --q) {
@@ -5728,7 +5728,7 @@ static void *stbi__tga_load(stbi__context *s, int *x, int *y, int *comp, int req
    }
    tga_inverted = 1 - ((tga_inverted >> 5) & 1);
 
-   //   If I'm paletted, then I'll use the number of bits from the palette
+   //   If I'm paletted, then I'll Use the number of bits from the palette
    if ( tga_indexed ) tga_comp = stbi__tga_get_comp(tga_palette_bits, 0, &tga_rgb16);
    else tga_comp = stbi__tga_get_comp(tga_bits_per_pixel, (tga_image_type == 3), &tga_rgb16);
 
@@ -6629,7 +6629,7 @@ static stbi_uc *stbi__gif_load_next(stbi__context *s, stbi__gif *g, int *comp, i
          dispose = 2; // if I don't have an image to revert back to, default to the old background
       }
 
-      if (dispose == 3) { // use previous graphic
+      if (dispose == 3) { // Use previous graphic
          for (pi = 0; pi < pcount; ++pi) {
             if (g->history[pi]) {
                memcpy( &g->out[pi * 4], &two_back[pi * 4], 4 );
@@ -6983,7 +6983,7 @@ static float *stbi__hdr_load(stbi__context *s, int *x, int *y, int *comp, int re
    if (!valid)    return stbi__errpf("unsupported format", "Unsupported HDR format");
 
    // Parse width and height
-   // can't use sscanf() if we're not using stdio!
+   // can't Use sscanf() if we're not using stdio!
    token = stbi__hdr_gettoken(s,buffer);
    if (strncmp(token, "-Y ", 3))  return stbi__errpf("unsupported data layout", "Unsupported HDR format");
    token += 3;
@@ -7031,7 +7031,7 @@ static float *stbi__hdr_load(stbi__context *s, int *x, int *y, int *comp, int re
          c2 = stbi__get8(s);
          len = stbi__get8(s);
          if (c1 != 2 || c2 != 2 || (len & 0x80)) {
-            // not run-length encoded, so we have to actually use THIS data as a decoded
+            // not run-length encoded, so we have to actually Use THIS data as a decoded
             // pixel (note this can't be a valid pixel--one of RGB must be >= 128)
             stbi_uc rgbe[4];
             rgbe[0] = (stbi_uc) c1;
@@ -7686,7 +7686,7 @@ STBIDEF int stbi_is_16_bit_from_callbacks(stbi_io_callbacks const *c, void *user
       1.07    attempt to fix C++ warning/errors again
       1.06    attempt to fix C++ warning/errors again
       1.05    fix TGA loading to return correct *comp and use good luminance calc
-      1.04    default float alpha is 1, not 255; use 'void *' for stbi_image_free
+      1.04    default float alpha is 1, not 255; Use 'void *' for stbi_image_free
       1.03    bugfixes to STBI_NO_STDIO, STBI_NO_HDR
       1.02    support for (subset of) HDR files, float interface for preferred access to them
       1.01    fix bug: possible bug in handling right-side up bmps... not sure
@@ -7728,7 +7728,7 @@ Copyright (c) 2017 Sean Barrett
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
 the Software without restriction, including without limitation the rights to
-use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+Use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
 of the Software, and to permit persons to whom the Software is furnished to do
 so, subject to the following conditions:
 The above copyright notice and this permission notice shall be included in all

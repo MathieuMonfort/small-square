@@ -16,21 +16,18 @@ namespace smallsquare {
             this->cam = cam;
         }
         void Tick(float deltaTime) override ;
-
-
-
     };
 
 
     class FlightCamCon : public CameraController{
-        float MoveSpeed;
-        float RotateSpeed;
+    private:
+        float _moveSpeed;
+        float _rotateSpeed;
 
     public :
-        FlightCamCon(vec3 position, vec3 euler, Camera * cam, float MoveSpeed = 1.0f, float RotateSpeed = 0.01f ) : CameraController(position, euler, cam){
-        this->MoveSpeed = MoveSpeed;
-        this->RotateSpeed = RotateSpeed;
-
+        FlightCamCon(vec3 position, vec3 euler, Camera * cam, float moveSpeed = 1.0f, float rotateSpeed = 0.01f ) : CameraController(position, euler, cam){
+        this->_moveSpeed = moveSpeed;
+        this->_rotateSpeed = rotateSpeed;
         }
 
         void Tick(float deltaTime) override;

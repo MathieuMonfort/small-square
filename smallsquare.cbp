@@ -44,7 +44,7 @@
 				<Option type="2"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="/home/mmonfort/dev-space/small-square/include/stb_image"/>
+					<Add _directory="/home/mmonfort/dev-space/small-square/include/stb_image"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="/usr/bin/gmake -f &quot;/home/mmonfort/dev-space/small-square/include/Makefile&quot;  VERBOSE=1 stb_image"/>
@@ -60,7 +60,7 @@
 				<Option type="2"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="/home/mmonfort/dev-space/small-square/include/stb_image"/>
+					<Add _directory="/home/mmonfort/dev-space/small-square/include/stb_image"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="/usr/bin/gmake -f &quot;/home/mmonfort/dev-space/small-square/include/Makefile&quot;  VERBOSE=1 stb_image/fast"/>
@@ -104,8 +104,8 @@
 				<Option type="2"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="/home/mmonfort/dev-space/small-square/source/core"/>
-					<Add directory="/home/mmonfort/dev-space/small-square/include/stb_image"/>
+					<Add _directory="/home/mmonfort/dev-space/small-square/source/core"/>
+					<Add _directory="/home/mmonfort/dev-space/small-square/include/stb_image"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="/usr/bin/gmake -f &quot;/home/mmonfort/dev-space/small-square/source/core/Makefile&quot;  VERBOSE=1 smallsquare_core"/>
@@ -121,8 +121,8 @@
 				<Option type="2"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="/home/mmonfort/dev-space/small-square/source/core"/>
-					<Add directory="/home/mmonfort/dev-space/small-square/include/stb_image"/>
+					<Add _directory="/home/mmonfort/dev-space/small-square/source/core"/>
+					<Add _directory="/home/mmonfort/dev-space/small-square/include/stb_image"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="/usr/bin/gmake -f &quot;/home/mmonfort/dev-space/small-square/source/core/Makefile&quot;  VERBOSE=1 smallsquare_core/fast"/>
@@ -138,7 +138,7 @@
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="/home/mmonfort/dev-space/small-square/source/core"/>
+					<Add _directory="/home/mmonfort/dev-space/small-square/source/core"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="/usr/bin/gmake -f &quot;/home/mmonfort/dev-space/small-square/samples/Makefile&quot;  VERBOSE=1 sample"/>
@@ -154,7 +154,7 @@
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="/home/mmonfort/dev-space/small-square/source/core"/>
+					<Add _directory="/home/mmonfort/dev-space/small-square/source/core"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="/usr/bin/gmake -f &quot;/home/mmonfort/dev-space/small-square/samples/Makefile&quot;  VERBOSE=1 sample/fast"/>

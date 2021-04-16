@@ -3,8 +3,8 @@
 // Date : 4/2/21.
 //
 
-#ifndef LIGHT_H
-#define LIGHT_H
+#ifndef SMALLSQUARE_LIGHT_H
+#define SMALLSQUARE_LIGHT_H
 
 #include <game.h>
 
@@ -23,10 +23,7 @@ namespace smallsquare{
         }
     };
 
-    class DirectionLight : public Light{
-
-
-    };
+    class DirectionLight : public Light{};
 
     class PointLight : public Light{
     public:

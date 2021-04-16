@@ -6,34 +6,34 @@
 #include "input.h"
 
 
-float smallsquare::Input::mlastx = 0;
-float smallsquare::Input::mlasty = 0;
-float smallsquare::Input::mxoffset = 0;
-float smallsquare::Input::myoffset = 0;
-int smallsquare::Input::winw = 0;
-int smallsquare::Input::winh = 0;
+float smallsquare::Input::_mLastX = 0;
+float smallsquare::Input::_mLastY = 0;
+float smallsquare::Input::_mXOffset = 0;
+float smallsquare::Input::_mYOffset = 0;
+int smallsquare::Input::_winW = 0;
+int smallsquare::Input::_winH = 0;
 
-float smallsquare::Input::sensitivity = 0.001f;
-bool smallsquare::Input::firstmouse = true;
-bool smallsquare::Input::initialised = false;
+float smallsquare::Input::_sensitivity = 0.001f;
+bool smallsquare::Input::_firstMouse = true;
+bool smallsquare::Input::_initialised = false;
 
 GLFWwindow * smallsquare::Input::_win = nullptr;
-vector<smallsquare::Action *> smallsquare::Input::keymap;
+vector<smallsquare::Action *> smallsquare::Input::_keymap;
 
 
 
 
 void smallsquare::Input::Init(GLFWwindow *win){
     Input::_win = win;
-    glfwGetWindowSize(_win, &winw,&winh);
-    Input::initialised = true;
+    glfwGetWindowSize(_win, &_winW, &_winH);
+    Input::_initialised = true;
 }
 
 
 bool smallsquare::Input::KeyPressed(const string &name) {
-    if(!initialised) {return false;}
+    if(!_initialised) {return false;}
     auto pressed = false;
-    for(auto & i : keymap){
+    for(auto & i : _keymap){
         if(i->id == name){
             pressed = glfwGetKey(_win, i->key) == GLFW_PRESS;
         }
@@ -43,42 +43,42 @@ bool smallsquare::Input::KeyPressed(const string &name) {
 }
 
 void smallsquare::Input::MouseMoveCallback(GLFWwindow * win, double xpos, double ypos){
-    if(firstmouse)
+    if(_firstMouse)
     {
-        mlastx = (float)xpos;
-        mlasty = (float)ypos;
-        firstmouse = false;
+        _mLastX = (float)xpos;
+        _mLastY = (float)ypos;
+        _firstMouse = false;
     }
 
 
-    mxoffset = (float)xpos - mlastx;
-    myoffset = mlasty - (float)ypos;
+    _mXOffset = (float)xpos - _mLastX;
+    _mYOffset = _mLastY - (float)ypos;
 
-    mlastx = (float)xpos;
-    mlasty = (float)ypos;
-    mxoffset *= sensitivity;
-    myoffset *= sensitivity;
+    _mLastX = (float)xpos;
+    _mLastY = (float)ypos;
+    _mXOffset *= _sensitivity;
+    _mYOffset *= _sensitivity;
 }
 
 
 vec2 smallsquare::Input::MouseOffset(){
-    return vec2(mxoffset ,myoffset );
+    return vec2(_mXOffset , _mYOffset );
 }
 
 vec2 smallsquare::Input::MousePosition() {
-    return vec2(mlastx,(float)winh - mlasty);
+    return vec2(_mLastX, (float)_winH - _mLastY);
 }
 
 void smallsquare::Input::Process() {
-    Input::mxoffset = 0;
-    Input::myoffset = 0;
+    Input::_mXOffset = 0;
+    Input::_mYOffset = 0;
 }
 
 void smallsquare::Input::AddInput(int key, string id) {
-    keymap.push_back(new Action(key, id));
+    _keymap.push_back(new Action(key, id));
 }
 
 void smallsquare::Input::WindowSizeCallback(GLFWwindow *win, int h, int w) {
-    winw = w;
-    winh = h;
+    _winW = w;
+    _winH = h;
 }

@@ -29,32 +29,32 @@ namespace smallsquare {
     class UIQuad : public UIElement{
     private :
         void SetupMesh();
-        unsigned int VAO = 0;
-        unsigned int VBO = 0;
-        static vector<float> vertices;
+        unsigned int _vao = 0;
+        unsigned int _vbo = 0;
+        static vector<float> _vertices;
 
     public:
         float alpha = 1.0f;
         Canvas * canvas = nullptr;
-        HorizontalAnchor HAnchor;
-        VerticalAnchor VAnchor;
+        HorizontalAnchor hAnchor;
+        VerticalAnchor vAnchor;
         Shader * shader;
         Texture * background;
 
         UIQuad(vec2 position,
                float rotation,
-               vec2 oscale,
+               vec2 scale,
                Shader * shader,
                Texture * background,
-               HorizontalAnchor HAnchor = HA_LEFT,
-               VerticalAnchor VAnchor = VA_TOP,
+               HorizontalAnchor hAnchor = HA_LEFT,
+               VerticalAnchor vAnchor = VA_TOP,
                const string &name = "UIQuad"
                   )
-                        : UIElement(vec3(position,0.0f), vec3(0.0f,0.0f,rotation), vec3(oscale, 0.0f),name ){
+                        : UIElement(vec3(position,0.0f), vec3(0.0f,0.0f,rotation), vec3(scale, 0.0f), name ){
 
 
-            this->HAnchor = HAnchor;
-            this->VAnchor = VAnchor;
+            this->hAnchor = hAnchor;
+            this->vAnchor = vAnchor;
             this->shader = shader;
             this->background = background;
 

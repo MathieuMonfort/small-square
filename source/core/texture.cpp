@@ -13,8 +13,8 @@
 
 smallsquare::Texture::Texture(const string& path){
 
-    glGenTextures(1,&ID);
-    glBindTexture(GL_TEXTURE_2D,ID);
+    glGenTextures(1,&id);
+    glBindTexture(GL_TEXTURE_2D, id);
 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -46,5 +46,5 @@ smallsquare::Texture::Texture(const string& path){
 
 void smallsquare::Texture::BindToProcessor(GLenum proc) const{
     glActiveTexture(proc);
-    glBindTexture(GL_TEXTURE_2D,ID); 
+    glBindTexture(GL_TEXTURE_2D, id);
 }

@@ -6,7 +6,7 @@
 
 #include "ui_quad.h"
 
-vector<float> smallsquare::UIQuad::vertices = {
+vector<float> smallsquare::UIQuad::_vertices = {
     -1.0f,  1.0f,   0.0f,   0.0f,   0.0f,
     -1.0,   -1.0f,  0.0f,   0.0f,   1.0f,
     1.0f,   1.0f,   0.0f,   1.0f,   0.0f,
@@ -31,13 +31,13 @@ void smallsquare::UIQuad::CheckIntegrity() {
 }
 
 void smallsquare::UIQuad::SetupMesh() {
-    glGenVertexArrays(1,&VAO);
-    glGenBuffers(1,&VBO);
+    glGenVertexArrays(1,&_vao);
+    glGenBuffers(1,&_vbo);
 
-    glBindVertexArray(VAO);
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glBindVertexArray(_vao);
+    glBindBuffer(GL_ARRAY_BUFFER, _vbo);
 
-    glBufferData(GL_ARRAY_BUFFER,vertices.size() * sizeof(float), &vertices[0] , GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, _vertices.size() * sizeof(float), &_vertices[0] , GL_STATIC_DRAW);
 
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0,3, GL_FLOAT, GL_FALSE, sizeof(float) *5, (void*)nullptr );
@@ -49,17 +49,17 @@ void smallsquare::UIQuad::SetupMesh() {
 }
 
 void smallsquare::UIQuad::Draw(Viewport *viewport) {
-    shader->use();
-    shader->setFloat("alpha", alpha);
+    shader->Use();
+    shader->SetFloat("alpha", alpha);
 
-    shader->setInt("texture_ui", 0);
+    shader->SetInt("texture_ui", 0);
 
-    shader->setMat4("model", GetGlobalMatrix());
-    shader->setMat4("view", canvas->GetViewMatrix(viewport));
-    shader->setMat4("projection", canvas->GetProjectionMatrix(viewport));
+    shader->SetMat4("model", GetGlobalMatrix());
+    shader->SetMat4("view", canvas->GetViewMatrix(viewport));
+    shader->SetMat4("projection", canvas->GetProjectionMatrix(viewport));
     background->BindToProcessor(GL_TEXTURE0);
 
-    glBindVertexArray(VAO);
+    glBindVertexArray(_vao);
     glDrawArrays(GL_TRIANGLES, 0, 6);
     glBindVertexArray(0);
 }
@@ -70,13 +70,13 @@ mat4 smallsquare::UIQuad::GetLocalMatrix() {
     vec3 Anchored;
     vec3 lscale = GetLocalScale();
 
-    switch(HAnchor){
+    switch(hAnchor){
         case HA_CENTER :    Anchored.x = GetLocalPosition().x; break;
         case HA_LEFT :      Anchored.x = 2.0f * (GetLocalPosition().x + lscale.x/2 ) - 1.0f * parentRatio ; break;
         case HA_RIGHT :     Anchored.x = 2.0f * (GetLocalPosition().x - lscale.x/2 ) + 1.0f * parentRatio ; break;
     }
 
-    switch(VAnchor){
+    switch(vAnchor){
         case VA_CENTER :    Anchored.y = GetLocalPosition().y ; break;
         case VA_TOP :       Anchored.y =  2.0f * (GetLocalPosition().y - lscale.y/2 ) + 1.0f ; break;
         case VA_BOTTOM :    Anchored.y =  2.0f * (GetLocalPosition().y + lscale.y/2 ) - 1.0f ; break;

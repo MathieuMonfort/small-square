@@ -17,7 +17,7 @@ debian
 ####GLFW3
 glfw3 is a common OpenGL library, you need to build it from source. 
 You can clone gflw from github : https://github.com/glfw/glfw 
-Build it with (when in glfw directory)
+Build it with (when in glfw _directory)
         
     mkdir build
     cd build 
@@ -39,16 +39,16 @@ setup this way:
     Check "Generate a Loader"
 
 Generate & download given .zip
-Copy the content of the include directory into your 
+Copy the content of the include _directory into your 
 
     /usr/include 
 
-directory (you probably need super user privileges).
+_directory (you probably need super user privileges).
 
 ####Assimp
 Assimp is the Open Asset Import Library (Manages 3d models imports).
 clone the source from https://github.com/assimp/assimp
-Build with (when in assimp directory):
+Build with (when in assimp _directory):
 
     kdir build   cd build
     cmake ../ -DBUILD_SHARED_LIBS=ON -DASSIMP_BUILD_ZLIB=ON
@@ -56,14 +56,14 @@ Build with (when in assimp directory):
     sudo make install
 
 ###Building
-Clone the source and build with ( in small-square directory) :
+Clone the source and build with ( in small-square _directory) :
 
     mkdir build
     cd build 
     cmake ../
     make
 
-Then test the sample code with ( in small-square directory) : 
+Then test the sample code with ( in small-square _directory) : 
 
     ./samples/sample
 

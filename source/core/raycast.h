@@ -15,7 +15,7 @@ namespace smallsquare {
     public:
         vec3 size;
 
-        Box(vec3 size){
+        explicit Box(vec3 size){
             this->size = size;
         }
     };
@@ -24,7 +24,7 @@ namespace smallsquare {
     public:
         vec2 size;
 
-        Plane(vec2 size){
+        explicit Plane(vec2 size){
             this->size = size;
         }
     };

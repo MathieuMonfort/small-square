@@ -16,7 +16,7 @@ namespace smallsquare {
     public:
         CollisionObject * cMaster = nullptr;
 
-        ColliderObject(vec3 position, vec3 euler,vec3 oscale, const string &name = "Collision Object"):GameObject(position, euler,oscale,name) {
+        ColliderObject(vec3 position, vec3 euler,vec3 s, const string &name = "Collision Object"):GameObject(position, euler,s,name) {
 
         };
 

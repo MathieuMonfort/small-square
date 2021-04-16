@@ -3,8 +3,8 @@
 // Date : 4/2/21.
 //
 
-#ifndef CAMERA_H
-#define CAMERA_H
+#ifndef SMALLSQUARE_CAMERA_H
+#define SMALLSQUARE_CAMERA_H
 
 
 #include <glm/glm.hpp>

@@ -16,22 +16,22 @@ void smallsquare::FlightCamCon::Tick(float deltaTime){
     CameraController::Tick(deltaTime);
 
     if(Input::KeyPressed("Move_Left")){
-        Translate( MoveSpeed * deltaTime * GetLocalRight());
+        Translate(_moveSpeed * deltaTime * GetLocalRight());
     }
     if(Input::KeyPressed("Move_Right")){
-        Translate( - MoveSpeed * deltaTime * GetLocalRight());
+        Translate(- _moveSpeed * deltaTime * GetLocalRight());
     }
     if(Input::KeyPressed("Move_Forward")){
-        Translate( MoveSpeed * deltaTime * GetLocalFront());
+        Translate(_moveSpeed * deltaTime * GetLocalFront());
     }
     if(Input::KeyPressed("Move_Back")){
-        Translate( - MoveSpeed * deltaTime * GetLocalFront());
+        Translate(- _moveSpeed * deltaTime * GetLocalFront());
     }
     if(Input::KeyPressed("Move_Up")){
-        Translate( MoveSpeed * deltaTime * GetLocalUp());
+        Translate(_moveSpeed * deltaTime * GetLocalUp());
     }
     if(Input::KeyPressed("Move_Down")){
-        Translate( - MoveSpeed * deltaTime * GetLocalUp());
+        Translate(- _moveSpeed * deltaTime * GetLocalUp());
     }
 
     Rotate(smallsquare::Input::MouseOffset().x,  GetLocalUp());

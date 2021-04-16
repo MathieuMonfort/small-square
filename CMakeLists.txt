@@ -7,7 +7,9 @@ set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DCURSOR_DEBUG")
 add_subdirectory(include)
 
 add_subdirectory(source/core)
+
 add_subdirectory(source/UI)
+add_subdirectory(source/physics)
 
 
 add_subdirectory(samples)

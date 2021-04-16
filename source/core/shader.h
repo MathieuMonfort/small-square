@@ -2,8 +2,8 @@
 // Created by Mathieu Monfort
 // Date : 4/2/21.
 //
-#ifndef SHADER_H
-#define SHADER_H
+#ifndef SMALLSQUARE_SHADER_H
+#define SMALLSQUARE_SHADER_H
 
 #include <string>
 #include <fstream>
@@ -43,23 +43,23 @@ namespace smallsquare{
 
 
         Shader(const GLchar* vertexPath, const GLchar* fragmentPath);
-        void use() const;
+        void Use() const;
 
-        void setBool(const string &name, bool value) const;
-        void setInt(const string &name, int value) const;
-        void setFloat(const string &name, float value) const;
-        void setVec2(const std::string &name, const glm::vec2 &value) const;
-        void setVec3(const std::string &name, const glm::vec3 &value) const;
-        void setVec4(const std::string &name, const glm::vec4 &value) const;
+        void SetBool(const string &name, bool value) const;
+        void SetInt(const string &name, int value) const;
+        void SetFloat(const string &name, float value) const;
+        void SetVec2(const std::string &name, const glm::vec2 &value) const;
+        void SetVec3(const std::string &name, const glm::vec3 &value) const;
+        void SetVec4(const std::string &name, const glm::vec4 &value) const;
 
-        void setMat2(const string &name, const mat2 &value) const;
-        void setMat3(const string &name, const mat3 &value) const;
-        void setMat4(const string &name, const mat4 &value) const;
-        void setMaterial(const string &name, Material *value) const;
+        void SetMat2(const string &name, const mat2 &value) const;
+        void SetMat3(const string &name, const mat3 &value) const;
+        void SetMat4(const string &name, const mat4 &value) const;
+        void SetMaterial(const string &name, Material *value) const;
 
-        void setDirLightArray(const string &name, vector<DirectionLight *>value) const;
-        void setPointLightArray(const string &name, vector<PointLight *>value) const;
-        void setSpotLightArray(const string &name, vector<SpotLight *> value) const;
+        void SetDirLightArray(const string &name, vector<DirectionLight *>value) const;
+        void SetPointLightArray(const string &name, vector<PointLight *>value) const;
+        void SetSpotLightArray(const string &name, vector<SpotLight *> value) const;
     };
 
 

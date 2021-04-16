@@ -6,13 +6,13 @@
 #include <game.h>
 
 #pragma region Game
-smallsquare::Game::Game(int Width, int Height){
+smallsquare::Game::Game(int width, int height){
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    _win = glfwCreateWindow(Width,Height, "SmallSquare - Game",nullptr,nullptr);
+    _win = glfwCreateWindow(width, height, "SmallSquare - Game", nullptr, nullptr);
     if(!_win){
         cerr << "Failed to Create GLFW Window"<<endl;
         glfwTerminate();
@@ -36,14 +36,14 @@ smallsquare::Game::Game(int Width, int Height){
         glfwTerminate();
     }
 
-    _object_tree.GetRoot()->game = this;
+    _objectTree.GetRoot()->game = this;
     glEnable(GL_DEPTH_TEST);
     Input::Init(_win);
 }
 
 smallsquare::Viewport * smallsquare::Game::AddViewPort(Camera * cam , float x, float y, float w , float h){
     auto res = new Viewport(_win,cam,x,y,w,h);
-    viewports.push_back(res);
+    _viewports.push_back(res);
     return res;
 }
 
@@ -51,7 +51,7 @@ smallsquare::Viewport * smallsquare::Game::GetFirstViewportAtProportion(float x,
     if(x > 1.0f || x < 0.0f || y > 1.0f || y < 0.0f ) {
         return nullptr;
     }
-    for (auto i = viewports.rbegin(); i != viewports.rend(); ++i) {
+    for (auto i = _viewports.rbegin(); i != _viewports.rend(); ++i) {
         if((*i)->ContainsProportionalPos(x, y)  ){return *i;}
     }
     return nullptr;
@@ -63,9 +63,8 @@ smallsquare::Viewport * smallsquare::Game::GetFirstViewportAtPixel(int x, int y)
     if(x > w || x < 0 || y > h || y < 0) {
         return nullptr;
     }
-    for (auto i = viewports.rbegin(); i != viewports.rend(); ++i) {
+    for (auto i = _viewports.rbegin(); i != _viewports.rend(); ++i) {
         Viewport * current = (*i);
-        float ratio = current->GetRatio();
         if(current->ContainsPixelPos(x, y)  ){return *i;}
 
     }
@@ -78,17 +77,17 @@ smallsquare::GameObject * smallsquare::Game::Instantiate(GameObject * object, Ga
 
     object->game = this;
     if(!parent) {
-        _object_tree.insert(object);
+        _objectTree.Insert(object);
         return object;
     }
-    _object_tree.insert(object, parent);
+    _objectTree.Insert(object, parent);
     return object;
 }
 
 void smallsquare::Game::GameLoop()
 {
-    auto object_list = _object_tree.flatten();
-    for(auto & i : object_list){
+    auto objectList = _objectTree.Flatten();
+    for(auto & i : objectList){
         decltype(i) obj = i;
         obj->CheckIntegrity();
     }
@@ -98,8 +97,8 @@ void smallsquare::Game::GameLoop()
         glClear(GL_COLOR_BUFFER_BIT);
 
         auto currentFrame = (float) glfwGetTime();
-        deltaTime = currentFrame - lastFrame;
-        lastFrame = currentFrame;
+        deltaTime = currentFrame - _lastFrame;
+        _lastFrame = currentFrame;
 
         Tick();
 
@@ -110,15 +109,15 @@ void smallsquare::Game::GameLoop()
 }
 
 void smallsquare::Game::Tick(){
-    auto object_list = _object_tree.flatten();
-    for(auto & i : object_list){
+    auto objectList = _objectTree.Flatten();
+    for(auto & i : objectList){
         decltype(i) obj = i;
         if(obj->IsActive()) {
             obj->CheckIntegrity();
         }
     }
 
-    for(auto & i : object_list){
+    for(auto & i : objectList){
         decltype(i) obj = i;
         if(obj->IsActive()) {
             obj->Tick(deltaTime);
@@ -126,7 +125,7 @@ void smallsquare::Game::Tick(){
     }
 
     auto drawables = FindObjectsOfType<DrawableObject *>();
-    for(auto & i :viewports){
+    for(auto & i :_viewports){
         i->Draw(drawables);
     }
 }
@@ -134,19 +133,19 @@ void smallsquare::Game::Tick(){
 
 
 smallsquare::GameObject * smallsquare::Game::GetParent(GameObject * object){
-    return _object_tree.ParentOf(object);
+    return _objectTree.ParentOf(object);
 }
 
 smallsquare::GameObject * smallsquare::Game::GetChild(GameObject * object, int i ){
-    return _object_tree.ChildOf(object, i);
+    return _objectTree.ChildOf(object, i);
 }
 
 vector<smallsquare::GameObject *> smallsquare::Game::GetChildren(GameObject *object){
-    return _object_tree.ChildrenOf(object);
+    return _objectTree.ChildrenOf(object);
 }
 
 vector<smallsquare::GameObject *> smallsquare::Game::GetPathTo(GameObject *object){
-    return _object_tree.PathTo(object);
+    return _objectTree.PathTo(object);
 }
 
 #pragma endregion
@@ -191,7 +190,7 @@ float smallsquare::Viewport::GetRatio(){
 
 
 mat4 smallsquare::Viewport::GetViewMatrix() const{
-    return _cam->GetView();
+    return cam->GetView();
 }
 
 bool smallsquare::Viewport::ContainsProportionalPos(float x, float y){
@@ -205,8 +204,8 @@ bool smallsquare::Viewport::ContainsPixelPos(int x, int y){
 
     int wSize = (int) ((float) _wWidth * _w);
     int hSize = (int) ((float) _wHeight * _h);
-    DEBUG::Log("Offset ", vec2(xOffset,yOffset));
-    DEBUG::Log("Size ", vec2(wSize,hSize));
+    Debug::Log("Offset ", vec2(xOffset, yOffset));
+    Debug::Log("Size ", vec2(wSize, hSize));
 
     return x < xOffset + wSize && x > xOffset && y < yOffset + hSize && y > yOffset ;
 }
@@ -270,10 +269,10 @@ vec3 smallsquare::GameObject::GetGlobalUp(){
     return vec3(inv[1][0], inv[1][1], inv[1][2]);
 }
 mat4 smallsquare::GameObject::GetGlobalMatrix(){
-    mat4 lmat = GetLocalMatrix();
+    mat4 lMat = GetLocalMatrix();
     if(!game->GetParent(this)) {return GetLocalMatrix();}
 
-    mat4 pmat = game->GetParent(this)->GetGlobalMatrix();
+    mat4 pMat = game->GetParent(this)->GetGlobalMatrix();
     return  game->GetParent(this)->GetGlobalMatrix() *  GetLocalMatrix();
 }
 mat4 smallsquare::GameObject::GetGlobalRotation(){

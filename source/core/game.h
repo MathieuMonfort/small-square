@@ -3,8 +3,8 @@
 // Date : 4/2/21.
 //
 
-#ifndef GAME_H
-#define GAME_H
+#ifndef SMALLSQUARE_GAME_H
+#define SMALLSQUARE_GAME_H
 
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
@@ -25,9 +25,6 @@ namespace smallsquare{
     class Game;
     class Viewport;
 
-
-
-
     class GameObject{
     private:
         vec3 _position = vec3(0.0f) ;
@@ -35,12 +32,10 @@ namespace smallsquare{
         vec3 _scale = vec3(0.0f) ;
 
     public:
-
-        Game * game = nullptr;
-
         string name;
         bool active = true;
 
+        Game * game = nullptr;
 
         GameObject(vec3 position, vec3 euler, vec3 s , const string& name = "GameObject");
 
@@ -97,18 +92,18 @@ namespace smallsquare{
     class Game{
     private:
 
-        float lastFrame = 0.0f;
-        tree<GameObject*> _object_tree = tree<GameObject *>(new Origin());
+        float _lastFrame = 0.0f;
+        Tree<GameObject*> _objectTree = Tree<GameObject *>(new Origin());
         GLFWwindow * _win;
+        list<Viewport* > _viewports;
 
     protected:
         float deltaTime = 0.0f;
 
 
     public:
-        list<Viewport* > viewports;
 
-        explicit Game(int Width = 1920, int Height = 1080);
+        explicit Game(int width = 1920, int height = 1080);
         Viewport * AddViewPort(Camera * cam, float x = 0, float y = 0, float w =1, float h =1);
         Viewport * GetFirstViewportAtProportion(float x, float y);
         Viewport * GetFirstViewportAtPixel(int x, int y);
@@ -123,10 +118,10 @@ namespace smallsquare{
         vector<GameObject *> GetPathTo(GameObject* object);
 
         template <class T> vector<T> FindObjectsOfType() {
-            vector<GameObject *> object_list = _object_tree.flatten();
+            vector<GameObject *> objectList = _objectTree.Flatten();
             vector<T> result;
 
-            for (auto &i :object_list ) {
+            for (auto &i :objectList ) {
                 GameObject *go = i;
 
                 if (dynamic_cast<T > (go)) {
@@ -136,12 +131,11 @@ namespace smallsquare{
             }
             return result;
         }
-
         template <class T> vector<T> FindObjects(const string & name){
-            vector<T> object_list = FindObjectsOfType<T>();
+            vector<T> objectList = FindObjectsOfType<T>();
             vector<T> res;
 
-            for(auto & i : object_list ){
+            for(auto & i : objectList ){
                 if(((GameObject *) i)->name == name ){
                     res.push_back(i);
                 }
@@ -161,17 +155,17 @@ namespace smallsquare{
         int _wWidth = 0;
         int _wHeight = 0;
         GLFWwindow * _win;
+
     public:
-        Camera * _cam;
+        Camera * cam;
         Viewport( GLFWwindow * win, Camera * cam,float x = 0, float y = 0, float width = 1, float height = 1){
-            _cam = cam;
+            this->cam = cam;
             _x= x;
             _y=y;
             _w = width;
             _h = height;
             _win = win;
         }
-
 
         [[nodiscard]]
         mat4 GetProjectionMatrix() const;

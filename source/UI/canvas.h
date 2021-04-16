@@ -15,17 +15,18 @@
 
 namespace  smallsquare {
     class UIElement : public DrawableObject{
+
     public:
         float ratio = 1.0f;
-        UIElement(vec3 position, vec3 euler, vec2 oscale, const string& name = "Canvas" ): DrawableObject( position , euler, vec3(oscale,0.0f ), name ){}
+        UIElement(vec3 position, vec3 euler, vec2 scale, const string& name = "Canvas" ): DrawableObject(position , euler, vec3(scale, 0.0f ), name ){}
 
     };
 
 
 class Canvas : public UIElement, public RayCastCandidate{
     public:
-        Canvas(vec3 position, vec3 euler, vec2 oscale, const string& name = "Canvas" ): UIElement( position , euler, vec3(oscale,0.0f ), name),
-                                                                                        RayCastCandidate()  {}
+        Canvas(vec3 position, vec3 euler, vec2 scale, const string& name = "Canvas" ): UIElement(position , euler, vec3(scale, 0.0f ), name),
+                                                                                       RayCastCandidate()  {}
 
         virtual mat4 GetProjectionMatrix(Viewport * viewport){
             return viewport->GetProjectionMatrix();
@@ -47,10 +48,8 @@ class Canvas : public UIElement, public RayCastCandidate{
         }
         mat4 GetProjectionMatrix(Viewport * viewport) override{
             return viewport->GetOrthoProjectionMatrix();
-            return mat4(1.0f);
         }
         mat4 GetViewMatrix(Viewport * viewport) override{
-            //return translate(mat4(1.0), vec3(0.0f, 0.0f, -2.0f )  );
             return mat4(1.0f);
         }
     };

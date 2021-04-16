@@ -61,7 +61,7 @@ vec3 CalcPointLight(PointLight light, vec3 norm, vec3 viewDir);
 out vec4 FragColor;
 
 in vec3 FragPos;
-in vec3 Normal;
+in vec3 normal;
 in vec2 Tex;
 
 uniform float time;
@@ -84,7 +84,7 @@ uniform vec3 viewPos;
 void main(){
     vec3 lightTotal = vec3(0.0);
 
-    vec3 norm = normalize(Normal);
+    vec3 norm = normalize(normal);
     vec3 viewDir = normalize(viewPos - FragPos);
 
     //Emisive Light Calculations

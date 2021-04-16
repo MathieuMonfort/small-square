@@ -2,8 +2,8 @@
 // Created by Mathieu Monfort
 // Date : 4/2/21.
 //
-#ifndef DEBUG_H
-#define DEBUG_H
+#ifndef SMALLSQUARE_DEBUG_H
+#define SMALLSQUARE_DEBUG_H
 
 #include <iostream>
 #include <string>
@@ -17,13 +17,13 @@
 using namespace std;
 using namespace glm;
 
-class DEBUG{
+class Debug{
 public:
     static void Log(const string &str){
         cout << str <<endl;
     }
 
-    static void Log( const string &name, mat4 mat){
+    static void Log(const string &name, mat4 mat){
         cout << name << " Matrix :" <<endl;
         cout << setprecision(1) << mat[0][0]  <<"\t" << mat[1][0]<< "\t" << mat[2][0]<< "\t" << mat[3][0] << endl;
         cout << setprecision(1) << mat[0][1] << "\t" << mat[1][1]<< "\t" << mat[2][1]<< "\t" << mat[3][1] << endl;

@@ -6,5 +6,5 @@
 
 #include "physics_object.h"
 void smallsquare::PhysicsObject::Tick(float deltaTime){
-    position += velocity;
+    Translate(velocity);
 }

@@ -36,20 +36,22 @@ namespace  smallsquare {
     };
 
     class Input {
-        static vector<Action *> keymap;
+
+    private:
+        static vector<Action *> _keymap;
         static GLFWwindow * _win;
-        static float mlastx;
-        static float mlasty;
-        static float mxoffset;
-        static float myoffset;
-        static float sensitivity;
+        static float _mLastX;
+        static float _mLastY;
+        static float _mXOffset;
+        static float _mYOffset;
+        static float _sensitivity;
 
-        static int winw;
-        static int winh;
+        static int _winW;
+        static int _winH;
 
 
-        static bool firstmouse;
-        static bool initialised;
+        static bool _firstMouse;
+        static bool _initialised;
 
     public:
 
