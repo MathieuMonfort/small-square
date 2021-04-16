@@ -31,7 +31,8 @@ namespace smallsquare {
 
 
     class Ray {
-        GameObject *sender;
+
+
     };
 
     class RayCastCandidate{

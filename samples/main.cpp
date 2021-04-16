@@ -66,6 +66,9 @@ int main(int argc, char * argv[]){
 
     auto game = new MyGame();
     game->GameLoop();
+
+
+    DEBUG::Log("Mouse Position", vec2(Input::MousePosition().x, Input::MousePosition().y ) );
 }
 
 
