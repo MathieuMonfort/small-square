@@ -66,7 +66,7 @@ vec2 smallsquare::Input::MouseOffset(){
 }
 
 vec2 smallsquare::Input::MousePosition() {
-    return vec2(_mLastX, (float)_winH - _mLastY);
+    return vec2(_mLastX, _mLastY);
 }
 
 void smallsquare::Input::Process() {

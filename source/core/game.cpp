@@ -46,7 +46,7 @@ smallsquare::Viewport * smallsquare::Game::AddViewPort(Camera * cam , float x, f
     _viewports.push_back(res);
     return res;
 }
-
+/*
 smallsquare::Viewport * smallsquare::Game::GetFirstViewportAtProportion(float x, float y) {
     if(x > 1.0f || x < 0.0f || y > 1.0f || y < 0.0f ) {
         return nullptr;
@@ -56,7 +56,7 @@ smallsquare::Viewport * smallsquare::Game::GetFirstViewportAtProportion(float x,
     }
     return nullptr;
 }
-
+*/
 smallsquare::Viewport * smallsquare::Game::GetFirstViewportAtPixel(int x, int y) {
     int w, h;
     glfwGetWindowSize(_win, &w, &h );
@@ -189,12 +189,39 @@ float smallsquare::Viewport::GetRatio(){
 
 
 
-mat4 smallsquare::Viewport::GetViewMatrix() const{
+mat4 smallsquare::Viewport::GetViewMatrix(){
     return cam->GetView();
 }
 
-bool smallsquare::Viewport::ContainsProportionalPos(float x, float y){
-    return x < _x + _w && x > _x && y < _y +_h && y > _y ;
+
+vec3 smallsquare::Viewport::ScreenToWorldSpace(int x, int y) {
+    glfwGetWindowSize(_win, &_wWidth, &_wHeight );
+    vec3 normalizedDeviceCoords = vec3((2.0f * (float)x) / (float) _wWidth - 1.0f,
+                                  1.0f - (2.0f *(float)y) /(float)_wHeight,
+                                       1.0f);
+
+    Debug::Log("Normalized Device Coordinates", normalizedDeviceCoords);
+
+    vec4 homogeneousClipCoords = vec4 (normalizedDeviceCoords.x ,  normalizedDeviceCoords.y, -1.0f, 1.0f);
+
+    Debug::Log("Homogeneous Clip Coordinates", homogeneousClipCoords);
+
+
+    vec4 eyeCoordinates = inverse(GetProjectionMatrix()) * homogeneousClipCoords;
+    eyeCoordinates = vec4(eyeCoordinates.x, eyeCoordinates.y,-1.0f,0.0f );
+
+    Debug::Log("Eye Coordinates", eyeCoordinates );
+
+    Debug::Log("View Matrix ", GetViewMatrix() );
+
+    Debug::Log("Inverse View Matrix" , inverse(GetViewMatrix()) );
+    vec4 worldCoords = inverse(GetViewMatrix()) * eyeCoordinates ;
+    vec3 translatedWorldCoords = vec3(normalize(worldCoords)) + cam->position;
+
+    Debug::Log("World Coordinates", worldCoords );
+    Debug::Log("Translated World Coordinates", translatedWorldCoords);
+
+    return worldCoords;
 }
 
 bool smallsquare::Viewport::ContainsPixelPos(int x, int y){
@@ -292,6 +319,12 @@ void smallsquare::GameObject::Rotate(float amount, vec3 direction) {
     _rotation = rotate(_rotation, amount, direction);
 }
 
+void smallsquare::GameObject::LookAt(vec3 position) {
+    LookAt(position, vec3(0,1,0));
+}
+void smallsquare::GameObject::LookAt(vec3 position, vec3 up) {
+    _rotation = lookAt(GetLocalPosition(),position, up);
+}
 void smallsquare::GameObject::Translate(vec3 direction) {
     _position += direction;
 }

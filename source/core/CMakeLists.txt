@@ -23,7 +23,6 @@ find_package(glfw3 3.3 REQUIRED)
 find_package(assimp REQUIRED)
 find_package(ZLIB REQUIRED)
 
-
 target_link_libraries(smallsquare_core PRIVATE 
                             stb_image 
                             glad 

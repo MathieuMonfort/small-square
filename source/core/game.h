@@ -63,6 +63,9 @@ namespace smallsquare{
 
 
         void Rotate(float amount , vec3 direction );
+        void LookAt(vec3 position );
+        void LookAt(vec3 position, vec3 up);
+
         void Translate(vec3 direction);
         void Place(vec3 position);
         void Scale(vec3 newScale);
@@ -95,10 +98,10 @@ namespace smallsquare{
         float _lastFrame = 0.0f;
         Tree<GameObject*> _objectTree = Tree<GameObject *>(new Origin());
         GLFWwindow * _win;
-        list<Viewport* > _viewports;
 
     protected:
         float deltaTime = 0.0f;
+        list<Viewport* > _viewports;
 
 
     public:
@@ -172,11 +175,11 @@ namespace smallsquare{
         [[nodiscard]]
         mat4 GetOrthoProjectionMatrix();
         [[nodiscard]]
-        mat4 GetViewMatrix() const;
+        mat4 GetViewMatrix();
+        [[nodiscard]]
+        vec3 ScreenToWorldSpace(int x, int y );
         [[nodiscard]]
         float GetRatio();
-        [[nodiscard]]
-        bool ContainsProportionalPos(float x, float y);
         [[nodiscard]]
         bool ContainsPixelPos(int x, int y);
 

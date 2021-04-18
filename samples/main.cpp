@@ -55,6 +55,14 @@ public:
     void Tick() override{
         Debug::Clear();
         Game::Tick();
+
+
+        auto vp =  *_viewports.begin();
+
+        Debug::Log("Mouse position", vec2(Input::MousePosition().x, Input::MousePosition().y ) );
+
+        auto mousePositionWorld = vp->ScreenToWorldSpace((int)Input::MousePosition().x,(int)Input::MousePosition().y);
+
     }
 
 };
@@ -67,7 +75,6 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char * argv[]){
     game->GameLoop();
 
 
-    Debug::Log("Mouse position", vec2(Input::MousePosition().x, Input::MousePosition().y ) );
 }
 
 

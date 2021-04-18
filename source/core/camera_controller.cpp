@@ -33,10 +33,10 @@ void smallsquare::FlightCamCon::Tick(float deltaTime){
     if(Input::KeyPressed("Move_Down")){
         Translate(- _moveSpeed * deltaTime * GetLocalUp());
     }
-
+/*
     Rotate(smallsquare::Input::MouseOffset().x,  GetLocalUp());
     Rotate(smallsquare::Input::MouseOffset().y,  GetLocalRight());
-
+*/
 
 }
 

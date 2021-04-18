@@ -8,6 +8,7 @@
 
 #include <game.h>
 
+class GameObject;
 namespace smallsquare{
     class Light : public GameObject{
     public:
