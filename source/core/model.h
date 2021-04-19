@@ -2,10 +2,6 @@
 // Created by Mathieu Monfort
 // Date : 4/2/21.
 //
-#include <game.h>
-#include <shader.h>
-#include <debug.h>
-
 #include <vector>
 #include <string>
 
@@ -13,10 +9,15 @@
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 
+#include <gameobject.h>
+#include <shader.h>
+
 using namespace std;
 
 namespace smallsquare{
 
+    class Shader;
+    class Material;
     struct Vertex {
         vec3 position;
         vec3 normal;

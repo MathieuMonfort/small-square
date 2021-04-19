@@ -6,7 +6,7 @@
 #ifndef SMALLSQUARE_LIGHT_H
 #define SMALLSQUARE_LIGHT_H
 
-#include <game.h>
+#include <gameobject.h>
 
 namespace smallsquare{
     class Light : public GameObject{

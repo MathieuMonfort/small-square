@@ -8,7 +8,17 @@
 #include <iostream>
 #include <string>
 #include <iomanip>
+#include <vector>
+
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
 #include <shader.h>
+#include <game.h>
+using namespace glm;
+using namespace std;
+
 
 struct DebugLine{
 public:

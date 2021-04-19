@@ -36,12 +36,12 @@ public:
 
 
 
-        /*Instantiate(new PointLight(vec3(-3.0f),vec3(0.0f), vec3(0.8f), vec3(2.f),vec3(3.0f),1.0f,0.09f,0.032f));
+        Instantiate(new PointLight(vec3(-3.0f),vec3(0.0f), vec3(0.8f), vec3(2.f),vec3(3.0f),1.0f,0.09f,0.032f));
         Instantiate(new Model(vec3(0.0f , 0.0f  , 2.0f), vec3(0.0f), vec3(0.3f),resFold + "/models/Backpack/backpack.obj", phongShader, "Back Pack" ));
         Instantiate(new Model(vec3(0.0f, 0.0f, 0.0f), vec3(0.0f), vec3(0.2f), resFold + "/models/Axes/all-axes.obj", solidShader));
 
         Instantiate(new FlightCamCon(vec3(0.0f, 0.0f, -5.0f), vec3(0.0f), cam));
-*/
+
         Input::AddInput( GLFW_KEY_A, "Move_Left");
         Input::AddInput( GLFW_KEY_D, "Move_Right");
         Input::AddInput( GLFW_KEY_W, "Move_Forward");
@@ -62,7 +62,6 @@ public:
 
         auto mousePositionWorld = vp->ScreenToWorldSpace((int)Input::MousePosition().x,(int)Input::MousePosition().y);
 
-        Debug::DrawRay(vec3(1.0f), vec3(0.0f), vec3(1.0f,0.0f,0.0f) );
 
 
     }

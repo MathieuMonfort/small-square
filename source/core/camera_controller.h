@@ -7,6 +7,7 @@
 #define SMALLSQUARE_CAMERA_CONTROLLER_H
 
 #include <game.h>
+#include <camera.h>
 
 namespace smallsquare {
     class CameraController : public GameObject {
