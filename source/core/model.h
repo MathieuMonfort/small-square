@@ -25,20 +25,39 @@ namespace smallsquare{
         vec3 bitangent;
     };
 
+
+
     struct MatIndex{
     public: 
         Material * mat;
         unsigned int index;
 
-        MatIndex(Material * mat, unsigned int index ){
-            this->mat = mat;
-            this->index = index;
-        }
+        MatIndex(Material * mat, unsigned int index );
     };
 
-    class Mesh;
-    class Model : public DrawableObject{
 
+
+    class Mesh{
+    private:
+        unsigned int _vao, _vbo, _ebo;
+
+    public:
+        Material * material;
+        vector<Vertex> vertices;
+        vector<unsigned int> indices;
+
+    private:
+        void SetupMesh();
+
+    public:
+        Mesh(vector<Vertex> vertices, vector<unsigned int> indices, Material * mat);
+        void Draw(Shader * shader) const ;
+
+    };
+
+
+
+    class Model : public DrawableObject{
     private:
         string _directory;
         vector<MatIndex> _loadedMaterials;
@@ -53,29 +72,10 @@ namespace smallsquare{
         Mesh  * ProcessMesh(aiMesh *mesh, const aiScene *scene);
 
     public:
-        Model(vec3 position, vec3 euler, vec3 s, string path, Shader * shader, const string & name = "Model") : DrawableObject(position, euler, s, name) {
-            this->shader = shader;
-            LoadModel(path);
-        }
+        Model(vec3 position, vec3 euler, vec3 s, string path, Shader * shader, const string & name = "Model") ;
         void Tick(float deltaTime) override;
         void Draw(Viewport * viewport) override;
     };
 
-    class Mesh{
-    private:
-        unsigned int _vao, _vbo, _ebo;
 
-    public:
-        Material * material; 
-        vector<Vertex> vertices;
-        vector<unsigned int> indices;
-
-    private:
-        void SetupMesh();
-
-    public:
-        Mesh(vector<Vertex> vertices, vector<unsigned int> indices, Material * mat); 
-        void Draw(Shader * shader) const ;
-
-    };
 }

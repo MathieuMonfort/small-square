@@ -20,7 +20,10 @@ bool smallsquare::Input::_initialised = false;
 GLFWwindow * smallsquare::Input::_win = nullptr;
 vector<smallsquare::Action *> smallsquare::Input::_keymap;
 
-
+smallsquare::Action::Action(const int key, string id) {
+    this->key = key;
+    this->id = std::move(id);
+}
 
 
 void smallsquare::Input::Init(GLFWwindow *win){
@@ -28,7 +31,6 @@ void smallsquare::Input::Init(GLFWwindow *win){
     glfwGetWindowSize(_win, &_winW, &_winH);
     Input::_initialised = true;
 }
-
 
 bool smallsquare::Input::KeyPressed(const string &name) {
     if(!_initialised) {return false;}
@@ -60,7 +62,6 @@ void smallsquare::Input::MouseMoveCallback(GLFWwindow * win, double xpos, double
     _mYOffset *= _sensitivity;
 }
 
-
 vec2 smallsquare::Input::MouseOffset(){
     return vec2(_mXOffset , _mYOffset );
 }
@@ -82,3 +83,4 @@ void smallsquare::Input::WindowSizeCallback(GLFWwindow *win, int h, int w) {
     _winW = w;
     _winH = h;
 }
+

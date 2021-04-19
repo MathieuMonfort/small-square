@@ -29,12 +29,7 @@ namespace smallsquare{
         Texture * emission;
         float shininess;
 
-        Material(Texture * diffuse, Texture * specular, Texture * emission, float shininess ){
-            this->diffuse = diffuse;
-            this->specular = specular;
-            this->emission = emission;
-            this->shininess = shininess;
-        }
+        Material(Texture * diffuse, Texture * specular, Texture * emission, float shininess );
     };
 
     class Shader{

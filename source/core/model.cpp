@@ -6,8 +6,114 @@
 #include <model.h>
 
 
+#pragma region MatIndex
+smallsquare::MatIndex::MatIndex(smallsquare::Material *mat, unsigned int index) {
+    this->mat = mat;
+    this->index = index;
+}
+#pragma endregion
+
+#pragma region Mesh
+
+smallsquare::Mesh::Mesh(vector<Vertex> vertices, vector<unsigned int> indices, Material * material){
+    _vao =0;
+    _vbo =0;
+    _ebo =0;
+
+    this->vertices = std::move(vertices);
+    this->indices = std::move(indices);
+    this->material = material;
+
+    SetupMesh();
+}
+
+void smallsquare::Mesh::Draw(Shader * shader) const {
+    shader->Use();
+    shader->SetMaterial("material", material);
+
+    glBindVertexArray(_vao);
+    glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, nullptr);
+    glBindVertexArray(0);
+}
+
+void smallsquare::Mesh::SetupMesh(){
+    glGenVertexArrays(1,&_vao);
+    glGenBuffers(1,&_vbo);
+    glGenBuffers(1,&_ebo);
+
+    glBindVertexArray(_vao);
+    glBindBuffer(GL_ARRAY_BUFFER, _vbo);
+
+    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), &vertices[0], GL_STATIC_DRAW);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _ebo);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), &indices[0], GL_STATIC_DRAW);
+
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)nullptr);
+    glEnableVertexAttribArray(1);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, normal));
+    glEnableVertexAttribArray(2);
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, texCoords));
+    glEnableVertexAttribArray(3);
+    glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, tangent));
+    glEnableVertexAttribArray(4);
+    glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, bitangent));
+
+    glBindVertexArray(0);
+}
+
+#pragma endregion
+
+#pragma region Model
+
+smallsquare::Model::Model(vec3 position, vec3 euler, vec3 s, string path, smallsquare::Shader *shader,
+                          const string &name) : DrawableObject(position, euler, s, name) {
+    this->shader = shader;
+    LoadModel(path);
+}
+
+void smallsquare::Model::Tick(float deltaTime){ }
+
+void smallsquare::Model::Draw(Viewport * viewport){
+
+    auto lightSources = game->FindObjectsOfType<Light*>();
+
+    shader->Use();
+
+    shader->SetMat4("model", GetLocalMatrix());
+    shader->SetMat4("view", viewport->GetViewMatrix());
+    shader->SetMat4("projection", viewport->GetProjectionMatrix());
+    shader->SetVec3("viewPos", viewport->cam->position);
+
+
+    //Adding Light Sources Info To used Shader;
+    vector<DirectionLight *> dls;
+    vector<PointLight *> pls;
+    vector<SpotLight *> sls;
+    for(auto & i : lightSources ){
+        Light * l = i ;
+        if(dynamic_cast<DirectionLight *>(l)){
+            dls.push_back((DirectionLight *)l);
+        }
+        if(dynamic_cast<PointLight *>(l)){
+            pls.push_back((PointLight *) l);
+        }
+        if(dynamic_cast<SpotLight *>(l)){
+            sls.push_back((SpotLight *) l);
+        }
+    }
+    shader->SetDirLightArray("dirlights", dls);
+    shader->SetPointLightArray("pointlights", pls);
+    shader->SetSpotLightArray("spotlights", sls);
+
+    for(auto & mesh : meshes){
+        mesh->Draw(shader);
+    }
+
+}
+
 void smallsquare::Model::LoadModel(string &path){
-    Assimp::Importer importer; 
+    Assimp::Importer importer;
     const aiScene * scene = importer.ReadFile(path, aiProcess_Triangulate |aiProcess_FlipUVs);
 
     if(!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode){
@@ -46,7 +152,7 @@ smallsquare::Mesh * smallsquare::Model::ProcessMesh(aiMesh * mesh, const aiScene
         vertex.normal.x = mesh->mNormals[i].x;
         vertex.normal.y = mesh->mNormals[i].y;
         vertex.normal.z = mesh->mNormals[i].z;
-        
+
         if(mesh->mTextureCoords[0]){
             vertex.texCoords.x = mesh->mTextureCoords[0][i].x;
             vertex.texCoords.y = mesh->mTextureCoords[0][i].y;
@@ -69,7 +175,7 @@ smallsquare::Mesh * smallsquare::Model::ProcessMesh(aiMesh * mesh, const aiScene
     bool isMatLoaded = false;
     for(auto & loadedMaterial : _loadedMaterials){
         if(loadedMaterial.index == mesh->mMaterialIndex) {
-            isMatLoaded = true; 
+            isMatLoaded = true;
             mat = loadedMaterial.mat;
 
         }
@@ -101,100 +207,13 @@ smallsquare::Mesh * smallsquare::Model::ProcessMesh(aiMesh * mesh, const aiScene
 
         _loadedMaterials.emplace_back(mat, mesh->mMaterialIndex);
     }
-    
+
     return new Mesh(vertices, indices, mat);
 }
 
-void smallsquare::Model::Tick(float deltaTime){
 
-
-}
+#pragma endregion
 
 
 
 
-void smallsquare::Model::Draw(Viewport * viewport){
-
-    auto lightSources = game->FindObjectsOfType<Light*>();
-
-    shader->Use();
-
-    shader->SetMat4("model", GetLocalMatrix());
-    shader->SetMat4("view", viewport->GetViewMatrix());
-    shader->SetMat4("projection", viewport->GetProjectionMatrix());
-    shader->SetVec3("viewPos", viewport->cam->position);
-    
-
-    //Adding Light Sources Info To used Shader;
-    vector<DirectionLight *> dls;
-    vector<PointLight *> pls;
-    vector<SpotLight *> sls;
-    for(auto & i : lightSources ){
-        Light * l = i ;
-        if(dynamic_cast<DirectionLight *>(l)){
-            dls.push_back((DirectionLight *)l);
-        } 
-        if(dynamic_cast<PointLight *>(l)){
-            pls.push_back((PointLight *) l);
-        } 
-        if(dynamic_cast<SpotLight *>(l)){
-            sls.push_back((SpotLight *) l);
-        } 
-    }
-    shader->SetDirLightArray("dirlights", dls);
-    shader->SetPointLightArray("pointlights", pls);
-    shader->SetSpotLightArray("spotlights", sls);
-
-    for(auto & mesh : meshes){
-        mesh->Draw(shader);
-    }
-
-}
-
-smallsquare::Mesh::Mesh(vector<Vertex> vertices, vector<unsigned int> indices, Material * material){
-    _vao =0;
-    _vbo =0;
-    _ebo =0;
-
-    this->vertices = std::move(vertices);
-    this->indices = std::move(indices);
-    this->material = material;
-
-    SetupMesh();
-}
-
-
-void smallsquare::Mesh::SetupMesh(){
-    glGenVertexArrays(1,&_vao);
-    glGenBuffers(1,&_vbo);
-    glGenBuffers(1,&_ebo);
-
-    glBindVertexArray(_vao);
-    glBindBuffer(GL_ARRAY_BUFFER, _vbo);
-
-    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), &vertices[0], GL_STATIC_DRAW);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _ebo);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), &indices[0], GL_STATIC_DRAW);
-
-    glEnableVertexAttribArray(0);	
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)nullptr);
-    glEnableVertexAttribArray(1);	
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, normal));
-    glEnableVertexAttribArray(2);	
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, texCoords));
-    glEnableVertexAttribArray(3);
-    glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, tangent));
-    glEnableVertexAttribArray(4);
-    glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, bitangent));
-
-    glBindVertexArray(0);
-}
-
-void smallsquare::Mesh::Draw(Shader * shader) const {
-    shader->Use();
-    shader->SetMaterial("material", material);
-
-    glBindVertexArray(_vao);
-    glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, nullptr);
-    glBindVertexArray(0);
-}

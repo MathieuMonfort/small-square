@@ -6,11 +6,23 @@
 #include "camera_controller.h"
 
 
+
+
+smallsquare::CameraController::CameraController(vec3 position, vec3 euler, smallsquare::Camera *cam) : GameObject( position, euler, vec3(1.0f) ){
+    this->cam = cam;
+}
+
 void smallsquare::CameraController::Tick(float deltaTime){
     cam->position = GetGlobalPosition();
     cam->rotation = GetGlobalRotation();
 }
 
+
+smallsquare::FlightCamCon::FlightCamCon(vec3 position, vec3 euler, smallsquare::Camera *cam, float moveSpeed,
+                                        float rotateSpeed) : CameraController(position, euler, cam){
+    this->_moveSpeed = moveSpeed;
+    this->_rotateSpeed = rotateSpeed;
+}
 
 void smallsquare::FlightCamCon::Tick(float deltaTime){
     CameraController::Tick(deltaTime);
@@ -33,10 +45,10 @@ void smallsquare::FlightCamCon::Tick(float deltaTime){
     if(Input::KeyPressed("Move_Down")){
         Translate(- _moveSpeed * deltaTime * GetLocalUp());
     }
-/*
+
     Rotate(smallsquare::Input::MouseOffset().x,  GetLocalUp());
     Rotate(smallsquare::Input::MouseOffset().y,  GetLocalRight());
-*/
 
 }
+
 

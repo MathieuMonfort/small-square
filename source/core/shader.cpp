@@ -4,6 +4,13 @@
 //
 #include <shader.h>
 
+smallsquare::Material::Material(smallsquare::Texture *diffuse, smallsquare::Texture *specular,
+                                smallsquare::Texture *emission, float shininess) {
+    this->diffuse = diffuse;
+    this->specular = specular;
+    this->emission = emission;
+    this->shininess = shininess;
+}
 
 smallsquare::Shader::Shader(const char * vertexPath, const char* fragmentPath){
     string vertexCode;
@@ -122,7 +129,6 @@ void smallsquare::Shader::SetMat4(const string &name, const mat4 &value) const{
 
 #pragma region Mat&Light
 
-
 void smallsquare::Shader::SetMaterial(const string &name, Material  *value) const{
     SetInt(name + ".diffuse", 0);
     SetInt(name + ".specular", 1);
@@ -195,3 +201,5 @@ void smallsquare::Shader::SetSpotLightArray(const string &name, vector<SpotLight
 }
 
 #pragma endregion
+
+

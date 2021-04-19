@@ -29,10 +29,7 @@ namespace  smallsquare {
         string id;
 
     public:
-        Action(const int key,string  id) {
-            this->key = key;
-            this->id = std::move(id);
-        }
+        Action(int key,string  id);
     };
 
     class Input {

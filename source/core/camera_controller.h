@@ -12,9 +12,7 @@ namespace smallsquare {
     class CameraController : public GameObject {
     public:
         Camera * cam;
-        CameraController(vec3 position, vec3 euler , Camera * cam): GameObject( position, euler, vec3(1.0f) ){
-            this->cam = cam;
-        }
+        CameraController(vec3 position, vec3 euler , Camera * cam);
         void Tick(float deltaTime) override ;
     };
 
@@ -25,11 +23,7 @@ namespace smallsquare {
         float _rotateSpeed;
 
     public :
-        FlightCamCon(vec3 position, vec3 euler, Camera * cam, float moveSpeed = 1.0f, float rotateSpeed = 0.01f ) : CameraController(position, euler, cam){
-        this->_moveSpeed = moveSpeed;
-        this->_rotateSpeed = rotateSpeed;
-        }
-
+        FlightCamCon(vec3 position, vec3 euler, Camera * cam, float moveSpeed = 1.0f, float rotateSpeed = 0.01f ) ;
         void Tick(float deltaTime) override;
     };
 }

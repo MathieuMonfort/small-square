@@ -30,18 +30,18 @@ public:
         auto phongShader = new Shader((resFold + "/shaders/basic_phong.vert").c_str(), (resFold + "/shaders/basic_phong.frag").c_str());
         auto solidShader = new Shader((resFold + "/shaders/solid.vert").c_str(), (resFold + "/shaders/solid.frag").c_str());
         auto uiShader = new Shader((resFold + "/shaders/basic_ui.vert").c_str(), (resFold + "/shaders/basic_ui.frag").c_str());
+        auto debugShader = new Shader((resFold + "/shaders/debug.vert").c_str(), (resFold + "/shaders/debug.frag").c_str());
+        Debug::Init(debugShader);
 
 
 
 
-
-
-        Instantiate(new PointLight(vec3(-3.0f),vec3(0.0f), vec3(0.8f), vec3(2.f),vec3(3.0f),1.0f,0.09f,0.032f));
+        /*Instantiate(new PointLight(vec3(-3.0f),vec3(0.0f), vec3(0.8f), vec3(2.f),vec3(3.0f),1.0f,0.09f,0.032f));
         Instantiate(new Model(vec3(0.0f , 0.0f  , 2.0f), vec3(0.0f), vec3(0.3f),resFold + "/models/Backpack/backpack.obj", phongShader, "Back Pack" ));
         Instantiate(new Model(vec3(0.0f, 0.0f, 0.0f), vec3(0.0f), vec3(0.2f), resFold + "/models/Axes/all-axes.obj", solidShader));
 
         Instantiate(new FlightCamCon(vec3(0.0f, 0.0f, -5.0f), vec3(0.0f), cam));
-
+*/
         Input::AddInput( GLFW_KEY_A, "Move_Left");
         Input::AddInput( GLFW_KEY_D, "Move_Right");
         Input::AddInput( GLFW_KEY_W, "Move_Forward");
@@ -53,15 +53,17 @@ public:
     }
 
     void Tick() override{
-        Debug::Clear();
+
         Game::Tick();
 
 
         auto vp =  *_viewports.begin();
 
-        Debug::Log("Mouse position", vec2(Input::MousePosition().x, Input::MousePosition().y ) );
 
         auto mousePositionWorld = vp->ScreenToWorldSpace((int)Input::MousePosition().x,(int)Input::MousePosition().y);
+
+        Debug::DrawRay(vec3(1.0f), vec3(0.0f), vec3(1.0f,0.0f,0.0f) );
+
 
     }
 
