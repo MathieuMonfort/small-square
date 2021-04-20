@@ -13,14 +13,10 @@
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
 
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
-
+#include <camera.h>
 #include <data_tree.h>
 #include <gameobject.h>
 
-#include <camera.h>
 #include <input.h>
 
 using namespace glm;

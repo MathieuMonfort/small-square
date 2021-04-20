@@ -3,7 +3,6 @@
 
 #include <ui_quad.h>
 #include <canvas.h>
-#include <debug.h>
 
 #include "config.h"
 
@@ -29,12 +28,6 @@ public:
         //Shaders
         auto phongShader = new Shader((resFold + "/shaders/basic_phong.vert").c_str(), (resFold + "/shaders/basic_phong.frag").c_str());
         auto solidShader = new Shader((resFold + "/shaders/solid.vert").c_str(), (resFold + "/shaders/solid.frag").c_str());
-        auto uiShader = new Shader((resFold + "/shaders/basic_ui.vert").c_str(), (resFold + "/shaders/basic_ui.frag").c_str());
-        auto debugShader = new Shader((resFold + "/shaders/debug.vert").c_str(), (resFold + "/shaders/debug.frag").c_str());
-        Debug::Init(debugShader);
-
-
-
 
         Instantiate(new PointLight(vec3(-3.0f),vec3(0.0f), vec3(0.8f), vec3(2.f),vec3(3.0f),1.0f,0.09f,0.032f));
         Instantiate(new Model(vec3(0.0f , 0.0f  , 2.0f), vec3(0.0f), vec3(0.3f),resFold + "/models/Backpack/backpack.obj", phongShader, "Back Pack" ));
@@ -53,16 +46,7 @@ public:
     }
 
     void Tick() override{
-
         Game::Tick();
-
-
-        auto vp =  *_viewports.begin();
-
-
-        auto mousePositionWorld = vp->ScreenToWorldSpace((int)Input::MousePosition().x,(int)Input::MousePosition().y);
-
-
 
     }
 
@@ -71,11 +55,8 @@ public:
 
 
 int main([[maybe_unused]] int argc, [[maybe_unused]] char * argv[]){
-
     auto game = new MyGame();
     game->GameLoop();
-
-
 }
 
 

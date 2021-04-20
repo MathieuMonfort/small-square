@@ -8,38 +8,23 @@
 #include <iostream>
 #include <string>
 #include <iomanip>
-#include <vector>
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include <shader.h>
-#include <game.h>
 using namespace glm;
 using namespace std;
 
-
-struct DebugLine{
-public:
-    vector<float> vertices;
-};
-
-using namespace std;
 class Debug{
 private:
-    static smallsquare::Shader * _debugShader;
 
 public:
-    static void Init( smallsquare::Shader * shader);
-    static void DrawRay(vec3 start, vec3 end , vec3 color);
-
     static void Log(const string &str);
     static void Log(const string &name, mat4 mat);
     static void Log( const string &name, vec2 vec);
     static void Log( const string &name, vec3 vec);
     static void Log( const string &name, vec4 vec);
-
 
     static void Clear();
 };
