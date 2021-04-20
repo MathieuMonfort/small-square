@@ -19,7 +19,7 @@ vector<float> smallsquare::UIQuad::_vertices = {
 
 
 void smallsquare::UIQuad::CheckIntegrity() {
-    for(auto &i :game->GetPathTo(this)  ){
+    for(auto &i :GetPathTo(this)  ){
         if(dynamic_cast<Canvas * >(i) ){
             canvas = (Canvas * ) i;
         }
@@ -48,15 +48,15 @@ void smallsquare::UIQuad::SetupMesh() {
     glBindVertexArray(0);
 }
 
-void smallsquare::UIQuad::Draw(Viewport *viewport) {
+void smallsquare::UIQuad::Draw(mat4 projection, Camera * cam, float ratio) {
     shader->Use();
     shader->SetFloat("alpha", alpha);
 
     shader->SetInt("texture_ui", 0);
 
     shader->SetMat4("model", GetGlobalMatrix());
-    shader->SetMat4("view", canvas->GetViewMatrix(viewport));
-    shader->SetMat4("projection", canvas->GetProjectionMatrix(viewport));
+    shader->SetMat4("view", cam->GetView());
+    shader->SetMat4("projection", projection);
     background->BindToProcessor(GL_TEXTURE0);
 
     glBindVertexArray(_vao);
@@ -65,7 +65,7 @@ void smallsquare::UIQuad::Draw(Viewport *viewport) {
 }
 
 mat4 smallsquare::UIQuad::GetLocalMatrix() {
-    float parentRatio =((UIElement *)game->GetParent(this))->ratio;
+    float parentRatio =((UIElement *)GetParent(this))->ratio;
 
     vec3 Anchored;
     vec3 lscale = GetLocalScale();

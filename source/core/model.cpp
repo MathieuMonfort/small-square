@@ -74,16 +74,16 @@ smallsquare::Model::Model(vec3 position, vec3 euler, vec3 s, string path, smalls
 
 void smallsquare::Model::Tick(float deltaTime){ }
 
-void smallsquare::Model::Draw(Viewport * viewport){
+void smallsquare::Model::Draw(mat4 projection, Camera * cam, float ratio){
 
-    auto lightSources = game->FindObjectsOfType<Light*>();
+    auto lightSources = FindObjectsOfType<Light*>();
 
     shader->Use();
 
     shader->SetMat4("model", GetLocalMatrix());
-    shader->SetMat4("view", viewport->GetViewMatrix());
-    shader->SetMat4("projection", viewport->GetProjectionMatrix());
-    shader->SetVec3("viewPos", viewport->cam->position);
+    shader->SetMat4("view", cam->GetView());
+    shader->SetMat4("projection", projection);
+    shader->SetVec3("viewPos", cam->position);
 
 
     //Adding Light Sources Info To used Shader;

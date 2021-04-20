@@ -69,7 +69,7 @@ namespace smallsquare {
 
         mat4 GetLocalMatrix() override;
 
-        void Draw(Viewport * viewport) override;
+        void Draw(mat4 projection, Camera * cam, float ratio) override;
 
 
     };

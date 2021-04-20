@@ -24,18 +24,23 @@ namespace  smallsquare {
 
 
 class Canvas : public UIElement, public RayCastCandidate{
+    private:
+        mat4 _projection;
+        mat4 _view;
     public:
         Canvas(vec3 position, vec3 euler, vec2 scale, const string& name = "Canvas" ): UIElement(position , euler, vec3(scale, 0.0f ), name),
                                                                                        RayCastCandidate()  {}
 
-        virtual mat4 GetProjectionMatrix(Viewport * viewport){
-            return viewport->GetProjectionMatrix();
+        virtual mat4 GetProjectionMatrix(){
+            return _projection;
         }
-        virtual mat4 GetViewMatrix(Viewport * viewport){
-            return viewport->GetViewMatrix();
+        virtual mat4 GetViewMatrix(){
+            return _view;
         }
-        void Draw(Viewport * viewport) override{
-            ratio = viewport->GetRatio();
+        void Draw(mat4 projection, Camera * cam , float ratio ) override{
+           this->ratio = ratio;
+           _view = cam->GetView();
+           _projection = projection;
         }
     };
 
@@ -46,10 +51,10 @@ class Canvas : public UIElement, public RayCastCandidate{
         mat4 GetGlobalMatrix() override{
             return mat4(1.0f);
         }
-        mat4 GetProjectionMatrix(Viewport * viewport) override{
-            return viewport->GetOrthoProjectionMatrix();
+        mat4 GetProjectionMatrix() override{
+            return ortho(-ratio ,ratio,-1.0f,1.0f);
         }
-        mat4 GetViewMatrix(Viewport * viewport) override{
+        mat4 GetViewMatrix() override{
             return mat4(1.0f);
         }
     };

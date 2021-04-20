@@ -46,8 +46,6 @@ namespace smallsquare{
         [[nodiscard]]
         mat4 GetProjectionMatrix() const;
         [[nodiscard]]
-        mat4 GetOrthoProjectionMatrix();
-        [[nodiscard]]
         mat4 GetViewMatrix() const;
         [[nodiscard]]
         vec3 ScreenToWorldSpace(int x, int y );
@@ -79,11 +77,11 @@ namespace smallsquare{
         virtual void Tick();
         void GameLoop();
 
-
         GameObject * GetParent(GameObject * object);
         GameObject * GetChild(GameObject * object, int i);
         vector<GameObject *> GetChildren(GameObject * object);
         vector<GameObject *> GetPathTo(GameObject* object);
+
 
 
         template <class T> vector<T> FindObjectsOfType(){

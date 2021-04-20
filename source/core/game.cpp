@@ -36,7 +36,7 @@ smallsquare::Game::Game(int width, int height){
         glfwTerminate();
     }
     _objectTree = new Tree<GameObject *>(new Origin());
-    _objectTree->GetRoot()->game = this;
+    _objectTree->GetRoot()->objectTree = _objectTree;
     glEnable(GL_DEPTH_TEST);
     Input::Init(_win);
 }
@@ -65,7 +65,7 @@ smallsquare::GameObject * smallsquare::Game::Instantiate(GameObject * object, Ga
 {
     if(!object) {return nullptr;}
 
-    object->game = this;
+    object->objectTree = _objectTree;
     if(!parent) {
         _objectTree->Insert(object);
         return object;
@@ -155,10 +155,6 @@ mat4 smallsquare::Viewport::GetProjectionMatrix() const{
     return perspective(radians(45.0f), (float)(_w*(float)_wWidth) /(_h*(float)_wHeight) ,0.1f,100.0f);
 }
 
-mat4 smallsquare::Viewport::GetOrthoProjectionMatrix(){
-    const float ratio = GetRatio();
-    return ortho(-ratio ,ratio,-1.0f,1.0f);
-}
 
 mat4 smallsquare::Viewport::GetViewMatrix() const{
     return cam->GetView();
@@ -217,7 +213,7 @@ void smallsquare::Viewport::Draw(vector<DrawableObject *> drawables){
     for(auto & i : drawables){
         decltype(i) obj = i;
         if(obj->visible && obj->IsActive()) {
-            obj->Draw(this);
+            obj->Draw(GetProjectionMatrix(), cam , GetRatio());
         }
     }
 }

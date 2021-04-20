@@ -65,22 +65,22 @@ vec3 smallsquare::GameObject::GetGlobalUp(){
 }
 mat4 smallsquare::GameObject::GetGlobalMatrix(){
     mat4 lMat = GetLocalMatrix();
-    if(!game->GetParent(this)) {return GetLocalMatrix();}
+    if(!GetParent(this)) {return GetLocalMatrix();}
 
-    mat4 pMat = game->GetParent(this)->GetGlobalMatrix();
-    return  game->GetParent(this)->GetGlobalMatrix() *  GetLocalMatrix();
+    mat4 pMat = GetParent(this)->GetGlobalMatrix();
+    return  GetParent(this)->GetGlobalMatrix() *  GetLocalMatrix();
 }
 mat4 smallsquare::GameObject::GetGlobalRotation(){
-    if(!game->GetParent(this)) {return GetLocalRotation();}
-    return game->GetParent(this)->GetGlobalRotation() * GetLocalRotation();
+    if(!GetParent(this)) {return GetLocalRotation();}
+    return GetParent(this)->GetGlobalRotation() * GetLocalRotation();
 }
 vec3 smallsquare::GameObject::GetGlobalPosition(){
-    if(!game->GetParent(this)) {return GetLocalPosition();}
-    return game->GetParent(this)->GetGlobalPosition() + GetLocalPosition();
+    if(!GetParent(this)) {return GetLocalPosition();}
+    return GetParent(this)->GetGlobalPosition() + GetLocalPosition();
 }
 vec3 smallsquare::GameObject::GetGlobalScale(){
-    if(!game->GetParent(this)) {return GetLocalScale();}
-    return game->GetParent(this)->GetGlobalScale() * GetLocalScale();
+    if(!GetParent(this)) {return GetLocalScale();}
+    return GetParent(this)->GetGlobalScale() * GetLocalScale();
 }
 
 void smallsquare::GameObject::Tick(float deltaTime){}
@@ -111,9 +111,25 @@ void smallsquare::GameObject::Scale(vec3 newScale) {
 }
 
 bool smallsquare::GameObject::IsActive() {
-    if(!game->GetParent(this)) {return active;}
-    if(game->GetParent(this)->IsActive()) {return active;}
+    if(!GetParent(this)) {return active;}
+    if(GetParent(this)->IsActive()) {return active;}
     return false;
+}
+
+smallsquare::GameObject *smallsquare::GameObject::GetParent(smallsquare::GameObject *object) {
+    return objectTree->ParentOf(object);
+}
+
+smallsquare::GameObject *smallsquare::GameObject::GetChild(smallsquare::GameObject *object, int i) {
+    return objectTree->ChildOf(object, i);
+}
+
+vector<smallsquare::GameObject *> smallsquare::GameObject::GetChildren(smallsquare::GameObject *object) {
+    return objectTree->ChildrenOf(object);
+}
+
+vector<smallsquare::GameObject *> smallsquare::GameObject::GetPathTo(smallsquare::GameObject *object) {
+    return objectTree->PathTo(object);
 }
 
 
@@ -152,6 +168,6 @@ mat4 smallsquare::Origin::GetGlobalRotation() {
 smallsquare::DrawableObject::DrawableObject(vec3 position, vec3 euler, vec3 s, const string& name)
         : GameObject(position, euler, s, name) { }
 
-void smallsquare::DrawableObject::Draw(smallsquare::Viewport *viewport) { }
+void smallsquare::DrawableObject::Draw(mat4 projection, Camera * cam ,float ratio) { }
 
 #pragma endregion

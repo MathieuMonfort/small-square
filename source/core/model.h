@@ -75,7 +75,7 @@ namespace smallsquare{
     public:
         Model(vec3 position, vec3 euler, vec3 s, string path, Shader * shader, const string & name = "Model") ;
         void Tick(float deltaTime) override;
-        void Draw(Viewport * viewport) override;
+        void Draw(mat4 projection, Camera * cam,float ratio ) override;
     };
 
 
