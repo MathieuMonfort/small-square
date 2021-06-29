@@ -33,3 +33,4 @@ target_link_libraries(smallsquare_core PRIVATE
 
 
 target_include_directories(smallsquare_core PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}")
+target_link_libraries(smallsquare_core PUBLIC glfw OpenGL::GL ${CMAKE_DL_LIBS})

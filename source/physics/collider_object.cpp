@@ -10,7 +10,7 @@
 
 
 void smallsquare::ColliderObject::CheckIntegrity() {
-    for (auto &i : game->GetPathTo(this)) {
+    for (auto &i : GetPathTo(this)) {
         if (dynamic_cast<CollisionObject *>(i)) {
             cMaster = (CollisionObject *) i;
         }
