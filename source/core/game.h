@@ -39,8 +39,8 @@ namespace smallsquare{
 
         /**
          * DO NOT USE Constructor for the Viewport class. Should only be called by the AddViewPort Function
-         * from the Game class
-         * @param win Active GLFWwindow
+         * from the Game class.
+         * @param win Active GLFWwindow.
          * @param cam A pointer to a camera the viewport can get a View Matrix From.
          * @param x viewport position from the left on a 0 to 1 scale.
          * @param y viewport position from the top on a 0 to 1 scale.
@@ -49,17 +49,49 @@ namespace smallsquare{
          */
         Viewport(GLFWwindow *win, Camera *cam, float x = 0, float y = 0, float width = 1, float height = 1);
 
+        /**
+         * Get the viewport projection matrix.
+         * @return A glm::mat4 matrix representing a projection matrix.
+         */
         [[nodiscard]]
         mat4 GetProjectionMatrix() const;
+
+        /**
+         * Get the viewport's currently assigned camera's view matrix.
+         * @return A glm::mat4 matrix representing a view matrix.
+         */
         [[nodiscard]]
         mat4 GetViewMatrix() const;
+
+        /**
+         * Get the position of a point projected on the screen plane in world space.
+         * @param x position of the projected point from the left.
+         * @param y position of the projected point from the top.
+         * @return a vec3 representing the position of a point in world space.
+         */
         [[nodiscard]]
         vec3 ScreenToWorldSpace(int x, int y );
+
+        /**
+         * Get the viewport's current ratio.
+         * @return The viewport's current ratio.
+         */
         [[nodiscard]]
         float GetRatio();
+
+        /**
+         * Checks if a point of the current window is inside the viewport.
+         * @param x position of the point in pixel from the left.
+         * @param y position of the point in pixel from the top.
+         * @return true if the point is inside the viewport, false if not.
+         */
         [[nodiscard]]
         bool ContainsPixelPos(int x, int y);
 
+        /**
+         * Draws a list of objects on screen. Should be called by the game's Tick Function.
+         * @param drawables The list of DrawableObjects to be drawn on screen.
+         */
         void Draw(vector<DrawableObject *> drawables);
     };
     class Game{
@@ -75,7 +107,6 @@ namespace smallsquare{
 
 
     public:
-
 
         /**
          * Constructor for the game class
