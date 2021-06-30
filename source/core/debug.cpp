@@ -35,7 +35,5 @@ void Debug::Log(const string &name, vec4 vec) {
 }
 
 void Debug::Clear() {
-    system("clear");
+    int ret = system("clear");
 }
-
-

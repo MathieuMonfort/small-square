@@ -1,11 +1,7 @@
-#Small Square Game Engine
-
-
-
-##Building Small Square
-###NixOS
-
-####NixOS with CLion
+# Small Square Game Engine
+## Building Small Square
+### NixOS
+#### NixOS with CLion
 If you're using NixOS, you probably know how awesome it is. 
 All you need to do to build the project and modify it with CLion is cd into small-square root directory and 
 
@@ -17,7 +13,7 @@ Then from the Nix Shell:
 
 And you're ready to go.
 
-####NixOS without CLion
+#### NixOS without CLion
 if you don't want nix-shell to install clion you just need to remove this line from shell.nix
 
 	pkgs.jetbrains.clion
@@ -25,8 +21,7 @@ if you don't want nix-shell to install clion you just need to remove this line f
 and either replace it with you're favorite IDE or write nothing.
 It will work as long as you launch cmake and make from the nix-shell.
 
-
-###Requirements
+### Requirements
 To build small-square libraries you need to download a bunch of external libraries
 
 Fedora
@@ -41,7 +36,7 @@ NixOS
 
 No requirements needed if you use nix-shell shell.nix cause NixOS rocks!!!
 
-####GLFW3
+#### GLFW3
 glfw3 is a common OpenGL library, you need to build it from source. 
 You can clone gflw from github : https://github.com/glfw/glfw 
 Build it with (when in glfw _directory)
@@ -52,7 +47,7 @@ Build it with (when in glfw _directory)
     make 
     sudo make install
 
-####GLAD
+#### GLAD
 This is a tricky one (will be built in situ in future builds)
 
 Go to https://glad.dav1d.de/
@@ -72,7 +67,7 @@ Copy the content of the include _directory into your
 
 _directory (you probably need super user privileges).
 
-####Assimp
+#### Assimp
 Assimp is the Open Asset Import Library (Manages 3d models imports).
 clone the source from https://github.com/assimp/assimp
 Build with (when in assimp _directory):
@@ -82,7 +77,7 @@ Build with (when in assimp _directory):
     make 
     sudo make install
 
-###Building
+### Building
 Clone the source and build with ( in small-square _directory) :
 
     mkdir build
