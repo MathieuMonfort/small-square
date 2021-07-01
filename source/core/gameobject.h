@@ -251,8 +251,17 @@ namespace smallsquare {
          * @param position The position the GameObject will be set to in wold space.
          */
         void PlaceInWorld(vec3 position);
+
+        /**
+         * Set the GameObject's local scale.
+         * @param newScale The scale the GameObject will be set to.
+         */
         void Scale(vec3 newScale);
 
+        /**
+         * Check recursively if the GameObject is active.
+         * @return true if object and its ancestor are all active, false if any of them is inactive.
+         */
         bool IsActive();
     };
 
@@ -266,6 +275,8 @@ namespace smallsquare {
 
         vec3 GetLocalUp() override;
 
+        vec3 GetGlobalPosition() override;
+
         mat4 GetLocalMatrix() override;
 
         mat4 GetGlobalMatrix() override;
@@ -277,8 +288,21 @@ namespace smallsquare {
     public:
         bool visible = true;
 
+        /**
+         * Constructor for the DrawableObject class
+         * @param position The initial GameObject's local position.
+         * @param euler The initial GameObject's local rotation applied in XYZ order.
+         * @param s The initial GameObject's local scale.
+         * @param name The GameObject's name.
+         */
         DrawableObject(vec3 position, vec3 euler, vec3 s, const string &name = "DrawableObject");
 
+        /**
+         * The Draw function is called by every active viewport at every iteration of the game loop.
+         * @param projection the current Viewport's projection matrix.
+         * @param cam A pointer to the camera currently attached to the viewport.
+         * @param ratio The current viewport's ratio.
+         */
         virtual void Draw(mat4 projection, Camera * cam, float ratio);
     };
 }

@@ -19,7 +19,8 @@ private:
 public:
     MyGame() : Game(){
         string resFold = RESOURCE_FOLDER;
-
+        auto o = new Origin();
+        o->GetGlobalPosition();
         //Cams & Viewports
         auto cam = new Camera(vec3 (0.0f), vec3(0.0f));
 

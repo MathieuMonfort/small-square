@@ -106,6 +106,10 @@ void smallsquare::GameObject::Place(vec3 position) {
     _position = position;
 }
 
+void smallsquare::GameObject::PlaceInWorld(vec3 position) {
+    _position = position - GetParent(this)->GetGlobalPosition();
+}
+
 void smallsquare::GameObject::Scale(vec3 newScale) {
     _scale = newScale;
 }
@@ -143,11 +147,15 @@ vec3 smallsquare::Origin::GetLocalFront() {
 }
 
 vec3 smallsquare::Origin::GetLocalRight() {
-    return vec3(0.0f,0.0f,1.0f);
+    return vec3(1.0f,0.0f,0.0f);
 }
 
 vec3 smallsquare::Origin::GetLocalUp() {
-    return vec3(0.0f,0.0f,1.0f);
+    return vec3(0.0f,1.0f,0.0f);
+}
+
+vec3 smallsquare::Origin::GetGlobalPosition() {
+    return vec3(0.0f);
 }
 
 mat4 smallsquare::Origin::GetLocalMatrix() {
@@ -161,6 +169,7 @@ mat4 smallsquare::Origin::GetGlobalMatrix() {
 mat4 smallsquare::Origin::GetGlobalRotation() {
     return mat4(1.0f);
 }
+
 
 #pragma endregion
 
