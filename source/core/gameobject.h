@@ -135,15 +135,47 @@ namespace smallsquare {
 
         /**
          * CheckIntegrity is initially called right before the main game loop starts. It is used to verify the integrity
-         * of the working object tree.
+         * of the working object tree. It should be overriden to had conditions to the tree integrity. It can be called
+         * at any time.
          */
         virtual void CheckIntegrity();
 
+        /**
+         * Get the parent of a GameObject in the current object tree
+         * @param object A pointer to the child object
+         * @return A pointer to the parent object
+         */
         GameObject * GetParent(GameObject * object);
+
+        /**
+         * Get the child of a GameObject at index i in the current object tree
+         * @param object a pointer to the parent object
+         * @param i The index of the child object
+         * @return A pointer to the child object
+         */
         GameObject * GetChild(GameObject * object, int i);
+
+        /**
+         * Get a vector containing pointers to every children of a GameObject
+         * @param object A pointer to the parent object
+         * @return A vector of GameObject pointers or null if the parent object has no children
+         */
         vector<GameObject *> GetChildren(GameObject * object);
+
+        /**
+         * Get a vector containing pointers to every GameObject between one object and the current tree root object.
+         * It is organized so the lowest index represents the path's end and the highest index represents the tree root.
+         * @param object A pointer to the path's end
+         * @return A vector og GameObject pointers.
+         */
         vector<GameObject *> GetPathTo(GameObject* object);
 
+        /**
+         * Get a vector containing pointers to every GameObject of a certain child type in the current object tree.
+         * @tparam T The type of object to be searched for. It must be a pointer to a class derived from GameObject.
+         * @return A vector containing objects of type T or an empty vector if there is no object of type T in the
+         * current object tree.
+         */
         template <class T> vector<T> FindObjectsOfType(){
             vector<GameObject *> objectList = objectTree->Flatten();
             vector<T> result;
@@ -160,6 +192,14 @@ namespace smallsquare {
 
         }
 
+        /**
+         * Get a vector containing pointers to every GameObject of a certain child type and with a given name
+         * in the current object tree.
+         * @tparam T The type of object to be searched for. It must be a pointer to a class derived from GameObject.
+         * @param name The name of the searched for objects.
+         * @return A vector containing objects of type T or an empty vector if there no object respects the type and
+         * name condition in the current object tree.
+         */
         template <class T> vector<T> FindObjects(const string & objectName){
             vector<T> objectList = FindObjectsOfType<T>();
             vector<T> result;
@@ -173,12 +213,44 @@ namespace smallsquare {
             return result;
         }
 
-
+        /**
+         * Rotate the game object an amount in degrees around a vector.
+         * @param amount The amount in degrees the GameObject should be rotated
+         * @param direction The vector the GameObject will be rotated around.
+         */
         void Rotate(float amount, vec3 direction);
-        void LookAt(vec3 position);
+
+        /**
+         * Generate a new rotation matrix with an up vector corresponding to the world's up vector and a front vector
+         * starting at the GameObject's global position and ending at end (normalized).
+         * @param end The point the GameObject will be oriented towards.
+         */
+        void LookAt(vec3 end);
+
+        /**
+         * Generate a new rotation matrix with a specified u vector and a front vector
+         * starting at the GameObject's global position and ending at end (normalized).
+         * @param end The point the GameObject will be oriented towards.
+         */
         void LookAt(vec3 position, vec3 up);
-        void Translate(vec3 direction);
+
+        /**
+         * Translate the GameObject by adding the current position and the specified vector
+         * @param translation the vector the GameObject will be translated by.
+         */
+        void Translate(vec3 translation);
+
+        /**
+         * Set the GameObject at a position relative to it's parent.
+         * @param position The position the GameObject will be set to in local space.
+         */
         void Place(vec3 position);
+
+        /**
+         * Set the GameObject at a position in world space.
+         * @param position The position the GameObject will be set to in wold space.
+         */
+        void PlaceInWorld(vec3 position);
         void Scale(vec3 newScale);
 
         bool IsActive();

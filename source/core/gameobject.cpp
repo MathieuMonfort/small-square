@@ -92,14 +92,14 @@ void smallsquare::GameObject::Rotate(float amount, vec3 direction) {
     _rotation = rotate(_rotation, amount, direction);
 }
 
-void smallsquare::GameObject::LookAt(vec3 position) {
-    LookAt(position, vec3(0,1,0));
+void smallsquare::GameObject::LookAt(vec3 end) {
+    LookAt(end, vec3(0, 1, 0));
 }
 void smallsquare::GameObject::LookAt(vec3 position, vec3 up) {
-    _rotation = lookAt(GetLocalPosition(),position, up);
+    _rotation = lookAt(GetGlobalPosition(),position, up);
 }
-void smallsquare::GameObject::Translate(vec3 direction) {
-    _position += direction;
+void smallsquare::GameObject::Translate(vec3 translation) {
+    _position += translation;
 }
 
 void smallsquare::GameObject::Place(vec3 position) {
