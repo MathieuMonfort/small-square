@@ -96,7 +96,6 @@ namespace smallsquare{
     };
     class Game{
     private:
-
         float _lastFrame = 0.0f;
         Tree<GameObject*> * _objectTree;
         GLFWwindow * _win;

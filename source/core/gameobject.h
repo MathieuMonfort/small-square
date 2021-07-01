@@ -34,26 +34,109 @@ namespace smallsquare {
         bool active = true;
         Tree<GameObject*> * objectTree;
 
-
+        /**
+         * Constructor for the GameObject class.
+         * @param position The initial GameObject's local position.
+         * @param euler The initial GameObject's local rotation applied in XYZ order.
+         * @param s The initial GameObject's local scale.
+         * @param name The GameObject's name.
+         */
         GameObject(vec3 position, vec3 euler, vec3 s, const string &name = "GameObject");
 
+        /**
+         * Get the local front vector calculated from the local rotation matrix.
+         * @return A vec3 representing the GameObject's local front vector.
+         */
         virtual vec3 GetLocalFront();
+
+        /**
+         * Get the local right vector calculated from the local rotation matrix.
+         * @return A vec3 representing the GameObject's local right vector.
+         */
         virtual vec3 GetLocalRight();
+
+        /**
+         * Get the local up vector calculated from the local rotation matrix.
+         * @return A vec3 representing the GameObject's local up vector.
+         */
         virtual vec3 GetLocalUp();
+
+        /**
+         * Get the current local position.
+         * @return A vec3 representing the GameObject's local position.
+         */
         virtual vec3 GetLocalPosition();
+
+        /**
+         * Get the current local scale.
+         * @return A vec3 representing the GameObject's local scale.
+         */
         virtual vec3 GetLocalScale();
+
+        /**
+         * Get the current local rotation matrix.
+         * @return A mat4 representing the GameObject's local rotation.
+         */
         virtual mat4 GetLocalRotation();
+
+        /**
+         * Get the current local transformation matrix calculated with the local position, scale and rotation matrix.
+         * @return A mat4 representing the GameObject's local transformation.
+         */
         virtual mat4 GetLocalMatrix();
 
+        /**
+         * Get the global front vector calculated from the global rotation matrix.
+         * @return A vec3 representing the GameObject's global front vector.
+         */
         virtual vec3 GetGlobalFront();
+
+        /**
+         * Get the global right vector calculated from the global rotation matrix.
+         * @return A vec3 representing the GameObject's global right vector.
+         */
         virtual vec3 GetGlobalRight();
+
+        /**
+         * Get the global up vector calculated from the global rotation matrix.
+         * @return A vec3 representing the GameObject's global up vector.
+         */
         virtual vec3 GetGlobalUp();
-        virtual mat4 GetGlobalMatrix();
-        virtual mat4 GetGlobalRotation();
+
+        /**
+         * Get the current global position.
+         * @return A vec3 representing the GameObject's global position.
+         */
         virtual vec3 GetGlobalPosition();
+
+        /**
+         * Get the current global scale.
+         * @return A vec3 representing the GameObject's global scale.
+         */
         virtual vec3 GetGlobalScale();
 
+        /**
+         * Get the current global rotation matrix.
+         * @return A mat4 representing the GameObject's global rotation.
+         */
+        virtual mat4 GetGlobalRotation();
+
+        /**
+         * Get the current global transformation matrix.
+         * @return A mat4 representing the GameObject's global transformation.
+         */
+        virtual mat4 GetGlobalMatrix();
+
+        /**
+         * Tick is called by the game's tick function at every iteration of the game loop.
+         * @param deltaTime The elapsed time in second since the last frame.
+         */
         virtual void Tick(float deltaTime);
+
+        /**
+         * CheckIntegrity is initially called right before the main game loop starts. It is used to verify the integrity
+         * of the working object tree.
+         */
         virtual void CheckIntegrity();
 
         GameObject * GetParent(GameObject * object);
