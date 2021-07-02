@@ -18,10 +18,9 @@ void smallsquare::CameraController::Tick(float deltaTime){
 }
 
 
-smallsquare::FlightCamCon::FlightCamCon(vec3 position, vec3 euler, smallsquare::Camera *cam, float moveSpeed,
-                                        float rotateSpeed) : CameraController(position, euler, cam){
+smallsquare::FlightCamCon::FlightCamCon(vec3 position, vec3 euler, smallsquare::Camera *cam, float moveSpeed)
+                        : CameraController(position, euler, cam){
     this->_moveSpeed = moveSpeed;
-    this->_rotateSpeed = rotateSpeed;
 }
 
 void smallsquare::FlightCamCon::Tick(float deltaTime){
