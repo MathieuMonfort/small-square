@@ -5,7 +5,7 @@
 #include <canvas.h>
 
 #include "config.h"
-
+#include "debug.h"
 
 
 using namespace std;
@@ -48,7 +48,6 @@ public:
 
     void Tick() override{
         Game::Tick();
-
     }
 
 };

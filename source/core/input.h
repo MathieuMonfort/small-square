@@ -78,11 +78,16 @@ namespace  smallsquare {
         static void WindowSizeCallback(GLFWwindow * win , int h, int w);
 
         /**
-         * Check if a key
-         * @param name
-         * @return
+         * Check if a key is currently in a pressed state.
+         * @param name The key's name, set with AddInput function.
+         * @return true if the key is currently down false if not.
          */
         static bool KeyPressed(const string &name);
+
+        /**
+         * Get
+         * @return
+         */
         static vec2 MouseOffset();
         static vec2 MousePosition();
         static void Process();
