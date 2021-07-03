@@ -60,7 +60,7 @@ namespace  smallsquare {
         static void Init(GLFWwindow * win);
 
         /**
-         * DO NOT USE Called every time the mouse moves. It updates _mXOffset and _mYOffset so any object class can retrieve mouse
+         * Called every time the mouse moves. It updates _mXOffset and _mYOffset so any object class can retrieve mouse
          * input information.
          * @param win The active window
          * @param xpos The current mouse x position in pixel
@@ -69,7 +69,7 @@ namespace  smallsquare {
         static void MouseMoveCallback(GLFWwindow * win, double xpos, double ypos);
 
         /**
-         * DO NOT USE Called every time the window is resized. It updates the _winH and _winW so the viewports can
+         * Called every time the window is resized. It updates the _winH and _winW so the viewports can
          * update their projection matrices.
          * @param win The active window.
          * @param h The current window height.
@@ -85,14 +85,29 @@ namespace  smallsquare {
         static bool KeyPressed(const string &name);
 
         /**
-         * Get
-         * @return
+         * Get the mouse movement since last frame in pixel.
+         * @return A vec2 representing a translation in pixel.
          */
         static vec2 MouseOffset();
-        static vec2 MousePosition();
-        static void Process();
-        static void AddInput( int key, string id);
 
+        /**
+         * Get The current mouse position in pixel from th top left.
+         * @return A vec2 representing the mouse position in pixel.
+         */
+        static vec2 MousePosition();
+
+        /**
+         * Process Should be called by the Game class at every iteration of the game loop
+         * before any object Tick and Draw Function (done by default).
+         */
+        static void Process();
+
+        /**
+         * Bind a GLFW_KEY to an id string so it can be accessed through the KeyPressed function.
+         * @param key A GLFW_KEY code.
+         * @param id A unique string to identify the key.
+         */
+        static void AddInput( int key, string id);
 
     };
 }

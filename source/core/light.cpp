@@ -15,6 +15,10 @@ smallsquare::Light::Light(vec3 position, vec3 euler, vec3 ambient, vec3 diffuse,
     this->specular = specular;
 }
 
+smallsquare::DirectionLight::DirectionLight(vec3 position, vec3 euler, vec3 ambient, vec3 diffuse, vec3 specular)
+        : Light(position, euler, ambient, diffuse, specular) {}
+
+
 smallsquare::PointLight::PointLight(vec3 position, vec3 euler, vec3 ambient, vec3 diffuse, vec3 specular,
                                     float constant, float linear, float quadratic)
                                     : Light(position, euler, ambient, diffuse, specular){
@@ -32,3 +36,4 @@ smallsquare::SpotLight::SpotLight(vec3 position, vec3 euler, vec3 ambient, vec3 
     this->cutOff = cutOff;
     this->outerCutOff = outerCutOff;
 }
+

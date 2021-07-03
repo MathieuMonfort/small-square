@@ -90,9 +90,9 @@ void smallsquare::Game::GameLoop()
         _deltaTime = currentFrame - _lastFrame;
         _lastFrame = currentFrame;
 
+        smallsquare::Input::Process();
         Tick();
 
-        smallsquare::Input::Process();
         glfwSwapBuffers(_win);
         glfwPollEvents();
     }

@@ -6,7 +6,7 @@
 
 #include "config.h"
 #include "debug.h"
-
+#include <string>
 
 using namespace std;
 using namespace glm;
@@ -17,7 +17,7 @@ private:
 
 
 public:
-    MyGame() : Game(){
+    MyGame() : Game(300,200){
         string resFold = RESOURCE_FOLDER;
         auto o = new Origin();
         o->GetGlobalPosition();
@@ -48,6 +48,9 @@ public:
 
     void Tick() override{
         Game::Tick();
+
+        Debug::Log("Mouse Position" , Input::MousePosition());
+
     }
 
 };
@@ -56,6 +59,8 @@ public:
 
 int main([[maybe_unused]] int argc, [[maybe_unused]] char * argv[]){
     auto game = new MyGame();
+
+
     game->GameLoop();
 }
 

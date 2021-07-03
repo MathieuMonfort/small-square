@@ -70,9 +70,19 @@ namespace smallsquare{
     private: 
         void LoadModel(string &path);
         void ProcessNode(aiNode *node, const aiScene *scene);
-        Mesh  * ProcessMesh(aiMesh *mesh, const aiScene *scene);
+        Mesh * ProcessMesh(aiMesh *mesh, const aiScene *scene);
 
     public:
+
+        /**
+         * Constructor for the Model class.
+         * @param position
+         * @param euler
+         * @param s
+         * @param path
+         * @param shader
+         * @param name
+         */
         Model(vec3 position, vec3 euler, vec3 s, string path, Shader * shader, const string & name = "Model") ;
         void Tick(float deltaTime) override;
         void Draw(mat4 projection, Camera * cam,float ratio ) override;
