@@ -61,6 +61,11 @@ public:
         _root = new Node<T>(data, nullptr);
     }
 
+    Tree<T> subtree(T newRoot){
+        if(!GetFirst(newRoot)) {return nullptr;}
+        return Tree(GetFirst(newRoot));
+    }
+
     T GetRoot(){
         return _root->data;
     }
@@ -109,14 +114,14 @@ public:
     }
 
     int Insert(T data, T parent){
+        if(GetFirst(data)) {return -1;}
         Node<T> * pNode  = GetFirst(parent);
         if(pNode == nullptr) { return -1; }
         Insert(data, pNode);
         return 0;
     }
     int Insert(T data){
-        Insert(data, _root);
-        return 0;
+        return Insert(data, _root);
     }
 };
 
