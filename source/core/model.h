@@ -74,8 +74,10 @@ namespace smallsquare{
 
     public:
 
+        //TODO Make a constructor for the model class so they can share loaded mesh.
+
         /**
-         * Constructor for the Model class.
+         * Constructor for the Model class. A model is a GameObject containing meshes.
          * @param position
          * @param euler
          * @param s
