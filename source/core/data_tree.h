@@ -61,10 +61,17 @@ public:
         _root = new Node<T>(data, nullptr);
     }
 
-    Tree<T> subtree(T newRoot){
+    Tree<T> Subtree(T newRoot){
         if(!GetFirst(newRoot)) {return nullptr;}
         return Tree(GetFirst(newRoot));
     }
+
+    void Exclude(T branch){
+        if(!GetFirst(branch)) {return; }
+
+
+    }
+
 
     T GetRoot(){
         return _root->data;
