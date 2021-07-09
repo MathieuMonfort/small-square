@@ -67,9 +67,16 @@ public:
     }
 
     void Exclude(T branch){
-        if(!GetFirst(branch)) {return; }
+
+        Node<T> branchRoot = GetFirst(branch);
+        if(branchRoot == nullptr) {return; }
 
 
+        for(Node<T> * n : branchRoot.parent.children ){
+            if (n->data == branch) {
+                erase(branchRoot.children, )
+            }
+        }
     }
 
 
