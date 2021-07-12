@@ -32,7 +32,7 @@ namespace smallsquare {
     public:
         string name;
         bool active = true;
-        Tree<GameObject*> * objectTree;
+        DynamicTree<GameObject*> * objectTree;
 
         /**
          * Constructor for the GameObject class.

@@ -6,43 +6,75 @@
 #ifndef SMALLSQUARE_DATA_TREE_H
 #define SMALLSQUARE_DATA_TREE_H
 #include <vector>
+#include <list>
 
 using namespace std;
 
-
 template <class T>
 struct Node{
-    Node * parent;
-    vector<Node * > children;
+
+};
+
+template <class T>
+struct DynamicNode : public Node<T> {
+    DynamicNode * parent;
+    list<DynamicNode * > children;
     T data;
 
-    Node(T data, Node * parent ){
+    DynamicNode(T data, DynamicNode * parent ){
         this->data = data;
         this->parent = parent;
     }
 };
 
-
 template <class T>
 class Tree{
-private:
+protected:
     Node<T> * _root;
 
-    Node<T> * GetFirst(T data){
+    virtual Node<T> * GetFirst(T data){}
+    virtual Node<T> * TraverseOrReturn(Node<T> * n, T data){}
+    virtual vector<T>  TraverseOrPushback(Node<T> * n){}
+    virtual void Insert(T data, Node<T> * parent){}
+
+public:
+    virtual Tree<T> Subtree(T newRoot){}
+    virtual void Exclude(T branch){}
+    virtual T GetRoot(){}
+
+    virtual vector<T> Flatten(){}
+    virtual vector<T> Flatten(T data){}
+
+    virtual T ChildOf(T Data, int i =0 ){}
+    virtual vector<T> ChildrenOf(T data){}
+    virtual T ParentOf(T data){}
+    virtual vector<T> PathTo(T data){}
+
+    virtual int Insert(T data, T parent){}
+    virtual int Insert(T data){}
+};
+
+
+template <class T>
+class DynamicTree : public Tree<T> {
+private:
+    DynamicNode<T> * _root;
+
+    DynamicNode<T> * GetFirst(T data) override {
         return TraverseOrReturn(_root, data);
     }
-    Node<T> * TraverseOrReturn(Node<T> *n, T data){
+    DynamicNode<T> * TraverseOrReturn(DynamicNode<T> *n, T data) override{
         if(n->data == data) {return n;}
 
         for(int i =0; i< n->children.size() ; i++) {
-            Node<T> * traversedChild = TraverseOrReturn(n->children[i], data);
+            DynamicNode<T> * traversedChild = TraverseOrReturn(n->children[i], data);
             if(traversedChild == nullptr){continue;}
             if(traversedChild->data == data ) {return traversedChild; } 
         }
 
         return nullptr;
     }
-    vector<T> TraverseOrPushback(Node<T> * n){
+    vector<T> TraverseOrPushback(DynamicNode<T> * n) override {
         vector<T> result;
         result.push_back(n->data);
         for(int i =0; i< n->children.size() ; i++){
@@ -50,35 +82,30 @@ private:
             result.insert(result.end(),traversedChild.begin() , traversedChild.end());
         }
         return result;
-    } 
-
-    void Insert(T data, Node<T> * parent){
-        parent->children.push_back(new Node<T>(data, parent));
+    }
+    void Insert(T data, DynamicNode<T> * parent) override{
+        parent->children.push_back(new DynamicNode<T>(data, parent));
     }
 
 public:
-    explicit Tree(T data)  {
-        _root = new Node<T>(data, nullptr);
+    explicit DynamicTree(T data)  {
+        _root = new DynamicNode<T>(data, nullptr);
     }
-
-    Tree<T> Subtree(T newRoot){
+    DynamicTree<T> Subtree(T newRoot){
         if(!GetFirst(newRoot)) {return nullptr;}
-        return Tree(GetFirst(newRoot));
+        return DynamicTree(GetFirst(newRoot));
     }
-
     void Exclude(T branch){
 
-        Node<T> branchRoot = GetFirst(branch);
+        DynamicNode<T> branchRoot = GetFirst(branch);
         if(branchRoot == nullptr) {return; }
 
 
-        for(Node<T> * n : branchRoot.parent.children ){
+        for(DynamicNode<T> * n : branchRoot.parent.children ){
             if (n->data == branch) {
-                erase(branchRoot.children, )
             }
         }
     }
-
 
     T GetRoot(){
         return _root->data;
@@ -92,7 +119,7 @@ public:
     }
 
     T ChildOf(T data, int i = 0){
-        Node<T> *  n = GetFirst(data);
+        DynamicNode<T> *  n = GetFirst(data);
         if(!n) {return nullptr;}
         if(n->children.size() == 0){return nullptr;}
         if(n->children.size() <= i ){return nullptr;}
@@ -100,7 +127,7 @@ public:
     }
     vector<T> ChildrenOf(T data){
         vector<T> result;
-        Node<T> *  n = GetFirst(data);
+        DynamicNode<T> *  n = GetFirst(data);
 
         for(int i =0; i< n->children.size(); i++){
             result.push_back(n->children[i]->data );
@@ -108,13 +135,13 @@ public:
         return result;
     }
     T ParentOf(T data){
-        Node<T> *  n = GetFirst(data);
+        DynamicNode<T> *  n = GetFirst(data);
         if(!n) {return nullptr;}
         if(!n->parent) {return nullptr;}
         return n->parent->data;
     }
-    vector<T> PathTo(T data){
-        Node<T> *  n = GetFirst(data);
+    vector<T> PathTo(T data) override{
+        DynamicNode<T> *  n = GetFirst(data);
         vector<T> result;
         result.push_back(data);
         if(!n) {return result;}
@@ -129,7 +156,7 @@ public:
 
     int Insert(T data, T parent){
         if(GetFirst(data)) {return -1;}
-        Node<T> * pNode  = GetFirst(parent);
+        DynamicNode<T> * pNode  = GetFirst(parent);
         if(pNode == nullptr) { return -1; }
         Insert(data, pNode);
         return 0;
