@@ -35,7 +35,7 @@ smallsquare::Game::Game(int width, int height){
         cerr << "Failed To Initialize GLAD;" << endl;
         glfwTerminate();
     }
-    _objectTree = new DynamicTree<GameObject *>(new Origin());
+    _objectTree = new Tree<GameObject *>(new Origin());
     _objectTree->GetRoot()->objectTree = _objectTree;
     glEnable(GL_DEPTH_TEST);
     Input::Init(_win);
