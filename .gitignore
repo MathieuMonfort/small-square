@@ -12,4 +12,6 @@ Testing
 build
 build-debug
 build-release
+cmake-build-debug
 term-build
+shell.drv
