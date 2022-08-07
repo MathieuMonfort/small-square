@@ -26,8 +26,7 @@ To build small-square libraries you need to download a bunch of external librari
 
 Fedora
     
-    sudo dnf install git g++ cmake glm-devel libX11-devel libgl1-mesa-dev
-
+    sudo dnf install git g++ cmake glm-devel libX11-devel libgl1-mesa-dev libXrandr-devel libXinerama-devel libXcursor-devel libXi-devel
 Debian
     
     sudo apt-get install git g++ cmake xorg-dev libglm-dev 
