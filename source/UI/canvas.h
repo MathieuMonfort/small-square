@@ -10,7 +10,9 @@
 #include <game.h>
 #include <raycast.h>
 
-
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 
 namespace  smallsquare {
@@ -55,7 +57,7 @@ class Canvas : public UIElement, public RayCastCandidate{
             return ortho(-ratio ,ratio,-1.0f,1.0f);
         }
         mat4 GetViewMatrix() override{
-            return mat4(1.0f);
+            return translate(mat4(1.0f), vec3(0.0f, 0.0f, 0.1f ) );
         }
     };
 }

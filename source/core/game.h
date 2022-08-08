@@ -18,7 +18,7 @@
 #include <gameobject.h>
 
 #include <input.h>
-
+#include <debug.h>
 using namespace glm;
 using namespace std;
 

@@ -8,6 +8,7 @@
 
 #include <game.h>
 #include <camera.h>
+#include <debug.h>
 
 namespace smallsquare {
     class CameraController : public GameObject {

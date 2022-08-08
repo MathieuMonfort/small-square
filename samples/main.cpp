@@ -17,25 +17,32 @@ private:
 
 
 public:
-    MyGame() : Game(300,200){
+    MyGame() : Game(1280   ,720){
         string resFold = RESOURCE_FOLDER;
         auto o = new Origin();
         o->GetGlobalPosition();
+
+        auto uielement = new Texture(resFold + "/textures/UI_Element.png");
+
         //Cams & Viewports
         auto cam = new Camera(vec3 (0.0f), vec3(0.0f));
-
         AddViewPort(cam);
 
         //Shaders
         auto phongShader = new Shader((resFold + "/shaders/basic_phong.vert").c_str(), (resFold + "/shaders/basic_phong.frag").c_str());
         auto solidShader = new Shader((resFold + "/shaders/solid.vert").c_str(), (resFold + "/shaders/solid.frag").c_str());
-
+        auto uiShader = new Shader((resFold + "/shaders/basic_ui.vert").c_str(), (resFold + "/shaders/basic_ui.frag").c_str());
+        //GameObjects
         Instantiate(new PointLight(vec3(-3.0f),vec3(0.0f), vec3(0.8f), vec3(2.f),vec3(3.0f),1.0f,0.09f,0.032f));
         Instantiate(new Model(vec3(0.0f , 0.0f  , 2.0f), vec3(0.0f), vec3(0.3f),resFold + "/models/Backpack/backpack.obj", phongShader, "Back Pack" ));
         Instantiate(new Model(vec3(0.0f, 0.0f, 0.0f), vec3(0.0f), vec3(0.2f), resFold + "/models/Axes/all-axes.obj", solidShader));
-
         Instantiate(new FlightCamCon(vec3(0.0f, 0.0f, -5.0f), vec3(0.0f), cam));
 
+        auto canvas = Instantiate(new smallsquare::Canvas(vec3(0.0f,0.0f,0.0f),vec3(0.0f,0.0f,0.0f),vec2(1.0f,1.0f)));
+        //auto canvas = Instantiate(new FixedCanvas());
+        Instantiate(new UIQuad(vec2(0.0f, 0.0f), 0.0f, vec2(1.0f, 1.0f),  uiShader,uielement,HA_CENTER, VA_CENTER),canvas);
+
+        //inputs
         Input::AddInput( GLFW_KEY_A, "Move_Left");
         Input::AddInput( GLFW_KEY_D, "Move_Right");
         Input::AddInput( GLFW_KEY_W, "Move_Forward");
@@ -43,13 +50,10 @@ public:
         Input::AddInput( GLFW_KEY_SPACE, "Move_Up");
         Input::AddInput( GLFW_KEY_C, "Move_Down");
 
-
     }
 
     void Tick() override{
         Game::Tick();
-
-        Debug::Log("Mouse Position" , Input::MousePosition());
 
     }
 

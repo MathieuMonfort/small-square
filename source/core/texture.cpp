@@ -39,7 +39,7 @@ smallsquare::Texture::Texture(const string& path){
         glGenerateMipmap(GL_TEXTURE_2D);
     }
     else{
-        cout<<"Failed to load texture" << endl;
+        cout<<"Failed to load texture with path :" << path << endl;
     }
     stbi_image_free(data);
 }

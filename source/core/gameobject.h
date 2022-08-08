@@ -17,6 +17,8 @@
 #include <data_tree.h>
 #include <camera.h>
 
+#include <debug.h>
+
 using namespace glm;
 using namespace std;
 

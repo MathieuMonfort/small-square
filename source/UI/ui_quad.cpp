@@ -55,8 +55,8 @@ void smallsquare::UIQuad::Draw(mat4 projection, Camera * cam, float ratio) {
     shader->SetInt("texture_ui", 0);
 
     shader->SetMat4("model", GetGlobalMatrix());
-    shader->SetMat4("view", cam->GetView());
-    shader->SetMat4("projection", projection);
+    shader->SetMat4("view", inverse(canvas->GetViewMatrix()));
+    shader->SetMat4("projection", canvas->GetProjectionMatrix());
     background->BindToProcessor(GL_TEXTURE0);
 
     glBindVertexArray(_vao);

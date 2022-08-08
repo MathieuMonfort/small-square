@@ -47,7 +47,6 @@ void smallsquare::FlightCamCon::Tick(float deltaTime){
 
     Rotate(smallsquare::Input::MouseOffset().x,  GetLocalUp());
     Rotate(smallsquare::Input::MouseOffset().y,  GetLocalRight());
-
 }
 
 

@@ -3,7 +3,7 @@ project(smallsquare)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DCURSOR_DEBUG")
-
+set(FIND_LIBRARY_USE_LIB64_PATHS True)
 
 
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/include")
