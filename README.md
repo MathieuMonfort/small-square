@@ -77,14 +77,14 @@ Build with (when in assimp _directory):
     sudo make install
 
 ### Building
-Clone the source and build with ( in small-square _directory) :
+Clone the source and build with ( in small-square directory) :
 
     mkdir build
     cd build 
     cmake ../
     make
 
-Then test the sample code with ( in small-square _directory) : 
+Then test the sample code with ( in small-square directory) : 
 
     ./samples/sample
 

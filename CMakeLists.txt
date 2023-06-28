@@ -5,16 +5,23 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DCURSOR_DEBUG")
 set(FIND_LIBRARY_USE_LIB64_PATHS True)
 
+include_directories(core/include)
+include_directories(core/source)
 
-include_directories("${CMAKE_CURRENT_SOURCE_DIR}/include")
-add_subdirectory(include)
+add_subdirectory("core")
 
-add_subdirectory(source/core)
+if(DEFINED SQ_MODULES)
+    if(SQ_MODULES MATCHES "UI" OR SQ_MODULES MATCHES "all")
+        include_directories(modules/UI/source)
+        add_subdirectory(modules/UI)
+    endif()
+    if(SQ_MODULES MATCHES "physics" OR SQ_MODULES MATCHES "all")
+        include_directories(modules/physics/source)
+        add_subdirectory(modules/physics)
+    endif()
+endif()
 
-add_subdirectory(source/UI)
-add_subdirectory(source/physics)
-
-
-add_subdirectory(samples)
-
+if(BUILD_SAMPLES)
+    add_subdirectory(samples)
+endif()
 
