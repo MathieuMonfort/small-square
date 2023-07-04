@@ -7,5 +7,9 @@ in vec2 Tex;
 
 out vec4 FragColor;
 void main() {
-    FragColor = vec4(texture(texture_ui, Tex).xyz,alpha) ;
+    vec4 texColor =vec4(texture(texture_ui, Tex));
+    if(texColor.a < 0.1e)
+        discard;
+    FragColor = texColor;
+
 }

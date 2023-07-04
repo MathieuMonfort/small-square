@@ -132,8 +132,8 @@ public:
         Insert(data, pNode);
         return 0;
     }
-    int Insert(T data){
-        return Insert(data, _root->data);
+    void Insert(T data){
+        Insert(data, _root);
     }
 };
 

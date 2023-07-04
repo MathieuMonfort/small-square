@@ -26,7 +26,7 @@ namespace smallsquare {
     class Viewport;
 
     class GameObject {
-    private:
+    protected:
         vec3 _position = vec3(0.0f);
         mat4 _rotation = mat4(0.0f);
         vec3 _scale = vec3(0.0f);

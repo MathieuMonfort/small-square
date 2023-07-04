@@ -50,6 +50,8 @@ namespace  smallsquare {
         static bool _firstMouse;
         static bool _initialised;
 
+        static void ProcessMousePosition();
+
     public:
 
         /**
@@ -66,7 +68,6 @@ namespace  smallsquare {
          * @param xpos The current mouse x position in pixel
          * @param ypos The current mouse y position in pixel
          */
-        static void MouseMoveCallback(GLFWwindow * win, double xpos, double ypos);
 
         /**
          * Called every time the window is resized. It updates the _winH and _winW so the viewports can

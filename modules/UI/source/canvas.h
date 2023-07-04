@@ -25,13 +25,12 @@ namespace  smallsquare {
     };
 
 
-class Canvas : public UIElement, public RayCastCandidate{
+class Canvas : public UIElement{
     private:
         mat4 _projection;
         mat4 _view;
     public:
-        Canvas(vec3 position, vec3 euler, vec2 scale, const string& name = "Canvas" ): UIElement(position , euler, vec3(scale, 0.0f ), name),
-                                                                                       RayCastCandidate()  {}
+        Canvas(vec3 position, vec3 euler, vec2 scale, const string& name = "Canvas" ): UIElement(position , euler, vec3(scale, 0.0f ), name){}
 
         virtual mat4 GetProjectionMatrix(){
             return _projection;

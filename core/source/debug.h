@@ -20,7 +20,6 @@ class Debug{
 private:
 
 public:
-
     /**
      * Log a string in the default debug terminal.
      * @param str The string that will be logged.
@@ -60,6 +59,5 @@ public:
      */
     static void Clear();
 };
-
 
 #endif

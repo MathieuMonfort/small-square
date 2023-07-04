@@ -140,7 +140,7 @@ vector<smallsquare::GameObject *> smallsquare::GameObject::GetPathTo(smallsquare
 #pragma endregion
 
 #pragma region Origin
-smallsquare::Origin::Origin() : GameObject(vec3(0.0f),vec3(0.0f),vec3(1.0f)){}
+smallsquare::Origin::Origin() : GameObject(vec3(0.0f),vec3(0.0f),vec3(1.0f),"Origin"){}
 
 vec3 smallsquare::Origin::GetLocalFront() {
     return vec3(0.0f,0.0f,1.0f);

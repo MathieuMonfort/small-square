@@ -25,10 +25,9 @@ smallsquare::Game::Game(int width, int height){
     glfwSetInputMode(_win, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 #endif
 #ifdef CURSOR_DEBUG
-    glfwSetInputMode(_win, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+    glfwSetInputMode(_win, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 #endif
 
-    glfwSetCursorPosCallback(_win, Input::MouseMoveCallback);
     glfwSetWindowSizeCallback(_win, Input::WindowSizeCallback);
 
     if(!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress)){
