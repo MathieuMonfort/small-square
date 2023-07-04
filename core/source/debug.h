@@ -16,48 +16,50 @@
 using namespace glm;
 using namespace std;
 
-class Debug{
-private:
 
-public:
-    /**
-     * Log a string in the default debug terminal.
-     * @param str The string that will be logged.
-     */
-    static void Log(const string &str);
+namespace smallsquare {
+    class Debug {
+    private:
 
-    /**
-     * Log a 4x4 matrix in the default debug terminal.
-     * @param name A title to identify the logged matrix.
-     * @param mat The matrix that will be logged.
-     */
-    static void Log(const string &name, mat4 mat);
+    public:
+        /**
+         * Log a string in the default debug terminal.
+         * @param str The string that will be logged.
+         */
+        static void Log(const string &str);
 
-    /**
-     * Log a 2D vector in the default debug terminal.
-     * @param name A title to identify the logged vector.
-     * @param mat The vector that will be logged.
-     */
-    static void Log( const string &name, vec2 vec);
+        /**
+         * Log a 4x4 matrix in the default debug terminal.
+         * @param name A title to identify the logged matrix.
+         * @param mat The matrix that will be logged.
+         */
+        static void Log(const string &name, mat4 mat);
 
-    /**
-     * Log a 3D vector in the default debug terminal.
-     * @param name A title to identify the logged vector.
-     * @param mat The vector that will be logged.
-     */
-    static void Log( const string &name, vec3 vec);
+        /**
+         * Log a 2D vector in the default debug terminal.
+         * @param name A title to identify the logged vector.
+         * @param mat The vector that will be logged.
+         */
+        static void Log(const string &name, vec2 vec);
 
-    /**
-     * Log a 4D vector in the default debug terminal.
-     * @param name A title to identify the logged vector.
-     * @param mat The vector that will be logged.
-     */
-    static void Log( const string &name, vec4 vec);
+        /**
+         * Log a 3D vector in the default debug terminal.
+         * @param name A title to identify the logged vector.
+         * @param mat The vector that will be logged.
+         */
+        static void Log(const string &name, vec3 vec);
 
-    /**
-     * Clear the default debug terminal.
-     */
-    static void Clear();
-};
+        /**
+         * Log a 4D vector in the default debug terminal.
+         * @param name A title to identify the logged vector.
+         * @param mat The vector that will be logged.
+         */
+        static void Log(const string &name, vec4 vec);
 
+        /**
+         * Clear the default debug terminal.
+         */
+        static void Clear();
+    };
+}
 #endif

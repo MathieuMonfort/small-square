@@ -26,7 +26,7 @@ enum HorizontalAnchor{
 };
 
 
-namespace smallsquare {
+namespace smallsquare::UI {
     class UIQuad : public UIElement{
     private :
         void SetupMesh();

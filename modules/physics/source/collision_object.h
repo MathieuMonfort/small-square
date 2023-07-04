@@ -11,7 +11,7 @@
 #include "collider_object.h"
 
 
-namespace smallsquare {
+namespace smallsquare::physics {
     class ColliderObject;
     class CollisionObject :public GameObject {
     public:

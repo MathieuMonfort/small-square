@@ -10,7 +10,7 @@
 #include "../../../core/source/game.h"
 #include "collision_object.h"
 
-namespace smallsquare {
+namespace smallsquare::physics {
     class CollisionObject;
     class ColliderObject : public GameObject {
     public:

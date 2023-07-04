@@ -9,7 +9,7 @@
 
 #include "collision_object.h"
 
-namespace smallsquare {
+namespace smallsquare::physics {
     class PhysicsObject : public CollisionObject{
     public:
         vec3 velocity  =vec3(0.0f);

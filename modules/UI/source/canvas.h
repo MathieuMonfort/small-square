@@ -15,7 +15,7 @@
 #include <glm/gtc/type_ptr.hpp>
 
 
-namespace  smallsquare {
+namespace  smallsquare::UI {
     class UIElement : public DrawableObject{
 
     public:
