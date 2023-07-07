@@ -27,6 +27,13 @@ namespace smallsquare{
     class DrawableObject;
     class Origin;
 
+    /** \brief An interface between the OpenGl window and a Camera
+     *
+     * A Viewport is an interface between the OpenGL Window and a Camera object.
+     * A Viewport base object has a function to return a projection matrix.
+     * That function is used in it's Draw function and can be overridden in a child class if a different projection is needed (an orthographic projection for instance).
+     * Every Viewport has to have a Camera but multiple viewports can have the same camera.
+     */
     class Viewport{
     private:
         float _x,_y,_w,_h;
@@ -94,6 +101,13 @@ namespace smallsquare{
          */
         void Draw(vector<DrawableObject *> drawables);
     };
+
+
+    /** \brief The main event.
+     *
+     * A Game is the engine's main object. Everything starts from here. (It's a Game Engine after all)
+     * A Game contains all the viewports and the GameObject Tree. It's a class meant to be inherited from as your own game.
+     */
     class Game{
     private:
         float _lastFrame = 0.0f;
@@ -144,6 +158,8 @@ namespace smallsquare{
 
         /**
          * Tick is called at every iteration of the game loop. It can be overridden to change object update priority.
+         * DON'T forget to call base function in the override unless you want your game to have a completely different behaviour.
+         * I'm fairly sure that's not what you want but you do you.
          */
         virtual void Tick();
 

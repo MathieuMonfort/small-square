@@ -11,6 +11,8 @@
 using namespace std;
 using namespace glm;
 using namespace smallsquare;
+using namespace smallsquare::UI;
+
 
 class MyGame : public Game{
 private:
@@ -47,7 +49,7 @@ public:
         Instantiate(new PointLight(vec3(3,3,3), vec3(0,0,0) ,vec3(1,1,1),vec3(1,1,1),vec3(1,1,1),1,1,1 ));
         Instantiate(new Model(vec3(3,3,3),vec3(0,0,0),vec3(1,1,1),resFold + "/models/Axes/all-axes.obj",solidShader ));
 
-        auto canvas = Instantiate(new smallsquare::Canvas(vec3(0,0,0), vec3(0,0,0), vec2(1)));
+        auto canvas = Instantiate(new smallsquare::UI::Canvas(vec3(0,0,0), vec3(0,0,0), vec2(1)));
         _uiElement = (UIQuad *)Instantiate(new UIQuad(vec2(0.0f, 0.0f), 0.0f, vec2(1.0f, 1.0f),  uiShader,uielement,HA_CENTER, VA_CENTER),canvas);
 
         auto fCanvas = Instantiate(new FixedCanvas());

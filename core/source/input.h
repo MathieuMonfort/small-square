@@ -23,16 +23,25 @@ using namespace glm;
 
 
 namespace  smallsquare {
-    struct Action {
-    public:
-        int key;
-        string id;
 
-    public:
-        Action(int key,string  id);
-    };
 
+    /** \brief An interface between user input and the game
+     *
+     *  A static class binding User Input to action string identifiers.
+     *  Not meant to be instantiated.
+     *  Every input mapping is saved and accessed statically.
+     */
     class Input {
+
+
+        struct Action {
+        public:
+            int key;
+            string id;
+
+        public:
+            Action(int key,string  id);
+        };
 
     private:
         static vector<Action *> _keymap;
@@ -55,19 +64,12 @@ namespace  smallsquare {
     public:
 
         /**
-         * Init should be called once in Game class constructor. it is used to assign a Window to get input information
-         * from.
+         * Init should be called once in Game class constructor.
+         * it is used to assign a Window to get input information from.
          * @param win The active window the Input class gets input information from.
          */
         static void Init(GLFWwindow * win);
 
-        /**
-         * Called every time the mouse moves. It updates _mXOffset and _mYOffset so any object class can retrieve mouse
-         * input information.
-         * @param win The active window
-         * @param xpos The current mouse x position in pixel
-         * @param ypos The current mouse y position in pixel
-         */
 
         /**
          * Called every time the window is resized. It updates the _winH and _winW so the viewports can

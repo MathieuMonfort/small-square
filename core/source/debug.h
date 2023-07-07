@@ -18,6 +18,12 @@ using namespace std;
 
 
 namespace smallsquare {
+
+
+    /**
+     * A Debug class to facilitate logging.
+     * As it writes to standard input, it's not meant to be Instantiated.
+     */
     class Debug {
     private:
 

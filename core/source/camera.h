@@ -16,6 +16,12 @@ using namespace std;
 using namespace glm;
 
 namespace smallsquare{
+    /** \brief A Viewport's eyes
+     *
+     * A camera is an object that generates a mat4 View Matrix using a rotation and a position.
+     * It's position and rotation are not meant to be modified directly by the game.
+     * It's meant to be updated by the CameraController Tick Function.
+     */
     class Camera {
 
     public:

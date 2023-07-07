@@ -6,7 +6,7 @@
 
 #include "ui_quad.h"
 
-vector<float> smallsquare::UIQuad::_vertices = {
+vector<float> smallsquare::UI::UIQuad::_vertices = {
     -1.0f,  1.0f,   0.0f,   0.0f,   0.0f,
     -1.0,   -1.0f,  0.0f,   0.0f,   1.0f,
     1.0f,   1.0f,   0.0f,   1.0f,   0.0f,
@@ -18,7 +18,7 @@ vector<float> smallsquare::UIQuad::_vertices = {
 
 
 
-void smallsquare::UIQuad::CheckIntegrity() {
+void smallsquare::UI::UIQuad::CheckIntegrity() {
     for(auto &i :GetPathTo(this)  ){
         if(dynamic_cast<Canvas * >(i) ){
             canvas = (Canvas * ) i;
@@ -30,7 +30,7 @@ void smallsquare::UIQuad::CheckIntegrity() {
     }
 }
 
-void smallsquare::UIQuad::SetupMesh() {
+void smallsquare::UI::UIQuad::SetupMesh() {
     glGenVertexArrays(1,&_vao);
     glGenBuffers(1,&_vbo);
 
@@ -48,7 +48,7 @@ void smallsquare::UIQuad::SetupMesh() {
     glBindVertexArray(0);
 }
 
-void smallsquare::UIQuad::Draw(mat4 projection, Camera * cam, float ratio) {
+void smallsquare::UI::UIQuad::Draw(mat4 projection, Camera * cam, float ratio) {
     shader->Use();
     shader->SetFloat("alpha", alpha);
 
@@ -68,7 +68,7 @@ void smallsquare::UIQuad::Draw(mat4 projection, Camera * cam, float ratio) {
     glBindVertexArray(0);
 }
 
-mat4 smallsquare::UIQuad::GetLocalMatrix() {
+mat4 smallsquare::UI::UIQuad::GetLocalMatrix() {
     float parentRatio =((UIElement *)GetParent(this))->ratio;
 
     vec3 Anchored;

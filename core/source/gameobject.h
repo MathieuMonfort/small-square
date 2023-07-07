@@ -137,7 +137,7 @@ namespace smallsquare {
 
         /**
          * CheckIntegrity is initially called right before the main game loop starts. It is used to verify the integrity
-         * of the working object tree. It should be overriden to had conditions to the tree integrity. It can be called
+         * of the working object tree. It should be overridden to add conditions to the Tree's integrity. It can be called
          * at any time.
          */
         virtual void CheckIntegrity();

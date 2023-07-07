@@ -19,9 +19,9 @@ bool smallsquare::Input::_firstMouse = true;
 bool smallsquare::Input::_initialised = false;
 
 GLFWwindow * smallsquare::Input::_win = nullptr;
-vector<smallsquare::Action *> smallsquare::Input::_keymap;
+vector<smallsquare::Input::Action *> smallsquare::Input::_keymap;
 
-smallsquare::Action::Action(const int key, string id) {
+smallsquare::Input::Action::Action(const int key, string id) {
     this->key = key;
     this->id = std::move(id);
 }
