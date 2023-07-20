@@ -44,21 +44,21 @@ namespace smallsquare {
         /**
          * Log a 2D vector in the default debug terminal.
          * @param name A title to identify the logged vector.
-         * @param mat The vector that will be logged.
+         * @param vec The vector that will be logged.
          */
         static void Log(const string &name, vec2 vec);
 
         /**
          * Log a 3D vector in the default debug terminal.
          * @param name A title to identify the logged vector.
-         * @param mat The vector that will be logged.
+         * @param vec The vector that will be logged.
          */
         static void Log(const string &name, vec3 vec);
 
         /**
          * Log a 4D vector in the default debug terminal.
          * @param name A title to identify the logged vector.
-         * @param mat The vector that will be logged.
+         * @param vec The vector that will be logged.
          */
         static void Log(const string &name, vec4 vec);
 

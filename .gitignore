@@ -17,3 +17,5 @@ cmake-build-release
 term-build
 shell.drv
 doxygen
+
+docs/sphinx/_build

@@ -24,7 +24,10 @@ using namespace std;
 
 namespace smallsquare {
     class Viewport;
-
+    /** \brief Glorified building blocks
+     *
+     * A GameObject is the basis for any object inside a game. It contains transform information and a series of functions needed for GameObject interactions and global transforms.
+     */
     class GameObject {
     protected:
         vec3 _position = vec3(0.0f);
@@ -198,7 +201,7 @@ namespace smallsquare {
          * Get a vector containing pointers to every GameObject of a certain child type and with a given name
          * in the current object tree.
          * @tparam T The type of object to be searched for. It must be a pointer to a class derived from GameObject.
-         * @param name The name of the searched for objects.
+         * @param objectName The name of the searched for objects.
          * @return A vector containing objects of type T or an empty vector if there no object respects the type and
          * name condition in the current object tree.
          */
@@ -230,9 +233,10 @@ namespace smallsquare {
         void LookAt(vec3 end);
 
         /**
-         * Generate a new rotation matrix with a specified u vector and a front vector
+         * Generate a new rotation matrix with a specified up vector and a front vector
          * starting at the GameObject's global position and ending at end (normalized).
-         * @param end The point the GameObject will be oriented towards.
+         * @param position The point the GameObject will be oriented towards.
+         * @param up The base up vector used to control the roll.
          */
         void LookAt(vec3 position, vec3 up);
 
@@ -267,6 +271,11 @@ namespace smallsquare {
         bool IsActive();
     };
 
+    /** \brief The boring GameObject
+     *
+     * An Origin is simply a GameObject that is always at the virtual "center" of your game's world.
+     * There only needs to be one at the root of your game tree so your game can stop looking for a GameObject's parent's transform.
+     */
     class Origin : public GameObject {
     public:
         Origin();
@@ -286,6 +295,10 @@ namespace smallsquare {
         mat4 GetGlobalRotation() override;
     };
 
+    /** \brief An object that's drawable... duh!
+     *
+     * Any GameObject that needs to be drawn using a shader (any object you see in an OpenGL Window) needs to implement the DrawaleObject class.
+     */
     class DrawableObject : public GameObject {
     public:
         bool visible = true;

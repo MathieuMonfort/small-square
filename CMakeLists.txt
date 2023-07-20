@@ -25,7 +25,7 @@ if(BUILD_SAMPLES)
     add_subdirectory(samples)
 endif()
 
-message("Building Doxygen API Doc")
+message("Doxygen Doc Configuration")
 
 find_package(Doxygen)
 if(DOXYGEN_FOUND)
@@ -38,6 +38,7 @@ if(DOXYGEN_FOUND)
     add_custom_target(doxygen
             COMMAND ${DOXYGEN_EXECUTABLE} ${DOXY_OUT}
             WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+            COMMENT "Building Doxygen API Doc"
             VERBATIM
             )
 
