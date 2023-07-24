@@ -47,6 +47,14 @@ Arch
 ..
     TODO Find Dependency libraries for Arch.
 
+~~~~~~~~~~~~~~~
+NixOS
+~~~~~~~~~~~~~~~
+Dependencies in Nixos are served with a Nix Shell:
+.. code-block:: console
+
+    cd small-square
+    nix-shell shell.nix
 
 Cmake Configuration
 ~~~~~~~~~~~~~~~~~~~

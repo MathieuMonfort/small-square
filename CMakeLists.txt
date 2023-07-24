@@ -1,5 +1,8 @@
 cmake_minimum_required(VERSION 3.17)
-project(smallsquare)
+project(smallsquare VERSION 0.0.1)
+configure_file(docs/README.md.in ${CMAKE_SOURCE_DIR}/README.md @ONLY)
+
+
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DCURSOR_DEBUG")

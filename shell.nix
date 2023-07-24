@@ -6,7 +6,6 @@
 			pkgs.gnumake
 			pkgs.gcc
 			pkgs.gdb
-			pkgs.jetbrains.clion
 			
 			pkgs.glfw3
 			pkgs.assimp
