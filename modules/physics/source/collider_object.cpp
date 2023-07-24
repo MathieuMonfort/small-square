@@ -9,7 +9,7 @@
 
 
 
-void smallsquare::ColliderObject::CheckIntegrity() {
+void smallsquare::physics::ColliderObject::CheckIntegrity() {
     for (auto &i : GetPathTo(this)) {
         if (dynamic_cast<CollisionObject *>(i)) {
             cMaster = (CollisionObject *) i;

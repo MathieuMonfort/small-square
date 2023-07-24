@@ -5,6 +5,6 @@
 //
 
 #include "physics_object.h"
-void smallsquare::PhysicsObject::Tick(float deltaTime){
+void smallsquare::physics::PhysicsObject::Tick(float deltaTime){
     Translate(velocity);
 }

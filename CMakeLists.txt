@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.17)
-project(smallsquare VERSION 0.0.1)
+project(smallsquare VERSION 1.0.0)
 configure_file(docs/README.md.in ${CMAKE_SOURCE_DIR}/README.md @ONLY)
 
 
@@ -15,10 +15,12 @@ add_subdirectory("core")
 
 if(DEFINED SQ_MODULES)
     if(SQ_MODULES MATCHES "UI" OR SQ_MODULES MATCHES "all")
+        message("Configuring Small Square Module - UI")
         include_directories(modules/UI/source)
         add_subdirectory(modules/UI)
     endif()
     if(SQ_MODULES MATCHES "physics" OR SQ_MODULES MATCHES "all")
+        message("Configuring Small Square Module - physics")
         include_directories(modules/physics/source)
         add_subdirectory(modules/physics)
     endif()
@@ -28,9 +30,9 @@ if(BUILD_SAMPLES)
     add_subdirectory(samples)
 endif()
 
+find_package(Doxygen)
 message("Doxygen Doc Configuration")
 
-find_package(Doxygen)
 if(DOXYGEN_FOUND)
     set(DOXY_IN ${CMAKE_CURRENT_SOURCE_DIR}/docs/doxygen/doxygen.in)
     set(DOXY_OUT ${CMAKE_CURRENT_BINARY_DIR}/docs/doxygen/doxygen.out)

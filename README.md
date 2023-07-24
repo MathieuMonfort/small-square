@@ -1,5 +1,5 @@
 # Small Square Game Engine
 
-Version 0.0.1
+Version 1.0.0
 
-<a href="https://small-square.readthedocs.io/en/0.0.1/">Documentation</a>
+<a href="https://small-square.readthedocs.io/en/1.0.0/">Documentation</a>
