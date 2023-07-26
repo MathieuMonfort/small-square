@@ -12,7 +12,8 @@
 
 namespace smallsquare {
 
-    /**
+    /** \brief Take Control of your sight
+     *
      * A CameraController is a GameObject with a camera attached.
      * At each tick, it updates the Camera's position and rotation to it's position and rotation.
      * DON'T Forget to call the base class's Tick function when Inheriting.
@@ -36,7 +37,16 @@ namespace smallsquare {
         void Tick(float deltaTime) override ;
     };
 
-
+    /** \brief As if you were flying
+     *
+     * A FlightCamCon is a CameraController controlled by user input. To make it respond to input, you need to bind keys to the following actions:
+     * Move_Left
+     * Move_Right
+     * Move_Forward
+     * Move_Back
+     * Move_Up
+     * Move_Down
+     */
     class FlightCamCon : public CameraController{
     private:
         float _moveSpeed;
