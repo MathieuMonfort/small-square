@@ -36,12 +36,47 @@ namespace smallsquare{
      */
     class Viewport{
     private:
-        float _x,_y,_w,_h;
+
+        /**
+         * The viewport's horizontal position inside the OpenGL window.
+         */
+        float _x;
+
+        /**
+         * The viewport's vertical position inside the OpenGL window.
+         */
+        float _y;
+
+        /**
+         * The viewport's proportional width inside the OpenGL window (0 to 1).
+         */
+        float _w;
+
+        /**
+         * The viewport's proportional height inside the OpenGL window (0 to 1).
+         */
+        float _h;
+
+        /**
+         * The OpenGL window's width
+         */
         int _wWidth = 0;
+
+        /**
+         * The OpenGL window's height
+         */
         int _wHeight = 0;
+
+        /**
+         * The OpenGL window in which the viewport displays it's data.
+         */
         GLFWwindow * _win;
 
     public:
+
+        /**
+         * The camera assigned to the viewport.
+         */
         Camera * cam;
 
         /**
@@ -110,12 +145,32 @@ namespace smallsquare{
      */
     class Game{
     private:
+
+        /**
+         * The game time calculated at the last frame.
+         */
         float _lastFrame = 0.0f;
+
+        /**
+         * The tree containing every instantiated GameObject.
+         */
         Tree<GameObject*> * _objectTree;
+
+        /**
+         * The OpenGL window created by the game.
+         */
         GLFWwindow * _win;
 
     protected:
+
+        /**
+         * The time elapsed since lastFrame
+         */
         float _deltaTime = 0.0f;
+
+        /**
+         * A list of all created viewports.
+         */
         list<Viewport* > _viewports;
 
 

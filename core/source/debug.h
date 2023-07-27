@@ -25,8 +25,6 @@ namespace smallsquare {
      * As it writes to standard input, it's not meant to be Instantiated.
      */
     class Debug {
-    private:
-
     public:
         /**
          * Log a string in the default debug terminal.

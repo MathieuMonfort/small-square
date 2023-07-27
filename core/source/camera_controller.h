@@ -20,6 +20,9 @@ namespace smallsquare {
      */
     class CameraController : public GameObject {
     public:
+        /**
+         * The Camera attached to the CameraController
+         */
         Camera * cam;
 
         /**
@@ -46,11 +49,15 @@ namespace smallsquare {
      * Move_Back
      * Move_Up
      * Move_Down
+     *
+     * You then control it like a spaceship.
      */
     class FlightCamCon : public CameraController{
     private:
+        /**
+         * The speed at witch the FlightCamCon moves (in meters per tick)
+         */
         float _moveSpeed;
-        float _rotateSpeed;
 
     public :
 
@@ -60,7 +67,7 @@ namespace smallsquare {
          * @param position The initial controller's position.
          * @param euler The initial controller's euler rotation (applied in XYZ order).
          * @param cam A pointer to the camera that needs to be updated by the controller.
-         * @param moveSpeed The speed at which the controller will Move.
+         * @param moveSpeed The speed at which the controller will Move (in meters per tick).
          */
         FlightCamCon(vec3 position, vec3 euler, Camera * cam, float moveSpeed = 1.0f) ;
         void Tick(float deltaTime) override;

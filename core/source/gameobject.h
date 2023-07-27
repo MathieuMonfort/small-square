@@ -30,13 +30,37 @@ namespace smallsquare {
      */
     class GameObject {
     protected:
+
+        /**
+         * The GameObject's position in 3D space.
+         */
         vec3 _position = vec3(0.0f);
+
+        /**
+         * The GameObject's rotation in 3D space as a 4D transformation matrix.
+         */
         mat4 _rotation = mat4(0.0f);
+
+        /**
+         * The GameObject's relative scale in 3D space
+         */
         vec3 _scale = vec3(0.0f);
 
     public:
+
+        /**
+         * The GameObject's name.
+         */
         string name;
+
+        /**
+         * The GameObject's active state. if the object is inactive, its Tick function is not triggered.
+         */
         bool active = true;
+
+        /**
+         * A Pointer to the Game's object Tree
+         */
         Tree<GameObject*> * objectTree;
 
         /**
@@ -301,6 +325,10 @@ namespace smallsquare {
      */
     class DrawableObject : public GameObject {
     public:
+
+        /**
+         * The DrawableObject's visible state. if the object is not visible, its Draw function is not triggered.
+         */
         bool visible = true;
 
         /**

@@ -33,32 +33,93 @@ namespace  smallsquare {
      */
     class Input {
 
-
+        /** \brief Let's Roll
+         *
+         *  An action an object binding a GLFW input key to an input ID.
+         */
         struct Action {
         public:
+
+            /**
+             * A GLFW input key
+             */
             int key;
+
+            /**
+             * The input id
+             */
             string id;
 
         public:
+
+            /**
+             * THe constructor for the Action class
+             * @param key A GLFW input key
+             * @param id The input id
+             */
             Action(int key,string  id);
         };
 
     private:
+
+        /**
+         * A vector of all the registered action in the Game.
+         */
         static vector<Action *> _keymap;
+
+        /**
+         * A pointer to the Game's OpenGL Window
+         */
         static GLFWwindow * _win;
+
+        /**
+         * The mouse's recorded horizontal position at last frame.
+         */
         static float _mLastX;
+
+        /**
+         * The mouse's recorded vertical position at last frame.
+         */
         static float _mLastY;
+
+        /**
+         * The mouse's horizontal offset since last frame.
+         */
         static float _mXOffset;
+
+        /**
+         * The mouse's horizontal offset since last frame.
+         */
         static float _mYOffset;
+
+        /**
+         * A factor by which the mouse's input axis is multiplied to get a final input axis
+         */
         static float _sensitivity;
 
+        /**
+         * The OpenGL window's width
+         */
         static int _winW;
+
+        /**
+         * The OpenGL window's height
+         */
         static int _winH;
 
-
+        /**
+         * True if mouse first enters the OpenGL Window
+         */
         static bool _firstMouse;
+
+        /**
+         * True if Input is correctly initialised
+         */
         static bool _initialised;
 
+        /**
+         * Gets mouse position from the OpenGL Window and processes it into mouse offset.
+         */
         static void ProcessMousePosition();
 
     public:
@@ -92,6 +153,12 @@ namespace  smallsquare {
          * @return A vec2 representing a translation in pixel.
          */
         static vec2 MouseOffset();
+
+        /**
+         * Get the mouse movement since last frame in pixel multiplied by the sensitivity.
+         * @return A vec2 representing an input axis.
+         */
+        static vec2 MouseOffsetSensitive();
 
         /**
          * Get The current mouse position in pixel from th top left.

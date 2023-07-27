@@ -91,7 +91,11 @@ void smallsquare::Input::ProcessMousePosition() {
 
     _mLastX = (float)xpos;
     _mLastY = (float)ypos;
-    _mXOffset *= _sensitivity;
-    _mYOffset *= _sensitivity;
+//    _mXOffset *= _sensitivity;
+//    _mYOffset *= _sensitivity;
+}
+
+vec2 smallsquare::Input::MouseOffsetSensitive() {
+    return MouseOffset() * _sensitivity;
 }
 

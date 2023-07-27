@@ -25,7 +25,12 @@ namespace smallsquare{
     class Camera {
 
     public:
+        /** The camera's Rotational Matrix in 3D space. Modified by it's CameraController
+         */
         mat4 rotation = mat4(1.0f);
+
+        /** The camera's Position in 3D space. Modified by it's CameraController
+         */
         vec3 position = vec3(1.0f);
 
         /**
