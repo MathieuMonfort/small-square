@@ -18,8 +18,20 @@ namespace smallsquare{
      */
     class Light : public GameObject{
     public:
+
+        /**
+         * The light's ambient intensity and color organised in a vector 3 as RGB
+         */
         vec3 ambient = vec3(0.0f);
+
+        /**
+         * The light's diffuse intensity and color organised in a vector 3 as RGB
+         */
         vec3 diffuse = vec3(0.0f);
+
+        /**
+         * The light's specular intensity and color organised in a vector 3 as RGB
+         */
         vec3 specular = vec3(0.0f);
 
         /**
@@ -59,11 +71,21 @@ namespace smallsquare{
     */
     class PointLight : public Light{
     public:
-        float constant;
-        float linear;
-        float quadratic;
 
-        // TODO look up what constant linear and quadratic stand for (I forgot).
+        /**
+         * The constant parameter of the attenuation equation (used by most shading algorithms)
+         */
+        float constant;
+
+        /**
+         * The linear parameter of the attenuation equation (used by most shading algorithms)
+         */
+        float linear;
+
+        /**
+         * The quadratic parameter of an attenuation equation (used by most shading algorithms)
+         */
+        float quadratic;
 
         /**
          * A constructor for the DirectionLight class.
@@ -72,9 +94,9 @@ namespace smallsquare{
          * @param ambient A vec3 representing the DirectionLight's ambient intensity and color ( in RGB format).
          * @param diffuse A vec3 representing the DirectionLight's diffusion intensity and color ( in RGB format).
          * @param specular A vec3 representing the DirectionLight's specular intensity and color ( in RGB format).
-         * @param constant
-         * @param linear
-         * @param quadratic
+         * @param constant The constant parameter of the attenuation equation (used by most shading algorithms)
+         * @param linear The linear parameter of the attenuation equation (used by most shading algorithms)
+         * @param quadratic The quadratic parameter of the attenuation equation (used by most shading algorithms)
          */
         PointLight( vec3 position , 
                     vec3 euler, 
@@ -92,14 +114,32 @@ namespace smallsquare{
     */
     class SpotLight : public Light{
     public:
+
+        /**
+         * The constant parameter of the attenuation equation (used by most shading algorithms)
+         */
         float constant;
+
+        /**
+         * The linear parameter of the attenuation equation (used by most shading algorithms)
+         */
         float linear;
+
+        /**
+         * The quadratic parameter of the attenuation equation (used by most shading algorithms)
+         */
         float quadratic;
+
+        /**
+         * Inner attenuation radius from the lights front vector.
+         */
         float cutOff;
+
+        /**
+         * outer attenuation radius from the lights front vector.
+         */
         float outerCutOff;
 
-
-        //TODO define cutOff and outerCutOff in documentation.
         /**
          * A constructor for the SpotLight class.
          * @param position The SpotLight's initial position.
@@ -107,11 +147,11 @@ namespace smallsquare{
          * @param ambient A vec3 representing the SpotLight's ambient intensity and color ( in RGB format).
          * @param diffuse A vec3 representing the SpotLight's diffusion intensity and color ( in RGB format).
          * @param specular A vec3 representing the SpotLight's specular intensity and color ( in RGB format).
-         * @param constant
-         * @param linear
-         * @param quadratic
-         * @param cutOff
-         * @param outerCutOff
+         * @param constant The constant parameter of the attenuation equation (used by most shading algorithms)
+         * @param linear The linear parameter of the attenuation equation (used by most shading algorithms)
+         * @param quadratic The quadratic parameter of the attenuation equation (used by most shading algorithms)
+         * @param cutOff Inner radius attenuation radius from the lights front vector.
+         * @param outerCutOff outer radius attenuation radius from the lights front vector.
          */
         SpotLight( vec3 position , 
                     vec3 euler, 
