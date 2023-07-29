@@ -28,6 +28,8 @@ smallsquare::Mesh::Mesh(vector<Vertex> vertices, vector<unsigned int> indices, M
 }
 
 void smallsquare::Mesh::Draw(Shader * shader) const {
+
+    //TODO: Error Management: shader not instantiated;
     shader->Use();
     shader->SetMaterial("material", material);
 
