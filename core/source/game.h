@@ -144,8 +144,8 @@ namespace smallsquare{
      * A Game contains all the viewports and the GameObject Tree. It's a class meant to be inherited from as your own game.
      */
     class Game{
-    private:
 
+    protected:
         /**
          * The game time calculated at the last frame.
          */
@@ -160,8 +160,6 @@ namespace smallsquare{
          * The OpenGL window created by the game.
          */
         GLFWwindow * _win;
-
-    protected:
 
         /**
          * The time elapsed since lastFrame
@@ -224,11 +222,18 @@ namespace smallsquare{
         void GameLoop();
 
         /**
+         * Get the OpenGL window attached to the game.
+         * @return An opened OpenGL window.
+         */
+        GLFWwindow * GetWindow();
+
+        /**
          * Get the parent of a GameObject in the current object tree
          * @param object A pointer to the child object
          * @return A pointer to the parent object
          */
         GameObject * GetParent(GameObject * object);
+
 
         /**
          * Get the child of a GameObject at index i in the current object tree
@@ -249,10 +254,15 @@ namespace smallsquare{
          * Get a vector containing pointers to every GameObject between one object and the current tree root object.
          * It is organized so the lowest index represents the path's end and the highest index represents the tree root.
          * @param object A pointer to the path's end
-         * @return A vector og GameObject pointers.
+         * @return A vector of GameObject pointers.
          */
         vector<GameObject *> GetPathTo(GameObject* object);
 
+        /**
+         * Get the Game Tree's root object
+         * @return the Root GameObject.
+         */
+        GameObject * GetRoot();
 
         /**
          * Get a vector containing pointers to every GameObject of a certain child type in the current object tree.

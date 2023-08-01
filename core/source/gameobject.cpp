@@ -136,6 +136,18 @@ vector<smallsquare::GameObject *> smallsquare::GameObject::GetPathTo(smallsquare
     return objectTree->PathTo(object);
 }
 
+smallsquare::GameObject * smallsquare::GameObject::Instantiate(smallsquare::GameObject *object, smallsquare::GameObject *parent) {
+    if(!object) {return nullptr;}
+
+    object->objectTree = objectTree;
+    if(!parent) {
+        objectTree->Insert(object);
+        return object;
+    }
+    objectTree->Insert(object, parent);
+    return object;
+}
+
 
 #pragma endregion
 

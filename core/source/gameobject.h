@@ -169,6 +169,8 @@ namespace smallsquare {
          */
         virtual void CheckIntegrity();
 
+        GameObject * Instantiate(GameObject * object, GameObject * parent = nullptr);
+
         /**
          * Get the parent of a GameObject in the current object tree
          * @param object A pointer to the child object

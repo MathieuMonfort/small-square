@@ -26,8 +26,14 @@ if(DEFINED SQ_MODULES)
     endif()
 endif()
 
-if(BUILD_SAMPLES)
+if(BUILD_SAMPLES MATCHES "ON")
+    message("Configuring Samples")
     add_subdirectory(samples)
+endif()
+
+if(BUILD_TESTS MATCHES "ON")
+    message("Configuring Tests")
+    add_subdirectory(tests)
 endif()
 
 find_package(Doxygen)

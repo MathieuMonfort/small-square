@@ -137,6 +137,15 @@ vector<smallsquare::GameObject *> smallsquare::Game::GetPathTo(GameObject *objec
     return _objectTree->PathTo(object);
 }
 
+GLFWwindow *smallsquare::Game::GetWindow() {
+    return _win;
+}
+
+smallsquare::GameObject *smallsquare::Game::GetRoot() {
+    return _objectTree->GetRoot();
+}
+
+
 
 #pragma endregion
 
@@ -194,7 +203,7 @@ bool smallsquare::Viewport::ContainsPixelPos(int x, int y){
     int hSize = (int) ((float) _wHeight * _h);
 
 
-    return x < xOffset + wSize && x > xOffset && y < yOffset + hSize && y > yOffset ;
+    return x <= xOffset + wSize && x >= xOffset && y <= yOffset + hSize && y >= yOffset ;
 }
 
 void smallsquare::Viewport::Draw(vector<DrawableObject *> drawables){

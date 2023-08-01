@@ -7,6 +7,7 @@
 #define SMALLSQUARE_DATA_TREE_H
 #include <vector>
 #include <list>
+#include <algorithm>
 
 using namespace std;
 
@@ -236,7 +237,7 @@ namespace smallsquare {
                 n = n->parent;
                 result.push_back(n->data);
             } while (n != _root);
-
+            reverse(result.begin() , result.end());
             return result;
         }
 
@@ -261,6 +262,8 @@ namespace smallsquare {
         void Insert(T data) {
             Insert(data, _root);
         }
+
+        //TODO: Add function appending subtree. !! Check for object duplicates !!
     };
 
 }
