@@ -18,7 +18,7 @@ class MyGame : public Game{
 private:
     UIQuad * _uiElement;
     UIQuad * _uiTarget;
-
+    CameraController * _controller;
     Model * _backpack;
 
     float totalOffset = 0;
@@ -54,8 +54,8 @@ public:
 
         auto fCanvas = Instantiate(new FixedCanvas());
         _uiTarget = (UIQuad *)Instantiate(new UIQuad(vec2(0),0.0f, vec2(.4f) ,uiShader,uiTarget,HA_CENTER,VA_CENTER),fCanvas);
-        Instantiate(new FlightCamCon(vec3(0,0,-10), vec3(0,0,0), _cam) );
-
+        //      Instantiate(new FlightCamCon(vec3(0,0,-10), vec3(0,0,0), _cam) );
+        _controller = (CameraController *)Instantiate(new CameraController(vec3(0.0f), vec3(0.0f), _cam));
 
         Instantiate(new Model(vec3(0,0,0), vec3(0,0,0), vec3(1,1,1), resFold + "/models/Spheres/ico-sphere.obj", solidShader));
 
@@ -64,6 +64,8 @@ public:
         Input::AddInput(GLFW_KEY_A, "Move_Left");
         Input::AddInput(GLFW_KEY_S, "Move_Back");
         Input::AddInput(GLFW_KEY_D, "Move_Right");
+        Input::AddInput(GLFW_KEY_Q, "Rotate_Right");
+        Input::AddInput(GLFW_KEY_E, "Rotate_Left");
 
 
         Input::AddInput(GLFW_KEY_KP_8, "UI_Up");
@@ -81,15 +83,34 @@ public:
         Debug::Clear();
 
 
-        //if(Input::KeyPressed("UI_Up")){
+        if(Input::KeyPressed("Move_Left")){
+            _controller->Translate(vec3(0.1,0,0));
+        }
 
-        _ray = new Ray(_cam->position, _cam->GetFront(), 800.0f);
-        if(_plane->IsIntersecting(_ray)) {
-            Debug::Log("Intersect");
+        if(Input::KeyPressed("Move_Right")){
+            _controller->Translate(vec3(-0.1,0,0));
         }
-        else{
-            Debug::Log("Not Intersecting");
+
+        if(Input::KeyPressed("Move_Forward")){
+            _controller->Translate(vec3(0,0,0.1));
         }
+
+        if(Input::KeyPressed("Move_Back")){
+            _controller->Translate(vec3(0,0,-0.1));
+        }
+
+        if(Input::KeyPressed("Rotate_Right")){
+            _controller->Rotate(-0.01,_controller->GetGlobalUp());
+        }
+
+
+        if(Input::KeyPressed("Rotate_Left")){
+            _controller->Rotate(0.01,_controller->GetGlobalUp());
+        }
+
+        Debug::Log("Mouse Position", Input::MousePosition());
+        Debug::Log("Mouse Position in world" ,(*_viewports.begin())->ScreenToWorldSpace(Input::MousePosition().x,Input::MousePosition().y) );
+        //if(Input::KeyPressed("UI_Up")){
     }
 
 };
