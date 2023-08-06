@@ -16,6 +16,7 @@
 #include "camera.h"
 #include "data_tree.h"
 #include "gameobject.h"
+#include "raycast.h"
 
 #include "input.h"
 #include "debug.h"
@@ -113,6 +114,8 @@ namespace smallsquare{
          */
         [[nodiscard]]
         vec3 ScreenToWorldSpace(int x, int y );
+
+        //Ray CameraToRay(vec<2,int> screenPosition  );
 
         /**
          * Get the viewport's current ratio.

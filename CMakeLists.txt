@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.17)
-project(smallsquare VERSION 1.0.0)
+project(small-square VERSION 1.0.0)
 configure_file(docs/README.md.in ${CMAKE_SOURCE_DIR}/README.md @ONLY)
 
 
@@ -30,23 +30,25 @@ if(BUILD_SAMPLES)
     add_subdirectory(samples)
 endif()
 
-find_package(Doxygen)
-message("Doxygen Doc Configuration")
+if(BUILD_DOXYGEN)
+    find_package(Doxygen)
+    message("Doxygen Doc Configuration")
 
-if(DOXYGEN_FOUND)
-    set(DOXY_IN ${CMAKE_CURRENT_SOURCE_DIR}/docs/doxygen/doxygen.in)
-    set(DOXY_OUT ${CMAKE_CURRENT_BINARY_DIR}/docs/doxygen/doxygen.out)
+    if(DOXYGEN_FOUND)
+        set(DOXY_IN ${CMAKE_CURRENT_SOURCE_DIR}/docs/doxygen/doxygen.in)
+        set(DOXY_OUT ${CMAKE_CURRENT_BINARY_DIR}/docs/doxygen/doxygen.out)
 
-    file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/docs/doxygen/)
-    configure_file(${DOXY_IN} ${DOXY_OUT} @ONLY)
+        file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/docs/doxygen/)
+        configure_file(${DOXY_IN} ${DOXY_OUT} @ONLY)
 
-    add_custom_target(doxygen
-            COMMAND ${DOXYGEN_EXECUTABLE} ${DOXY_OUT}
-            WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-            COMMENT "Building Doxygen API Doc"
-            VERBATIM
-            )
+        add_custom_target(small-square-doxygen
+                COMMAND ${DOXYGEN_EXECUTABLE} ${DOXY_OUT}
+                WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+                COMMENT "Building Doxygen API Doc"
+                VERBATIM
+                )
 
-else(DOXYGEN_FOUND)
-    message("Doxygen not installed")
-endif(DOXYGEN_FOUND)
+    else(DOXYGEN_FOUND)
+        message("Doxygen not installed")
+    endif(DOXYGEN_FOUND)
+endif()

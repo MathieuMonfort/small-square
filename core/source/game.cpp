@@ -25,7 +25,7 @@ smallsquare::Game::Game(int width, int height){
     glfwSetInputMode(_win, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 #endif
 #ifdef CURSOR_DEBUG
-    glfwSetInputMode(_win, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    glfwSetInputMode(_win, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 #endif
 
     glfwSetWindowSizeCallback(_win, Input::WindowSizeCallback);
@@ -162,23 +162,49 @@ mat4 smallsquare::Viewport::GetViewMatrix() const{
 }
 
 vec3 smallsquare::Viewport::ScreenToWorldSpace(int x, int y) {
-    glfwGetWindowSize(_win, &_wWidth, &_wHeight );
-    vec3 normalizedDeviceCoords = vec3((2.0f * (float)x) / (float) _wWidth - 1.0f,
-                                       1.0f - (2.0f *(float)y) /(float)_wHeight,
-                                       1.0f);
+//    glfwGetWindowSize(_win, &_wWidth, &_wHeight );
+//    vec3 normalizedDeviceCoords = vec3((2.0f * (float)x) / (float) _wWidth - 1.0f,
+//                                       1.0f - (2.0f *(float)y) /(float)_wHeight,
+//                                       1.0f);
+//
+//
+//    vec4 homogeneousClipCoords = vec4 (normalizedDeviceCoords.x ,  normalizedDeviceCoords.y, -1.0f, 1.0f);
+//
+//    vec4 eyeCoordinates = inverse(GetProjectionMatrix()) * homogeneousClipCoords;
+//    eyeCoordinates = vec4(eyeCoordinates.x, eyeCoordinates.y,-1.0f,0.0f );
+//
+//
+//    vec4 worldCoords = inverse(GetViewMatrix()) * eyeCoordinates ;
+//    vec3 translatedWorldCoords = vec3(normalize(worldCoords)) + cam->position;
+//
+//    return worldCoords;
+//    glfwGetWindowSize(_win, &_wWidth, &_wHeight );
+    vec4 normalizedScreenPos =  vec4((float)x /(float)_wWidth - 0.5f,(float)y /(float)_wHeight - 0.5f, 0.0f,1.0f);
 
+    Debug::Log("Normalized Screen Pos" , normalizedScreenPos);
+    Debug::Log("View Matrix" , cam->GetView());
+    vec4 wsPos = normalizedScreenPos * inverse( cam->GetView() *GetProjectionMatrix())  ;
+    wsPos.w = 1.0/ wsPos.w ;
 
-    vec4 homogeneousClipCoords = vec4 (normalizedDeviceCoords.x ,  normalizedDeviceCoords.y, -1.0f, 1.0f);
+    wsPos.x *= wsPos.w;
+    wsPos.y *= wsPos.w;
+    wsPos.z *= wsPos.w;
 
-    vec4 eyeCoordinates = inverse(GetProjectionMatrix()) * homogeneousClipCoords;
-    eyeCoordinates = vec4(eyeCoordinates.x, eyeCoordinates.y,-1.0f,0.0f );
+    Debug::Log("World Space Pos" , wsPos);
 
-
-    vec4 worldCoords = inverse(GetViewMatrix()) * eyeCoordinates ;
-    vec3 translatedWorldCoords = vec3(normalize(worldCoords)) + cam->position;
-
-    return worldCoords;
+    return vec3(wsPos.x,wsPos.y,wsPos.z);
 }
+
+/*smallsquare::Ray smallsquare::Viewport::CameraToRay(vec<2, int> screenPosition) {
+    vec4 camPosition = vec4(screenPosition.x, screenPosition.y, 0,1);
+    vec4 camDirection = vec4(0,0,1,1);
+
+
+    vec4 tPosition = cam->GetView() * GetProjectionMatrix() * camPosition;
+    vec4 tDirection = cam->GetView() * GetProjectionMatrix() * camDirection;
+
+
+}*/
 
 float smallsquare::Viewport::GetRatio(){
     glfwGetWindowSize(_win, &_wWidth, &_wHeight );
@@ -218,6 +244,8 @@ void smallsquare::Viewport::Draw(vector<DrawableObject *> drawables){
         }
     }
 }
+
+
 
 
 #pragma endregion

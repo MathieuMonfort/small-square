@@ -23,6 +23,10 @@ using namespace std;
 using namespace glm;
 
 namespace smallsquare{
+
+    /** \brief
+     *
+     */
     struct Material{
     public:
         Texture * diffuse;
