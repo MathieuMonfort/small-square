@@ -3,7 +3,7 @@
 // Date : 7/29/23
 // In Project : smallsquare
 // Copyright (c) Mathieu Monfort
-//
+//a
 #define BOOST_TEST_MODULE Small Square Core Tests
 #define BOOST_TEST_DYN_LINK
 #include <boost/test/unit_test.hpp>
@@ -51,7 +51,6 @@ BOOST_AUTO_TEST_CASE(viewport_creation){
     BOOST_TEST(v == g->GetFirstViewportAtPixel(1920/2,1080/2 +1));
     BOOST_TEST(v == g->GetFirstViewportAtPixel(1920/2+1,1080/2));
 }
-
 
 class TestObject : public GameObject{
 public:
@@ -102,3 +101,5 @@ BOOST_AUTO_TEST_CASE(tree_integrity){
     BOOST_TEST(oSameName[2] == tosm2);
 
 }
+
+//TODO: Test the ScreenToWorldSpace Function
